@@ -35,25 +35,28 @@ void j1Map::Draw()
 	
 	MapLayer* mapLayer = data.layers[0];
 
-	//pugi::xml_node* Iterator = & map_file.child("map").child("layer").child("data").child("tile"); 
-	uint* gid_list = data.layers.start->data->data;
+	//pugi::xml_node* Iterator = & map_file.child("map").child("layer").child("data").child("tile");
 
-	int i = 0;
-	for (int y = 0; y < data.height; y++) {
-		for (int x = 0; x < data.width; x++) {
-		
-			
-			App->render->Blit(data.tilesets[0]->texture, 
-				data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-				data.tilesets[0]->TileRect(gid_list[i]));
-			i++;
-			 //Iterator = & Iterator->next_sibling("tile");
+	p2List_item<MapLayer*>* layerIter = data.layers.start;
+	
+	while(layerIter != nullptr) { //loop for layers, (no sucio) (by paus)
 
+		uint* gid_list = layerIter->data->data;
+
+		int i = 0;
+		for (int y = 0; y < data.height; y++) {
+			for (int x = 0; x < data.width; x++) {
+
+				App->render->Blit(data.tilesets[0]->texture,
+					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
+					data.tilesets[0]->TileRect(gid_list[i]));
+				i++;
+				//Iterator = & Iterator->next_sibling("tile");
+			}
 		}
+		layerIter = layerIter->next;//go to next layer
 	}
 }
-
-
 
 // Called before quitting
 bool j1Map::CleanUp()

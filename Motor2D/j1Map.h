@@ -17,7 +17,7 @@ struct MapLayer
 	p2SString			name;
 	uint				width;
 	uint				height;
-	uint*				data;
+	uint*				data; //Tile Ids
 	inline uint Get(int x, int y) const
 	{
 		return x + y * width;
