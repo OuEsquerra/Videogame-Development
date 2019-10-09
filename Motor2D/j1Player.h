@@ -48,8 +48,18 @@ public://variables
 
 private:
 
+	float floor = 500.0f;
+
+	int boxW = 50;
+	int boxH = 100;
+
+	float playerSpeed = 5;
+
+	int accelerationFrames = 0;
+
+
 	SDL_Rect playerBox;
-	iPoint positionP1;
+	p2Point<float> positionP1;
 	
 	PlayerState playerState;
 

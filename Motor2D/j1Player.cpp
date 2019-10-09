@@ -29,8 +29,8 @@ bool j1Player::Awake(pugi::xml_node config) {
 
 bool j1Player::Start() {
 
-	positionP1 = {200,500 };
-	playerBox = { positionP1.x,positionP1.y,50,100 };
+	positionP1 = {200.0f,500.0f };
+	playerBox = { (int)positionP1.x,(int)positionP1.y,boxW,boxH };
 
 
 	return true;
@@ -46,26 +46,36 @@ bool j1Player::PreUpdate() {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		playerState = runningLeft;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
+		playerState = jumping;
+	}
 	
-
-
 	return true;
 };
 
 bool j1Player::Update(float dt) {
+	float a = 0.3f;
 
 	switch (playerState) {
 
 	case idle:
+		accelerationFrames = 0;
 
 		break;
 
 	case runningRight:
-		positionP1.x += 1; // Move Right at Speed
+
+
+
+		
+		positionP1.x += playerSpeed; // Move Right at Speed
+		
+		accelerationFrames++;
+
 		break;
 
 	case runningLeft:
-		positionP1.x -= 1; // Mode Left at Speed
+		positionP1.x -= playerSpeed; // Mode Left at Speed
 		break;
 
 	case jumping:
@@ -74,8 +84,12 @@ bool j1Player::Update(float dt) {
 	}
 
 	playerBox.x = positionP1.x;
-	App->render->DrawQuad(playerBox,200,200,0);
+
+	App->render->DrawQuad(playerBox,255,200,0);
+
+
 	return true;
+	
 };
 
 bool j1Player::PostUpdate() {
