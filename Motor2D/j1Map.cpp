@@ -30,12 +30,8 @@ void j1Map::Draw()
 {
 	if(map_loaded == false)
 		return;
-
-	// TODO 5: Prepare the loop to iterate all the tiles in a layer
 	
 	MapLayer* mapLayer = data.layers[0];
-
-	//pugi::xml_node* Iterator = & map_file.child("map").child("layer").child("data").child("tile");
 
 	p2List_item<MapLayer*>* layerIter = data.layers.start;
 	
@@ -51,7 +47,7 @@ void j1Map::Draw()
 					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
 					data.tilesets[0]->TileRect(gid_list[i]));
 				i++;
-				//Iterator = & Iterator->next_sibling("tile");
+				
 			}
 		}
 		layerIter = layerIter->next;//go to next layer
@@ -74,7 +70,7 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
-	// TODO 2: clean up all layer data
+	
 	// Remove all layers
 	data.layers.clear();
 
@@ -123,7 +119,7 @@ bool j1Map::Load(const char* file_name)
 		data.tilesets.add(set);
 	}
 
-	// TODO 4: Iterate all layers and load each of them
+	
 	// Load layer info ----------------------------------------------
 	pugi::xml_node layer;
 	for (layer = map_file.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer")) 
@@ -138,6 +134,22 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(newLayer);
 	}
 
+	// Load collider info -------------------------------------------
+	pugi::xml_node objectgroup;
+	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
+	{
+		MapObjectgroup* newObjectgroup = new MapObjectgroup();
+
+		if (ret == true)
+		{
+			ret = LoadObjectgroup(objectgroup, newObjectgroup);
+		}
+
+		data.objectgroups.add(newObjectgroup);
+	}
+
+
+	//LOG of xml data.
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -154,9 +166,6 @@ bool j1Map::Load(const char* file_name)
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
 			item = item->next;
 		}
-
-		// TODO 4: Add info here about your loaded layers
-		// Adapt this code with your own variables
 		
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
 		while(item_layer != NULL)
@@ -322,5 +331,55 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		layer->data[i] = iterator_node.attribute("gid").as_uint();
 	}
 
+	return true;
+}
+
+bool j1Map::LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup)
+{
+
+	
+	objectgroup->name	= node.attribute("name").as_string();
+	objectgroup->id		= node.attribute("id").as_uint();
+
+	int AmountObjects = 0;
+	for (pugi::xml_node iterator_node = node.child("object"); iterator_node; iterator_node = iterator_node.next_sibling("object"), AmountObjects++) {}
+
+	objectgroup->objects = new Object[AmountObjects];
+	memset(objectgroup->objects, 0, AmountObjects * sizeof(Object));
+
+	int i = 0;
+	for (pugi::xml_node iterator_node = node.child("object"); iterator_node; iterator_node = iterator_node.next_sibling("object"), i++) {
+		SDL_Rect* box = new SDL_Rect;
+		
+		box->x = iterator_node.attribute("x").as_uint();
+		box->y = iterator_node.attribute("y").as_uint();
+		box->w = iterator_node.attribute("width").as_uint();
+		box->h = iterator_node.attribute("height").as_uint();
+
+		objectgroup->objects[i].box = box;
+		objectgroup->objects[i].id = iterator_node.attribute("id").as_uint();
+		objectgroup->objects[i].name = iterator_node.attribute("name").as_string();
+
+		p2SString type(iterator_node.attribute("type").as_string());
+
+		if (type == "platform")
+		{
+			objectgroup->objects[i].type = ObjectType::PLATFORM;
+		}
+		else if (type == "solid")
+		{
+			objectgroup->objects[i].type = ObjectType::SOLID;
+		}
+		else if (type == "damage")
+		{
+			objectgroup->objects[i].type = ObjectType::DAMAGE;
+		}
+		else
+		{
+			objectgroup->objects[i].type = ObjectType::UNKNOWN;
+		}
+
+	}
+	
 	return true;
 }

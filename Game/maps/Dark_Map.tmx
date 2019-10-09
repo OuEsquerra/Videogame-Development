@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="9">
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="666" columns="18">
   <image source="DarkTileset.png" width="576" height="1184"/>
  </tileset>
- <layer name="Capa de patrones 2" width="40" height="20">
+ <layer id="1" name="Capa de patrones 2" width="40" height="20">
   <data>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -807,7 +807,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <layer name="Capa de Patrones 1" width="40" height="20">
+ <layer id="2" name="Capa de Patrones 1" width="40" height="20">
   <data>
    <tile/>
    <tile/>
@@ -1611,4 +1611,7 @@
    <tile/>
   </data>
  </layer>
+ <objectgroup id="3" name="Object Layer 1">
+  <object id="5" name="Collider" type="Collider" x="64" y="352" width="128" height="25"/>
+ </objectgroup>
 </map>

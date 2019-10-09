@@ -6,12 +6,35 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-// TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
+// Object for Colliders
+enum class ObjectType {
+	UNKNOWN = 0,
+	PLATFORM,
+	SOLID,
+	DAMAGE
+};
 
-// TODO 6: Short function to get the value of x,y
+
+struct Object 
+{
+	uint				id;
+	p2SString			name;
+	ObjectType			type = ObjectType::UNKNOWN;
+	SDL_Rect*			box;
+
+};
 
 
+struct MapObjectgroup 
+{
+	uint				id;
+	p2SString			name;
+	Object*				objects;
+};
+
+
+// ----------------------------------------------------
 struct MapLayer 
 {
 	p2SString			name;
@@ -28,7 +51,7 @@ struct MapLayer
 // ----------------------------------------------------
 struct TileSet
 {
-	// TODO 7: Create a method that receives a tile id and returns it's Rect
+	
 	SDL_Rect* Tilerect = new SDL_Rect;
 	SDL_Rect* TileRect(uint tile_id) {
 		SDL_Rect* ret = Tilerect; 
@@ -76,17 +99,16 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
-	SDL_Color			background_color;
-	MapTypes			type;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	layers;
+	int						width;
+	int						height;
+	int						tile_width;
+	int						tile_height;
+	SDL_Color				background_color;
+	MapTypes				type;
+	p2List<TileSet*>		tilesets;
+	p2List<MapLayer*>		layers;
+	p2List<MapObjectgroup*> objectgroups;
 
-
-	// TODO 2: Add a list/array of layers to the map!
 };
 
 // ----------------------------------------------------
@@ -119,8 +141,8 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	// TODO 3: Create a method that loads a single layer
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup);
 
 public:
 

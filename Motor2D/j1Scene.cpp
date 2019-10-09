@@ -30,7 +30,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->Load("hello2.tmx");
+	App->map->Load("Dark_Map.tmx");
 	//App->map->Load("Test_Map.tmx");
 	return true;
 }
@@ -63,7 +63,7 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x += 1;
 
 	//App->render->Blit(img, 0, 0);
-	//App->map->Draw();
+	App->map->Draw();
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 					App->map->data.width, App->map->data.height,
