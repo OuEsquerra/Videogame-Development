@@ -4,20 +4,36 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "j1Render.h"
+#include "j1Input.h"
+
+enum PlayerState {
+	idle,
+	runningRight,
+	runningLeft,
+	jumping,
+
+};
+
 
 class j1Player : public j1Module {
 public://methods
+
+	j1Player();
+
+	// Destructor
+	virtual ~j1Player();
+
 	bool Init();
 
 	bool Awake(pugi::xml_node config);
 
 	bool Start();
 
-	bool preUpdate();
+	bool PreUpdate();
 
-	bool Update();
+	bool Update(float dt);
 
-	bool postUpdate();
+	bool PostUpdate();
 
 	bool cleanUp();
 
@@ -35,8 +51,9 @@ private:
 	SDL_Rect playerBox;
 	iPoint positionP1;
 	
-	
+	PlayerState playerState;
 
+	//j1Input playerInput;
 };
 
 
