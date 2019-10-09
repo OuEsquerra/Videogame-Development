@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="16" tileheight="16" infinite="0" nextobjectid="1">
  <tileset firstgid="1" name="nature-paltformer-tileset-16x16" tilewidth="16" tileheight="16" tilecount="77" columns="7">
-  <image source="../../../../../Desktop/Assets/Nature Platformer Tileset [16x16][FREE] - RottingPixels/nature-paltformer-tileset-16x16.png" width="112" height="176"/>
+  <image source="maps/Nature.png" width="112" height="176"/>
   <terraintypes>
    <terrain name="Nuevo Terreno" tile="13"/>
    <terrain name="Nuevo Terreno" tile="13"/>
