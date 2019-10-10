@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "p2Animation.h"
 
 j1Player::j1Player() 
 {
@@ -40,6 +41,8 @@ bool j1Player::Start()
 
 	player.positionP1 = {200.0f,player.floor };
 	player.playerBox = { (int)player.positionP1.x,(int)player.positionP1.y,player.boxW,player.boxH };
+
+	bool LoadAnimation("player.tmx");
 
 
 	return true;
@@ -128,6 +131,10 @@ bool j1Player::Update(float dt)
 	{
 		player.positionP1.y = player.floor;
 	}
+
+	
+
+
 
 	return true;
 	

@@ -53,6 +53,7 @@ struct TileSet
 {
 	
 	SDL_Rect* Tilerect = new SDL_Rect;
+
 	SDL_Rect* TileRect(uint tile_id) {
 		SDL_Rect* ret = Tilerect; 
 		int x = ((tile_id - firstgid) % num_tiles_width);

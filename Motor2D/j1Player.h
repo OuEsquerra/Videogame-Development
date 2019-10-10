@@ -32,6 +32,8 @@ struct Player {
 
 	PlayerState playerState;
 
+
+
 };
 
 class j1Player : public j1Module {
