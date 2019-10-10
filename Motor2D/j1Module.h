@@ -11,6 +11,8 @@
 
 class j1App;
 
+struct Collider;
+
 class j1Module
 {
 public:
@@ -69,6 +71,8 @@ public:
 		return true;
 	}
 
+	// Callbacks ---
+	virtual void OnCollision(Collider* A, Collider* B) {	}
 public:
 
 	p2SString	name;
