@@ -35,7 +35,7 @@ void j1Map::Draw()
 
 	p2List_item<MapLayer*>* layerIter = data.layers.start;
 	
-	while(layerIter != nullptr) { //loop for layers, (no sucio) (by paus)
+	while(layerIter != nullptr) { //loop for layers
 
 		uint* gid_list = layerIter->data->data;
 

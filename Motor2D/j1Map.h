@@ -12,7 +12,8 @@ enum class ObjectType {
 	UNKNOWN = 0,
 	PLATFORM,
 	SOLID,
-	DAMAGE
+	DAMAGE,
+	PLAYER
 };
 
 
@@ -20,7 +21,7 @@ struct Object
 {
 	uint				id;
 	p2SString			name;
-	ObjectType			type = ObjectType::UNKNOWN;
+	ObjectType			type;
 	SDL_Rect*			box;
 
 };

@@ -1,7 +1,41 @@
 #ifndef __j1COLLISIONS_H__
 #define __j1COLLISIONS_H__
 
+#define MAX_COLLIDERS 100
+
 #include "j1Module.h"
+#include "SDL/include/SDL.h"
+
+enum class ObjectType;
+struct Object;
+
+
+
+struct Collider
+{
+	SDL_Rect rect;
+	bool to_delete = false;
+	ObjectType type;
+	j1Module* callback = nullptr;
+
+	Collider(SDL_Rect rectangle, ObjectType type, j1Module* callback = nullptr) :
+		rect(rectangle),
+		type(type),
+		callback(callback)
+	{}
+
+	Collider(Object object);
+
+	inline void SetPos(int x, int y)
+	{
+		rect.x = x;
+		rect.y = y;
+	}
+
+	inline bool CheckCollision(const SDL_Rect& r) const;
+};
+
+
 
 class j1Collisions : public j1Module {
 	//Methods
@@ -25,10 +59,17 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback);
 private:
+	
+	void DebugDraw();
 
 	//Variables
 public:
+
+	p2List<Collider*> colliders;
+	bool debug_colliders = false;
 
 private:
 
