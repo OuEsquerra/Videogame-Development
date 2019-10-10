@@ -32,6 +32,7 @@ struct MapObjectgroup
 	uint				id;
 	p2SString			name;
 	Object*				objects;
+	uint				objects_size;
 };
 
 

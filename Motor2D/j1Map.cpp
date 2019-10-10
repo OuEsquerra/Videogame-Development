@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collisions.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -337,14 +338,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 bool j1Map::LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup)
 {
 
-	
 	objectgroup->name	= node.attribute("name").as_string();
 	objectgroup->id		= node.attribute("id").as_uint();
 
 	int AmountObjects = 0;
 	for (pugi::xml_node iterator_node = node.child("object"); iterator_node; iterator_node = iterator_node.next_sibling("object"), AmountObjects++) {}
 
-	objectgroup->objects = new Object[AmountObjects];
+	objectgroup->objects_size	= AmountObjects;
+	objectgroup->objects		= new Object[AmountObjects];
 	memset(objectgroup->objects, 0, AmountObjects * sizeof(Object));
 
 	int i = 0;

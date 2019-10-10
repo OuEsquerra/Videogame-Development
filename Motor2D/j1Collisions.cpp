@@ -3,7 +3,7 @@
 #include "j1Map.h"
 #include "j1Render.h"
 
-j1Collisions::j1Collisions() : j1Module()
+j1Collisions::j1Collisions() : j1Module(), debug_colliders(true)
 {
 	name.create("collisions");
 }
@@ -20,6 +20,19 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 };
 
 bool j1Collisions::Start() {
+	
+	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
+	while (list_i != nullptr) {
+		for (int i = 0; i < list_i->data->objects_size; i++) {
+			
+			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr);
+		}
+		
+		list_i = list_i->next;
+	}
+
+	
+	
 	return true;
 };
 
@@ -57,7 +70,7 @@ bool j1Collisions::PreUpdate() {
 		c1 = Coll_iterator->data;
 		
 		p2List_item<Collider*>* Coll_iterator2 = colliders.start;
-		while (Coll_iterator != nullptr) {
+		while (Coll_iterator2 != nullptr) {
 
 			c2 = Coll_iterator2->data;
 
@@ -70,7 +83,7 @@ bool j1Collisions::PreUpdate() {
 					c2->callback->OnCollision(c2, c1);
 			}
 
-			Coll_iterator2 = Coll_iterator->next;
+			Coll_iterator2 = Coll_iterator2->next;
 		}
 
 		Coll_iterator = Coll_iterator->next;
@@ -118,8 +131,8 @@ bool j1Collisions::Update(float dt) {
 void j1Collisions::DebugDraw() {
 	if (debug_colliders == false)
 		return;
+	/*
 
-	Uint8 alpha = 80;//MAGIC NUMBER
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
@@ -141,7 +154,9 @@ void j1Collisions::DebugDraw() {
 			break;
 		}
 	}
+	*/
 
+	Uint8 alpha = 80; 	//MAGIC NUMBER
 	p2List_item<Collider*>* Coll_iterator = colliders.start;
 	while (Coll_iterator != nullptr) {
 
@@ -178,16 +193,13 @@ bool j1Collisions::CleanUp() {
 
 Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback)
 {
-	Collider* ret = nullptr;
+	Collider* ret = new Collider;
 
-	for (uint i = 0; i < MAX_COLLIDERS; i++)
-	{
-		if (colliders[i] == nullptr)
-		{
-			ret = colliders[i] = new Collider(rect, type, callback);
-			break;
-		}
-	}
+	ret->callback = callback;
+	ret->rect = rect;
+	ret->type = type;
+
+	colliders.add(ret);
 	
 	return ret;
 }

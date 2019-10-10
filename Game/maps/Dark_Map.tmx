@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="9">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="40" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="10">
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="666" columns="18">
   <image source="DarkTileset.png" width="576" height="1184"/>
  </tileset>
@@ -1612,6 +1612,7 @@
   </data>
  </layer>
  <objectgroup id="3" name="Object Layer 1">
-  <object id="5" name="Collider" type="Collider" x="64" y="352" width="128" height="25"/>
+  <object id="5" name="Collider" type="platform" x="64" y="352" width="128" height="25"/>
+  <object id="9" name="Ground" type="solid" x="0" y="480" width="224" height="160"/>
  </objectgroup>
 </map>

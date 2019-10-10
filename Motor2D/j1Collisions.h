@@ -26,6 +26,8 @@ struct Collider
 
 	Collider(Object object);
 
+	Collider() {};
+
 	inline void SetPos(int x, int y)
 	{
 		rect.x = x;
@@ -69,7 +71,7 @@ private:
 public:
 
 	p2List<Collider*> colliders;
-	bool debug_colliders = false;
+	bool debug_colliders;
 
 private:
 
