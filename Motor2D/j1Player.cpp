@@ -5,99 +5,142 @@
 #include "j1Render.h"
 #include "j1Input.h"
 
-j1Player::j1Player() {
+j1Player::j1Player() 
+{
 
 	name.create("player");
 
 };
 
-j1Player::~j1Player() {
+j1Player::~j1Player() 
+{
 
 
 };
 
-bool j1Player::Init() {
+bool j1Player::Init() 
+{
 	
 	return true;
 };
 
-bool j1Player::Awake(pugi::xml_node config) {
+bool j1Player::Awake(pugi::xml_node& conf) 
+{
+	player.acceleration = conf.child("acceleration").attribute("value").as_float();
 
+	player.speedX = conf.child("speedX").attribute("value").as_float();
+
+	player.maxSpeed = conf.child("maxSpeed").attribute("value").as_float();
 
 	return true;
 }; 
 
-bool j1Player::Start() {
+bool j1Player::Start() 
+{
 
-	positionP1 = {200.0f,500.0f };
-	playerBox = { (int)positionP1.x,(int)positionP1.y,boxW,boxH };
+	player.positionP1 = {200.0f,player.floor };
+	player.playerBox = { (int)player.positionP1.x,(int)player.positionP1.y,player.boxW,player.boxH };
 
 
 	return true;
 };
 
-bool j1Player::PreUpdate() {
+bool j1Player::PreUpdate() 
+{
 	
-	playerState = idle;
+	player.playerState = idle;
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		playerState = runningRight;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
+	{
+		player.playerState = runningRight;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		playerState = runningLeft;
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+	{
+		player.playerState = runningLeft;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
-		playerState = jumping;
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+	{
+		player.playerState = jumping;
 	}
 	
 	return true;
 };
 
-bool j1Player::Update(float dt) {
-	float a = 0.3f;
+bool j1Player::Update(float dt) 
+{
+	frames++;
 
-	switch (playerState) {
+	switch (player.playerState) 
+	{
 
 	case idle:
-		accelerationFrames = 0;
+		
+		player.speedX = 0;
 
 		break;
 
 	case runningRight:
-
-
-
 		
-		positionP1.x += playerSpeed; // Move Right at Speed
+
+		player.speedX += player.acceleration; 
+
+		if (player.speedX > player.maxSpeed) 
+		{
+			player.speedX = player.maxSpeed;
+		}
 		
-		accelerationFrames++;
+		player.positionP1.x += player.speedX; // Move Right at Speed
+		
 
 		break;
 
 	case runningLeft:
-		positionP1.x -= playerSpeed; // Mode Left at Speed
+
+		
+		player.speedX -= player.acceleration; //non linear acceleration
+
+		if (player.speedX < -player.maxSpeed) 
+		{
+			player.speedX = -player.maxSpeed;
+		}
+
+		player.positionP1.x += player.speedX; // Mode Left at -Speed
+
+
 		break;
 
 	case jumping:
 
+
+
+
+
 		break;
 	}
 
-	playerBox.x = positionP1.x;
+	player.playerBox.x = player.positionP1.x;
 
-	App->render->DrawQuad(playerBox,255,200,0);
+	App->render->DrawQuad(player.playerBox,255,200,0);
 
+	if (player.positionP1.y <= player.floor) 
+	{
+		player.positionP1.y = player.floor;
+	}
 
 	return true;
 	
 };
 
-bool j1Player::PostUpdate() {
+bool j1Player::PostUpdate() 
+{
 
 	return true;
 };
 
-bool j1Player::cleanUp() {
+bool j1Player::cleanUp() 
+{
 
 	return true;
 };

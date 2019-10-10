@@ -14,6 +14,25 @@ enum PlayerState {
 
 };
 
+struct Player {
+	float acceleration;
+
+	float speedX;
+
+	float maxSpeed;
+
+	float floor = 400.0f;
+
+	int boxW = 40;
+	int boxH = 70;
+
+	SDL_Rect playerBox;
+
+	p2Point<float> positionP1;
+
+	PlayerState playerState;
+
+};
 
 class j1Player : public j1Module {
 public://methods
@@ -25,7 +44,7 @@ public://methods
 
 	bool Init();
 
-	bool Awake(pugi::xml_node config);
+	bool Awake(pugi::xml_node&);
 
 	bool Start();
 
@@ -48,20 +67,13 @@ public://variables
 
 private:
 
-	float floor = 500.0f;
+	float frames = 0;
 
-	int boxW = 50;
-	int boxH = 100;
+	bool runFrames = false;
 
-	float playerSpeed = 5;
+	float startFrame = 0;
 
-	int accelerationFrames = 0;
-
-
-	SDL_Rect playerBox;
-	p2Point<float> positionP1;
-	
-	PlayerState playerState;
+	Player player;
 
 	//j1Input playerInput;
 };

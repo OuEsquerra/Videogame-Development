@@ -18,6 +18,12 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <player>
+    <acceleration value="1.2" />
+    <speedX value="0" />
+    <maxSpeed value="10" />
+  </player>
+  
   <file_system>
     <path>data.zip</path>
   </file_system>
