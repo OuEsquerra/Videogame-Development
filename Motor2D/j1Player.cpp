@@ -53,7 +53,7 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	
+	playerGrounded = false;
 	player.playerState = falling;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
@@ -124,8 +124,10 @@ bool j1Player::Update(float dt)
 
 
 		break;
-	case falling:
-		
+	}
+
+	if (playerGrounded == false) {
+
 		player.speedY += player.acceleration;
 
 		if (player.speedY > player.maxSpeed)
@@ -134,10 +136,9 @@ bool j1Player::Update(float dt)
 		}
 
 		player.positionP1.y += player.speedY;
-		
-		break;
 
 	}
+
 
 	player.playerBox.x = player.positionP1.x;
 
@@ -173,12 +174,12 @@ bool j1Player::cleanUp()
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
-		//player.positionP1.y = B->rect.y - player.collider->rect.h + 5;
-		player.playerState = idle;
+		player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
+		playerGrounded = true;
 	}
 	if (A->type == ObjectType::SOLID && B->type == ObjectType::PLAYER) {
-		//player.positionP1.y = A->rect.y - player.collider->rect.h + 5 ;
-		player.playerState = idle;
+		player.positionP1.y = A->rect.y - player.collider->rect.h + 1;
+		playerGrounded = true;
 	}
 }
 

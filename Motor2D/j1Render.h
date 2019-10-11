@@ -4,7 +4,6 @@
 #include "SDL/include/SDL.h"
 #include "p2Point.h"
 
-
 class j1Render : public j1Module
 {
 public:

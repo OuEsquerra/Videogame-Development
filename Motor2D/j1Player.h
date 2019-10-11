@@ -70,6 +70,7 @@ private:
 public://variables
 
 	Player player;
+	bool playerGrounded;
 
 private:
 
@@ -79,7 +80,7 @@ private:
 
 	float startFrame = 0;
 
-	
+
 	//j1Input playerInput;
 };
 
