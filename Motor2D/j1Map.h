@@ -21,7 +21,7 @@ struct Animations
 	p2SString name;
 	uint id; //Tile which is animated
 	uint nFrames; //Number of frames of the animation
-	uint frames[4];
+	uint* frames;
 };
 
 struct Object 
@@ -87,7 +87,8 @@ struct TileSet
 		/*int x = ((tile_id - firstgid) % num_tiles_width);
 		int y = ((tile_id - firstgid) / num_tiles_width);*/
 
-		ret->x = 0;
+
+		ret->x = 0 + tile_id * 64;
 		ret->y = 0;
 		ret->w = 64;
 		ret->h = 64;
@@ -157,7 +158,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(const char* name);
+	void DrawAnimation(const char* name,const char* tileset);
 
 	// Called before quitting
 	bool CleanUp();
@@ -182,6 +183,10 @@ public:
 	MapData data;
 
 private:
+
+	int i = 0;
+
+	int frameCount;
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
