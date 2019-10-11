@@ -125,13 +125,14 @@ bool j1Player::Update(float dt)
 
 	player.playerBox.x = player.positionP1.x;
 
-	App->render->DrawQuad(player.playerBox,255,200,0);
+	//App->render->DrawQuad(player.playerBox,255,200,0);
 
 	if (player.positionP1.y <= player.floor) 
 	{
 		player.positionP1.y = player.floor;
 	}
 
+	App->map->DrawAnimation("idle"); // run does nothing
 	
 
 

@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Player.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
 #include <math.h>
@@ -53,6 +54,51 @@ void j1Map::Draw()
 		}
 		layerIter = layerIter->next;//go to next layer
 	}
+}
+
+void j1Map::DrawAnimation(const char* name) 
+{
+	TileSet* animTileset = nullptr;
+
+	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
+	while(TilesetIter != NULL)
+	{
+		if (TilesetIter->data->name, "adventurer 64")
+		{
+
+			animTileset = TilesetIter->data;
+
+		}
+		TilesetIter = TilesetIter->next;
+	}
+	 // I have the adventurer 64 Tileset inside I have animation
+
+	Animations* currentanim = nullptr;  
+
+	p2List_item<Animations*>* animIter = animTileset->animations.start;
+	while (animIter != NULL)
+	{
+		if (animIter->data->name, name)
+		{
+
+			currentanim = animIter->data;
+
+		}
+		animIter = animIter->next;
+	}
+
+	/*int maxX = data.tilesets.end->data->tex_width/ data.tilesets.end->data->num_tiles_width;
+	int maxY = data.tilesets.end->data->tex_height/ data.tilesets.end->data->num_tiles_height;*/
+
+	
+	
+
+	App->render->Blit(data.tilesets.start->data->texture,//Texture of the animation(tileset) animTileset->texture
+	App->player->player.positionP1.x , App->player->player.positionP1.y , //drawn at player position
+	animTileset->TileRect(1) ); //draw frames tile id
+
+	
+	
 }
 
 // Called before quitting
@@ -325,23 +371,22 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 
-	int i = 0;
 	
-	
-
-	for (pugi::xml_node iterator_node = tileset_node.child("tile"); iterator_node; iterator_node = iterator_node.next_sibling("tile"), i++) { //Iterator for all animation childs
+	for (pugi::xml_node iterator_node = tileset_node.child("tile"); iterator_node; iterator_node = iterator_node.next_sibling("tile")) { //Iterator for all animation childs
 		
 		Animations* newAnimation = new Animations;
 		
+		newAnimation->id = iterator_node.attribute("id").as_uint(); // Get the Id of the animated Tile
 
-		newAnimation->id = iterator_node.attribute("id").as_uint();
-		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string();
+		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string(); //Get the name of the animation inside extra attribute
+
 		int j = 0;
 		for (pugi::xml_node iterator_node_anim = tileset_node.child("tile").child("animation").child("frame"); iterator_node_anim = iterator_node.next_sibling("frame"); j++) {
+
 			newAnimation->frames[j] = iterator_node_anim.attribute("tileid").as_uint(); //Set frames ids
 
 		}
-		newAnimation->nFrames = j + 1;
+		newAnimation->nFrames = j +1;
 
 		set->animations.add(newAnimation);
 	}

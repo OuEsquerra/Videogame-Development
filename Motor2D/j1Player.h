@@ -65,7 +65,7 @@ public://variables
 
 	
 
-	
+	Player player;
 
 private:
 
@@ -75,7 +75,7 @@ private:
 
 	float startFrame = 0;
 
-	Player player;
+	
 
 	//j1Input playerInput;
 };

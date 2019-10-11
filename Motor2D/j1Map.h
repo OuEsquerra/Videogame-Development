@@ -21,7 +21,7 @@ struct Animations
 	p2SString name;
 	uint id; //Tile which is animated
 	uint nFrames; //Number of frames of the animation
-	uint* frames;
+	uint frames[4];
 };
 
 struct Object 
@@ -30,7 +30,7 @@ struct Object
 	p2SString			name;
 	ObjectType			type;
 	SDL_Rect*			box;
-
+	SDL_Texture*		texture;
 };
 
 
@@ -64,7 +64,9 @@ struct TileSet
 	SDL_Rect* Tilerect = new SDL_Rect;
 
 	SDL_Rect* TileRect(uint tile_id) {
+
 		SDL_Rect* ret = Tilerect; 
+
 		int x = ((tile_id - firstgid) % num_tiles_width);
 		int y = ((tile_id - firstgid) / num_tiles_width);
 
@@ -72,6 +74,23 @@ struct TileSet
 		ret->y = y*tile_height + margin + spacing*y;
 		ret->w = tile_width;
 		ret->h = tile_height;
+
+		return ret;
+	}
+	
+	SDL_Rect* PlayerTilerect = new SDL_Rect;
+
+	SDL_Rect* PlayerTileRect(uint tile_id) {
+
+		SDL_Rect* ret = PlayerTilerect;
+
+		/*int x = ((tile_id - firstgid) % num_tiles_width);
+		int y = ((tile_id - firstgid) / num_tiles_width);*/
+
+		ret->x = 0;
+		ret->y = 0;
+		ret->w = 64;
+		ret->h = 64;
 
 		return ret;
 	}
@@ -119,7 +138,7 @@ struct MapData
 	p2List<TileSet*>		tilesets;
 	p2List<MapLayer*>		layers;
 	p2List<MapObjectgroup*> objectgroups;
-
+	
 };
 
 // ----------------------------------------------------
@@ -137,6 +156,8 @@ public:
 
 	// Called each loop iteration
 	void Draw();
+
+	void DrawAnimation(const char* name);
 
 	// Called before quitting
 	bool CleanUp();
