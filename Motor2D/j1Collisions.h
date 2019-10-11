@@ -1,7 +1,7 @@
 #ifndef __j1COLLISIONS_H__
 #define __j1COLLISIONS_H__
 
-#define MAX_COLLIDERS 100
+
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
@@ -72,6 +72,7 @@ public:
 
 	p2List<Collider*> colliders;
 	bool debug_colliders;
+	bool* CollisionMatrix;
 
 private:
 

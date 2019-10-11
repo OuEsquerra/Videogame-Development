@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 #include "p2Animation.h"
+#include "j1Collisions.h"
 
 j1Player::j1Player() 
 {
@@ -39,8 +40,10 @@ bool j1Player::Awake(pugi::xml_node& conf)
 bool j1Player::Start() 
 {
 
-	player.positionP1 = {200.0f,player.floor };
+	player.positionP1 = {100.0f,player.floor };
 	player.playerBox = { (int)player.positionP1.x,(int)player.positionP1.y,player.boxW,player.boxH };
+
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
 
 	bool LoadAnimation("player.tmx");
 
@@ -51,7 +54,7 @@ bool j1Player::Start()
 bool j1Player::PreUpdate() 
 {
 	
-	player.playerState = idle;
+	player.playerState = falling;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
 	{
@@ -121,19 +124,35 @@ bool j1Player::Update(float dt)
 
 
 		break;
+	case falling:
+		
+		player.speedY += player.acceleration;
+
+		if (player.speedY > player.maxSpeed)
+		{
+			player.speedY = player.maxSpeed;
+		}
+
+		player.positionP1.y += player.speedY;
+		
+		break;
+
 	}
 
 	player.playerBox.x = player.positionP1.x;
 
 	//App->render->DrawQuad(player.playerBox,255,200,0);
 
-	if (player.positionP1.y <= player.floor) 
+	/*if (player.positionP1.y <= player.floor) 
 	{
 		player.positionP1.y = player.floor;
-	}
+	}*/
 
 	App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
 
+
+	//Update Player Collider after updating its position
+	player.collider->SetPos(player.positionP1.x, player.positionP1.y);
 
 
 	return true;
@@ -151,4 +170,15 @@ bool j1Player::cleanUp()
 
 	return true;
 };
+
+void j1Player::OnCollision(Collider* A, Collider* B) {
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
+		//player.positionP1.y = B->rect.y - player.collider->rect.h + 5;
+		player.playerState = idle;
+	}
+	if (A->type == ObjectType::SOLID && B->type == ObjectType::PLAYER) {
+		//player.positionP1.y = A->rect.y - player.collider->rect.h + 5 ;
+		player.playerState = idle;
+	}
+}
 

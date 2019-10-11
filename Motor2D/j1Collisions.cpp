@@ -6,6 +6,7 @@
 j1Collisions::j1Collisions() : j1Module(), debug_colliders(true)
 {
 	name.create("collisions");
+
 }
 
 bool j1Collisions::Init() {
@@ -20,7 +21,7 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 };
 
 bool j1Collisions::Start() {
-	
+
 	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
 	while (list_i != nullptr) {
 		for (int i = 0; i < list_i->data->objects_size; i++) {
@@ -74,15 +75,16 @@ bool j1Collisions::PreUpdate() {
 
 			c2 = Coll_iterator2->data;
 
-			if (c1->CheckCollision(c2->rect) == true)
-			{
-				if (c1->callback)
-					c1->callback->OnCollision(c1, c2);
+			if (c1 != c2) {
+				if (c1->CheckCollision(c2->rect) == true && (c1->type == ObjectType::PLAYER || c2->type == ObjectType::PLAYER))
+				{
+					if (c1->callback)
+						c1->callback->OnCollision(c1, c2);
 
-				if (c2->callback)
-					c2->callback->OnCollision(c2, c1);
+					if (c2->callback)
+						c2->callback->OnCollision(c2, c1);
+				}
 			}
-
 			Coll_iterator2 = Coll_iterator2->next;
 		}
 
