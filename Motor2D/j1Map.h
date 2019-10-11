@@ -16,6 +16,13 @@ enum class ObjectType {
 	PLAYER
 };
 
+struct Animations
+{
+	p2SString name;
+	uint id; //Tile which is animated
+	uint nFrames; //Number of frames of the animation
+	uint* frames;
+};
 
 struct Object 
 {
@@ -90,6 +97,7 @@ struct TileSet
 	int					num_tiles_height;
 	int					offset_x;
 	int					offset_y;
+	p2List<Animations*> animations;
 };
 
 enum MapTypes
@@ -144,6 +152,7 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
+	bool LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup);
 

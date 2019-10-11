@@ -117,6 +117,11 @@ bool j1Map::Load(const char* file_name)
 			ret = LoadTilesetImage(tileset, set);
 		}
 
+		if (ret == true)
+		{
+			ret = LoadTilesetAnimation(tileset, set);
+		}
+
 		data.tilesets.add(set);
 	}
 
@@ -315,6 +320,37 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 
 	return ret;
 }
+
+bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
+{
+	bool ret = true;
+
+	int i = 0;
+	
+	
+
+	for (pugi::xml_node iterator_node = tileset_node.child("tile"); iterator_node; iterator_node = iterator_node.next_sibling("tile"), i++) { //Iterator for all animation childs
+		
+		Animations* newAnimation = new Animations;
+		
+
+		newAnimation->id = iterator_node.attribute("id").as_uint();
+		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string();
+		int j = 0;
+		for (pugi::xml_node iterator_node_anim = tileset_node.child("tile").child("animation").child("frame"); iterator_node_anim = iterator_node.next_sibling("frame"); j++) {
+			newAnimation->frames[j] = iterator_node_anim.attribute("tileid").as_uint(); //Set frames ids
+
+		}
+		newAnimation->nFrames = j + 1;
+
+		set->animations.add(newAnimation);
+	}
+	
+	return ret;
+};
+
+
+
 
 // TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
