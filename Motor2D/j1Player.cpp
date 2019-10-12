@@ -53,8 +53,11 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
-	playerGrounded = false;
+	player.SetGroundState(false);
 	player.playerState = falling;
+	
+
+
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
 	{
@@ -78,27 +81,28 @@ bool j1Player::Update(float dt)
 {
 	frames++;
 
-	switch (player.playerState) 
+	player.prevpositionP1 = player.positionP1;
+	switch (player.playerState)
 	{
 
 	case idle:
-		
+
 		player.speedX = 0;
 
 		break;
 
 	case runningRight:
-		
 
-		player.speedX += player.acceleration; 
 
-		if (player.speedX > player.maxSpeed) 
+		player.speedX += player.acceleration;
+
+		if (player.speedX > player.maxSpeed)
 		{
 			player.speedX = player.maxSpeed;
 		}
-		
+
 		player.positionP1.x += player.speedX; // Move Right at Speed
-		
+
 
 		break;
 
@@ -107,7 +111,7 @@ bool j1Player::Update(float dt)
 		
 		player.speedX -= player.acceleration; //non linear acceleration
 
-		if (player.speedX < -player.maxSpeed) 
+		if (player.speedX < -player.maxSpeed)
 		{
 			player.speedX = -player.maxSpeed;
 		}
@@ -120,13 +124,16 @@ bool j1Player::Update(float dt)
 	case jumping:
 
 
+		player.speedY = -player.acceleration*12;
 
-
-
-		break;
+		player.positionP1.y += player.speedY*5;
+		 
+		player.SetGroundState(false);
+		break; 	
 	}
 
-	if (playerGrounded == false) {
+	//The player is falling
+	if (player.playerGrounded == false) {
 
 		player.speedY += player.acceleration;
 
@@ -179,13 +186,38 @@ bool j1Player::cleanUp()
 };
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
+	
+
+
+	if (B->type == ObjectType::PLAYER) {
+		Collider temp = *A;
+		A = B;
+		B = &temp;
+	}
+	if (A->type != ObjectType::PLAYER) {
+		return;
+	}
+
+	// ------------ Player Colliding against the wall ------------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
 		player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
-		playerGrounded = true;
+		player.SetGroundState(true);
 	}
-	if (A->type == ObjectType::SOLID && B->type == ObjectType::PLAYER) {
+	/*if (A->type == ObjectType::SOLID && B->type == ObjectType::PLAYER) {
 		player.positionP1.y = A->rect.y - player.collider->rect.h + 1;
-		playerGrounded = true;
+		player.SetGroundState(true);
+	}*/
+
+	// ------------ Player Colliding against a platform -----------------
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLATFORM) {
+		if (player.positionP1.y >= player.prevpositionP1.y) {
+			player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
+			player.SetGroundState(true);
+		}
 	}
+	/*if (A->type == ObjectType::PLATFORM && B->type == ObjectType::PLAYER) {
+		player.positionP1.y = A->rect.y - player.collider->rect.h + 1;
+		player.SetGroundState(true);
+	}*/
 }
 
