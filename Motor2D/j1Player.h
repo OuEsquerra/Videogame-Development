@@ -18,6 +18,7 @@ enum PlayerState {
 };
 
 struct Player {
+	
 	float acceleration;
 
 	float speedX;

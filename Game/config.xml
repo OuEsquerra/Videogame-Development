@@ -19,9 +19,9 @@
   </window>
 
   <player>
-    <acceleration value="1.2" />
+    <acceleration value="2" />
     <speedX value="0" />
-    <maxSpeed value="10" />
+    <maxSpeed value="7.5" />
   </player>
   
   <file_system>

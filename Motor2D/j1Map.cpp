@@ -56,13 +56,13 @@ void j1Map::Draw()
 	}
 }
 
-void j1Map::DrawAnimation(const char* name,const char* tileset) 
+void j1Map::DrawAnimation(p2SString name, const char* tileset)
 {
 	TileSet* animTileset = nullptr;
 
 	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
 
-	while(TilesetIter != NULL)
+	while (TilesetIter != NULL)
 	{
 		if (TilesetIter->data->name, tileset)
 		{
@@ -70,15 +70,15 @@ void j1Map::DrawAnimation(const char* name,const char* tileset)
 		}
 		TilesetIter = TilesetIter->next;
 	}
-	 // I have the adventurer 64 Tileset inside I have animation
+	// I have the adventurer 64 Tileset inside I have animation
 
-	Animations* currentanim = nullptr;  
+	Animations* currentanim = nullptr;
 
 	p2List_item<Animations*>* animIter = animTileset->animations.start;
 
-	while (animIter != NULL)
+	while (animIter)
 	{
-		if (animIter->data->name, name)
+		if (name == animIter->data->name)
 		{
 			currentanim = animIter->data; //gets the animation with the name we send
 		}
@@ -370,13 +370,10 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 
-	
 	for (pugi::xml_node iterator_node = tileset_node.child("tile"); iterator_node; iterator_node = iterator_node.next_sibling("tile")) { //Iterator for all animation childs
 		
 		Animations* newAnimation = new Animations;
 		
-
-
 		newAnimation->id = iterator_node.attribute("id").as_uint(); // Get the Id of the animated Tile
 
 		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string(); //Get the name of the animation inside extra attribute
@@ -386,18 +383,18 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 		memset(newAnimation->frames, 0, 12); // allocate the new array
 
 		int j = 0;
-		for (pugi::xml_node iterator_node_anim = tileset_node.child("tile").child("animation").child("frame"); iterator_node_anim  !=  NULL ; j++ ) {
+		for (pugi::xml_node iterator_node_anim = iterator_node.child("animation").child("frame"); iterator_node_anim; j++ ) { //Enters the frame of the animation child inside the tile we are in
 
 			newAnimation->frames[j] = iterator_node_anim.attribute("tileid").as_uint(); //Set frames ids
 			
-			iterator_node_anim = iterator_node_anim.next_sibling("frame");
+			iterator_node_anim = iterator_node_anim.next_sibling("frame"); // next frame
 		}
 
 		newAnimation->nFrames = j;
 
 		set->animations.add(newAnimation);
 	}
-	
+
 	return ret;
 };
 

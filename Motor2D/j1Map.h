@@ -165,7 +165,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(const char* name,const char* tileset);
+	void DrawAnimation(p2SString name,const char* tileset);
 
 	// Called before quitting
 	bool CleanUp();

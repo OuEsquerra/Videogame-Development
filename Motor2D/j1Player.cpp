@@ -148,11 +148,16 @@ bool j1Player::Update(float dt)
 	{
 		player.positionP1.y = player.floor;
 	}*/
-
-	//App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
-
-
-	//Update Player Collider after updating its position
+	if (player.playerState == falling) 
+	{
+		App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
+		
+	}
+	if (player.playerState == runningRight)
+	{
+		//Update Player Collider after updating its position
+		App->map->DrawAnimation("running", "adventurer 64");
+	}
 	player.collider->SetPos(player.positionP1.x, player.positionP1.y);
 
 
