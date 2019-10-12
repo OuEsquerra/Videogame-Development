@@ -132,9 +132,9 @@ bool j1Player::Update(float dt)
 		player.positionP1.y = player.floor;
 	}
 
-	App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
+	//App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
 
-
+	App->map->DrawAnimation("running", "adventurer 64");
 
 	return true;
 	
