@@ -70,11 +70,19 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	// Update Camera Position
+	
+	//Get size of window
 	uint winWidth, winHeight;
 	App->win->GetWindowSize(winWidth, winHeight);
+	
+	p2Point<int> goalPos;
+	goalPos.x = -(App->player->player.positionP1.x - (1.0f / 3.0f)*winWidth);
+	goalPos.y = -(App->player->player.positionP1.y - (2.0f / 3.0f)*winHeight);
+	
 	camera.x = -(App->player->player.positionP1.x - (1.0f/3.0f)*winWidth);
 
-	if (App->player->playerGrounded == true) {
+	if (App->player->player.playerGrounded == true) {
 		camera.y = -(App->player->player.positionP1.y - (2.0f / 3.0f)*winHeight);
 	}
 	return true;

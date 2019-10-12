@@ -33,10 +33,22 @@ struct Player {
 	SDL_Rect playerBox;
 
 	p2Point<float> positionP1;
+	p2Point<float> prevpositionP1;
 
 	PlayerState playerState;
 
 	Collider*	collider;
+
+	bool playerGrounded;
+	p2Point<float> lastGroundedPos;
+
+	inline void SetGroundState(bool state) 
+	{
+		if (playerGrounded == true) {
+			lastGroundedPos = positionP1;
+		}
+		playerGrounded = state;
+	};
 
 };
 
@@ -70,7 +82,7 @@ private:
 public://variables
 
 	Player player;
-	bool playerGrounded;
+	
 
 private:
 
