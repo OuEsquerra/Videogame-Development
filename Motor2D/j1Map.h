@@ -88,12 +88,17 @@ struct TileSet
 
 		/*int x = ((tile_id - firstgid) % num_tiles_width);
 		int y = ((tile_id - firstgid) / num_tiles_width);*/
+		int num_t_width = tex_width / tile_width;
+		int num_t_height = tex_height / tile_height;
+
+		int x = tile_id % num_t_width;
+		int y = tile_id / num_t_width;
 
 
-		ret->x = 0 + tile_id * 64;
-		ret->y = 0;
-		ret->w = 64;
-		ret->h = 64;
+		ret->x = x * tile_width;
+		ret->y = y * tile_height;
+		ret->w = tile_width;
+		ret->h = tile_height;
 
 		return ret;
 	}

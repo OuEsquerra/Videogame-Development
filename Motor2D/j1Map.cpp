@@ -381,9 +381,9 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 
 		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string(); //Get the name of the animation inside extra attribute
 
-		newAnimation->frames = new uint[12];
+		newAnimation->frames = new uint[12]; // new array for frames
 
-		memset(newAnimation->frames, 0, 12);
+		memset(newAnimation->frames, 0, 12); // allocate the new array
 
 		int j = 0;
 		for (pugi::xml_node iterator_node_anim = tileset_node.child("tile").child("animation").child("frame"); iterator_node_anim  !=  NULL ; j++ ) {
