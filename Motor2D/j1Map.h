@@ -13,7 +13,9 @@ enum class ObjectType {
 	PLATFORM,
 	SOLID,
 	DAMAGE,
-	PLAYER
+	PLAYER,
+
+	MAX_OBJECTS = 5
 };
 
 struct Animations

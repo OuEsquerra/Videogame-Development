@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Player.h"
 
 #define VSYNC true
 
@@ -69,6 +70,13 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
+	uint winWidth, winHeight;
+	App->win->GetWindowSize(winWidth, winHeight);
+	camera.x = -(App->player->player.positionP1.x - (1.0f/3.0f)*winWidth);
+
+	if (App->player->playerGrounded == true) {
+		camera.y = -(App->player->player.positionP1.y - (2.0f / 3.0f)*winHeight);
+	}
 	return true;
 }
 

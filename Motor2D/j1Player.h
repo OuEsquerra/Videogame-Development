@@ -6,18 +6,22 @@
 #include "j1Render.h"
 #include "j1Input.h"
 
+
+struct Collider;
+
 enum PlayerState {
 	idle,
 	runningRight,
 	runningLeft,
 	jumping,
-
+	falling
 };
 
 struct Player {
 	float acceleration;
 
 	float speedX;
+	float speedY;
 
 	float maxSpeed;
 
@@ -32,12 +36,12 @@ struct Player {
 
 	PlayerState playerState;
 
-
+	Collider*	collider;
 
 };
 
 class j1Player : public j1Module {
-public://methods
+public:// methods
 
 	j1Player();
 
@@ -58,14 +62,15 @@ public://methods
 
 	bool cleanUp();
 
+	// Collision handling -----
+	void j1Player::OnCollision(Collider* A, Collider* B);
 private:
 
 	
 public://variables
 
-	
-
 	Player player;
+	bool playerGrounded;
 
 private:
 
@@ -75,7 +80,6 @@ private:
 
 	float startFrame = 0;
 
-	
 
 	//j1Input playerInput;
 };
