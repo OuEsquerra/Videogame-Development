@@ -95,7 +95,7 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt) 
 {
 
-	time +=  1 / 60;
+	time +=  1.0f / 60.0f;
 
 	player.prevpositionP1 = player.positionP1;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -223,11 +223,9 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			player.positionP1.y = B->rect.y + B->rect.h;
 		}
 		//from a side
-		//if ((player.positionP1.y+player.collider->rect.h) > B->rect.y || player.positionP1.y < (B->rect.y + B->rect.h)) {
 		else if ((player.positionP1.x < B->rect.x + B->rect.w && player.positionP1.x > B->rect.x) ||
 			(player.positionP1.x + player.collider->rect.w < B->rect.x + B->rect.w && player.positionP1.x + player.collider->rect.w > B->rect.x)) {
 			LOG("Touching WALL");
-			//if ((player.prevpositionP1.x + player.collider->rect.w) < B->rect.x) {
 			if ((player.positionP1.x + player.collider->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
 				player.positionP1.x = B->rect.x - player.collider->rect.w;
 			}
@@ -235,12 +233,6 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 				player.positionP1.x = B->rect.x + B->rect.w;
 			}
 		}
-
-
-
-		//player.positionP1.y = B->rect.y - player.collider->rect.h - 9;
-		//player.SetGroundState(true);
-		
 	}
 
 
@@ -248,7 +240,12 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLATFORM) {
 		
 		if (player.drop_plat == false ) {
-			if ((player.positionP1.y >= player.prevpositionP1.y)) {
+			if ((player.prevpositionP1.y + player.collider->rect.h) < B->rect.y + (B->rect.h/2.0f) && (player.prevpositionP1.y + player.collider->rect.h) > B->rect.y) {//this won't ever happen
+				player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
+				player.SetGroundState(true);
+				player.able_to_jump = false;
+			}
+			else if ((player.positionP1.y >= player.prevpositionP1.y) && (player.prevpositionP1.y + player.collider->rect.h) < B->rect.y) {
 				player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
 				player.SetGroundState(true);
 				player.able_to_jump = false;
