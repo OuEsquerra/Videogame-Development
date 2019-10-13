@@ -29,17 +29,12 @@ bool j1Player::Init()
 bool j1Player::Awake(pugi::xml_node& conf) 
 {
 	player.acceleration.x = conf.child("acceleration").attribute("x").as_float();
-
 	player.acceleration.y = conf.child("acceleration").attribute("y").as_float();
-
 	player.speed.x = conf.child("speed").attribute("x").as_float();
-
 	player.speed.y = conf.child("speed").attribute("y").as_float();
-
 	player.maxSpeed.x = conf.child("maxSpeed").attribute("x").as_float();
-
 	player.maxSpeed.y = conf.child("maxSpeed").attribute("y").as_float();
-
+	player.gravity = conf.child("gravity").attribute("value").as_float();
 	return true;
 }; 
 
@@ -60,26 +55,30 @@ bool j1Player::Start()
 bool j1Player::PreUpdate() 
 {
 	player.SetGroundState(false);
-	player.playerState = idle;
+	
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
+	if (player.playerState != jumping && player.playerState != falling)
 	{
-		player.playerState = runningRight;
-	}
+		player.playerState = idle;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			player.playerState = runningRight;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
-	{
-		player.playerState = runningLeft;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			player.playerState = runningLeft;
+		}
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 	{
-		if (!player.able_to_jump)
+		if (player.able_to_jump)
 		{
 			player.playerState = jumping;
+			player.positionP1.y -= 50;
 			player.jumpStart = player.positionP1.y; //Gets position at start of jump
-			player.speed.y = 0;
-			player.able_to_jump = true;
+			
+			player.able_to_jump = false;
 		}
 	}
 
@@ -106,14 +105,14 @@ bool j1Player::Update(float dt)
 	{
 
 	case idle:
-
+		player.animation = "idle";
 		player.speed.x = 0;
 
 		break;
 
 	case runningRight:
 
-
+		player.animation = "running";
 		player.speed.x += player.acceleration.x;
 
 		if (player.speed.x > player.maxSpeed.x)
@@ -143,60 +142,53 @@ bool j1Player::Update(float dt)
 
 	case jumping:
 
-		if (player.positionP1.y > player.jumpStart - player.jumpHeight)
-		{
-
-			player.speed.y -= player.acceleration.y * 30;
-			
-		}
-		else {
-			player.playerState = falling;
-		}
 		
-		player.SetGroundState(false);
+		
+		player.speed.y -= player.acceleration.y;
+		
+		
+	player.SetGroundState(false);
 
 		break; 	
 	case falling:
 
-
-
-
-
-		break;
-	}
-
-	//The player is falling
-	if ( player.playerGrounded  == false) {
-
-		player.speed.y += player.acceleration.y ; // Seed is +acceleration when not grounded
+		player.speed.y += player.gravity; // Speed is +gravity when not grounded
 
 		if (player.speed.y >= player.maxSpeed.y)
 		{
 			player.speed.y = player.maxSpeed.y;
 		}
-		
+
+		break;
+	}
+
+	if (player.speed.y >= 0)
+	{
+		player.playerState = falling;
+	}
+	
+	
+	if(player.playerGrounded)
+	{
+		player.able_to_jump = true;
+		player.playerState = idle;
+
+	}
+	else {
+		player.playerState = falling;
 	}
 	player.positionP1.y += player.speed.y;
 
 	player.playerBox.x = player.positionP1.x;
 	player.playerBox.y = player.positionP1.y;
 
-	//App->render->DrawQuad(player.playerBox,255,200,0);
-
-	/*if (player.positionP1.y <= player.floor) 
-	{
-		player.positionP1.y = player.floor;
-	}*/
-	if (player.playerState == idle) 
-	{
-		App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
-		
-	}
-	if (player.playerState == runningRight)
-	{
+	
+	App->map->DrawAnimation(player.animation,"adventurer 64"); //We'll send the animation we need
+	
+	
 		//Update Player Collider after updating its position
-		App->map->DrawAnimation("running", "adventurer 64");
-	}
+		//App->map->DrawAnimation("running", "adventurer 64");
+	
 	player.collider->SetPos(player.positionP1.x, player.positionP1.y);
 
 
@@ -260,8 +252,7 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 		//player.positionP1.y = B->rect.y - player.collider->rect.h - 9;
 		//player.SetGroundState(true);
-		player.able_to_jump = false;
-
+		
 	}
 
 

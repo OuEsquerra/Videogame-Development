@@ -19,9 +19,10 @@
   </window>
 
   <player>
-    <acceleration x="2" y="0.4"/>
+    <acceleration x="2" y="15"/>
+    <gravity value="0.4" />
     <speed x="0" y="0" />
-    <maxSpeed x="7.5" y="7.5"/>
+    <maxSpeed x="7.5" y="8"/>
   </player>
   
   <file_system>

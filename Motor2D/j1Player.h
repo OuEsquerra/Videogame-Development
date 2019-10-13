@@ -24,6 +24,10 @@ struct Player {
 	p2Point<float> speed;
 	p2Point<float> maxSpeed;
 
+	p2SString animation;
+
+	float gravity;
+
 	bool able_to_jump = false;
 
 	float jumpStart = 0;
