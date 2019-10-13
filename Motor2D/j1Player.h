@@ -11,8 +11,7 @@ struct Collider;
 
 enum PlayerState {
 	idle,
-	runningRight,
-	runningLeft,
+	running,
 	jumping,
 	falling,
 	crouch
@@ -21,45 +20,37 @@ enum PlayerState {
 struct Player {
 	
 	p2Point<float> acceleration;
-
 	p2Point<float> speed;
 	p2Point<float> maxSpeed;
+	p2Point<float> position;
+	p2Point<float> prevposition;
+	p2Point<float> lastGroundedPos;
 
 	p2SString animation;
 
-	float gravity;
+	float gravity; 
 
-	bool able_to_jump = false;
+	bool able_to_jump = false; //Only lets the player jump if it's true
+	bool jumping = false; //True when the player is jumping
+	bool drop_plat; //Checks if the player is dropping from a platform.
+	bool playerGrounded;
+	bool flip = false;
 
-	bool jumping = false;
-
-	float floor = 400.0f;
-
-	int boxW = 40;
-	int boxH = 70;
+	int boxW ;
+	int boxH ;
 
 	SDL_Rect playerBox;
-
-	p2Point<float> positionP1;
-	p2Point<float> prevpositionP1; 
-
 	PlayerState playerState;
-
 	Collider*	collider;
-
-	bool drop_plat; //Checks if the player is dropping from a platform.
-
-	bool playerGrounded;
-	p2Point<float> lastGroundedPos;
 
 	inline void SetGroundState(bool state) 
 	{
-		if (playerGrounded == true) {
-			lastGroundedPos = positionP1;
+		if (playerGrounded == true) 
+		{
+			lastGroundedPos = position;
 		}
 		playerGrounded = state;
 	};
-
 };
 
 class j1Player : public j1Module {
@@ -90,6 +81,7 @@ public:// methods
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
+
 private:
 
 	
@@ -97,16 +89,7 @@ public://variables
 
 	Player player;
 	
-
 private:
-
-	float frames = 0;
-
-	bool runFrames = false;
-
-	float time = 0.0f;
-
-	float startTime = 0.0f;
 
 	//j1Input playerInput;
 };

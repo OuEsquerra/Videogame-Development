@@ -54,8 +54,8 @@
     <property name="fall" value=""/>
    </properties>
    <animation>
-    <frame tileid="16" duration="300"/>
-    <frame tileid="17" duration="300"/>
+    <frame tileid="16" duration="100"/>
+    <frame tileid="17" duration="100"/>
    </animation>
   </tile>
  </tileset>

@@ -77,13 +77,13 @@ bool j1Render::Update(float dt)
 	App->win->GetWindowSize(winWidth, winHeight);
 	
 	p2Point<int> goalPos;
-	goalPos.x = -(App->player->player.positionP1.x - (1.0f / 3.0f)*winWidth);
-	goalPos.y = -(App->player->player.positionP1.y - (2.0f / 3.0f)*winHeight);
+	goalPos.x = -(App->player->player.position.x - (1.0f / 3.0f)*winWidth);
+	goalPos.y = -(App->player->player.position.y - (2.0f / 3.0f)*winHeight);
 	
-	camera.x = -(App->player->player.positionP1.x - (1.0f/3.0f)*winWidth);
+	camera.x = -(App->player->player.position.x - (1.0f/3.0f)*winWidth);
 
 	//Pan camera towards player when player lands Or distances himself from the last grounded position
-	if (abs(App->player->player.lastGroundedPos.y - App->player->player.positionP1.y) > 100 || App->player->player.playerGrounded == false) {
+	if (abs(App->player->player.lastGroundedPos.y - App->player->player.position.y) > 100 || App->player->player.playerGrounded == false) {
 		if (goalPos.y != camera.y) {
 			if (goalPos.y > camera.y) {
 				camera.y += 5; //Magic Number?
@@ -149,19 +149,36 @@ void j1Render::ResetViewPort()
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,  bool flip, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	if (flip) 
+	{
+		rect.x = ((int)(camera.x * speed) + x * scale) + App->player->player.boxW; //Add player width when flipping it
+		rect.y = (int)(camera.y * speed) + y * scale;
+	}
+	else
+	{
+		rect.x = (int)(camera.x * speed) + x * scale;
+		rect.y = (int)(camera.y * speed) + y * scale;
 
+	}
+	
 	if(section != NULL)
 	{
-		rect.w = section->w;
-		rect.h = section->h;
+		if (flip)
+		{
+			rect.w = -section->w;
+			rect.h = section->h;
+		}
+		else 
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
 	}
 	else
 	{
