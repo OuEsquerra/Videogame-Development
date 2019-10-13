@@ -59,6 +59,11 @@ bool j1Player::PreUpdate()
 	if (player.playerState != jumping && player.playerState != falling)
 	{
 		player.playerState = idle;
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			player.playerState = crouch;
+			player.drop_plat = true;
+		}
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			player.playerState = runningRight;
@@ -74,23 +79,15 @@ bool j1Player::PreUpdate()
 		{
 			player.playerState = jumping;
 			player.speed.y = 0;
-			player.jumpStart = player.positionP1.y; //Gets position at start of jump
 			player.able_to_jump = false;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		player.playerState = falling;
 		player.drop_plat = true;
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		MoveRight();
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		MoveLeft();
+	else {
+		player.drop_plat = false;
 	}
 	return true;
 };
@@ -101,71 +98,84 @@ bool j1Player::Update(float dt)
 	time +=  1 / 60;
 
 	player.prevpositionP1 = player.positionP1;
-	if ((player.positionP1.y - player.collider->rect.h) > (player.lastGroundedPos.y + App->collisions->platform_h)) {
-		player.drop_plat = false;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		MoveRight();
 	}
-	
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		MoveLeft();
+	}
 	switch (player.playerState)
 	{
-
 	case idle:
 		player.animation = "idle";
 		player.speed.x = 0;
-
 		break;
 
 	case runningRight:
-
-		player.animation = "running";
-		
-
+		player.animation = "run";
 		break;
 
 	case runningLeft:
-		
-
 		break;
 
+	case crouch:
+		player.animation = "crouch";
+
+		break;
 	case jumping:
-
+		
 		player.speed.y -= player.acceleration.y;
-		LOG("Player y acceleration: %f   Player y speed: %f", player.speed.y, player.acceleration.y);
-		player.SetGroundState(false);
-
+		//player.SetGroundState(false);
+		player.jumping = true;
+		LOG("Player y acceleration: %f   Player y speed: %f", player.acceleration.y, player.speed.y);
 		break;
 
 	case falling:
+		player.jumping = true;
+		break;
+	
+	}
 
+	if (player.jumping)
+	{
 		player.speed.y += player.gravity; // Speed is +gravity when not grounded
 		if (player.speed.y >= player.maxSpeed.y)
 		{
 			player.speed.y = player.maxSpeed.y;
 		}
 
-		break;
+		if (player.speed.y < 0) 
+		{
+			player.animation = "jump";
+		}
+		else 
+		{
+			player.animation = "fall";
+		}
 	}
-
-	if (player.speed.y >= 0)
-	{
-		player.playerState = falling;
-	}
+	
+	
 	
 	if(player.playerGrounded)
 	{
 		player.able_to_jump = true;
 		player.playerState = idle;
-
+		player.jumping = false;
 	}
-	else {
+	else 
+	{
 		player.playerState = falling;
 	}
+
 	
 	player.positionP1.y += player.speed.y;
 
 	player.playerBox.x = player.positionP1.x;
 	player.playerBox.y = player.positionP1.y;
 
-	App->map->DrawAnimation(player.animation,"adventurer 64"); //We'll send the animation we need
+	App->map->DrawAnimation(player.animation,"Adventurer"); //We'll send the animation we need
 	
 	
 	

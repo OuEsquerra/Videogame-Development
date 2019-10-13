@@ -24,6 +24,7 @@ struct Animations
 	uint id; //Tile which is animated
 	uint nFrames; //Number of frames of the animation
 	uint* frames;
+	uint speed;
 };
 
 struct Object 

@@ -22,7 +22,7 @@
     <acceleration x="2" y="15"/>
     <gravity value="0.75" />
     <speed x="0" y="0" />
-    <maxSpeed x="7.5" y="9"/>
+    <maxSpeed x="6" y="10"/>
   </player>
   
   <file_system>

@@ -14,7 +14,8 @@ enum PlayerState {
 	runningRight,
 	runningLeft,
 	jumping,
-	falling
+	falling,
+	crouch
 };
 
 struct Player {
@@ -30,9 +31,7 @@ struct Player {
 
 	bool able_to_jump = false;
 
-	float jumpStart = 0;
-
-	float jumpHeight = 100;
+	bool jumping = false;
 
 	float floor = 400.0f;
 
