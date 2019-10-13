@@ -19,12 +19,16 @@ enum PlayerState {
 
 struct Player {
 	
-	float acceleration;
+	p2Point<float> acceleration;
 
-	float speedX;
-	float speedY;
+	p2Point<float> speed;
+	p2Point<float> maxSpeed;
 
-	float maxSpeed;
+	bool able_to_jump = false;
+
+	float jumpStart = 0;
+
+	float jumpHeight = 100;
 
 	float floor = 400.0f;
 
@@ -34,7 +38,7 @@ struct Player {
 	SDL_Rect playerBox;
 
 	p2Point<float> positionP1;
-	p2Point<float> prevpositionP1;
+	p2Point<float> prevpositionP1; 
 
 	PlayerState playerState;
 
@@ -77,6 +81,8 @@ public:// methods
 
 	bool cleanUp();
 
+	bool startTimer();
+
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
 private:
@@ -93,8 +99,9 @@ private:
 
 	bool runFrames = false;
 
-	float startFrame = 0;
+	float time = 0.0f;
 
+	float startTime = 0.0f;
 
 	//j1Input playerInput;
 };
