@@ -75,7 +75,8 @@ bool j1Player::PreUpdate()
 		if (player.able_to_jump)
 		{
 			player.playerState = jumping;
-			player.positionP1.y -= 50;
+			//player.positionP1.y -= 50;
+			player.acceleration.y = 15;
 			player.jumpStart = player.positionP1.y; //Gets position at start of jump
 			
 			player.able_to_jump = false;
@@ -126,7 +127,6 @@ bool j1Player::Update(float dt)
 		break;
 
 	case runningLeft:
-
 		
 		player.speed.x -= player.acceleration.x; //non linear acceleration
 
@@ -142,14 +142,13 @@ bool j1Player::Update(float dt)
 
 	case jumping:
 
-		
-		
 		player.speed.y -= player.acceleration.y;
-		
+		LOG("Player y acceleration: %f   Player y speed: %f", player.speed.y, player.acceleration.y);
 		
 	player.SetGroundState(false);
 
-		break; 	
+		break;
+
 	case falling:
 
 		player.speed.y += player.gravity; // Speed is +gravity when not grounded
@@ -177,6 +176,8 @@ bool j1Player::Update(float dt)
 	else {
 		player.playerState = falling;
 	}
+	
+	
 	player.positionP1.y += player.speed.y;
 
 	player.playerBox.x = player.positionP1.x;
@@ -258,9 +259,9 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 	// ------------ Player Colliding against a platform -----------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLATFORM) {
-
-		if (player.drop_plat == false) {
-			if (player.positionP1.y >= player.prevpositionP1.y) {
+		
+		if (player.drop_plat == false ) {
+			if ((player.positionP1.y >= player.prevpositionP1.y)) {
 				player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
 				player.SetGroundState(true);
 				player.able_to_jump = false;
