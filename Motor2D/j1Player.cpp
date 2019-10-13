@@ -6,6 +6,7 @@
 #include "j1Input.h"
 #include "p2Animation.h"
 #include "j1Collisions.h"
+#include "p2Log.h"
 
 j1Player::j1Player() 
 {
