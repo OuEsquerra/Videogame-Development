@@ -72,7 +72,7 @@ public:
 
 	p2List<Collider*> colliders;
 	bool debug_colliders;
-	bool* CollisionMatrix;
+	uint platform_h = 25; //MAGIC NUMBER
 
 private:
 

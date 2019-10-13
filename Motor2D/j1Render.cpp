@@ -82,8 +82,18 @@ bool j1Render::Update(float dt)
 	
 	camera.x = -(App->player->player.positionP1.x - (1.0f/3.0f)*winWidth);
 
-	if (App->player->player.playerGrounded == true) {
-		camera.y = -(App->player->player.positionP1.y - (2.0f / 3.0f)*winHeight);
+	//Pan camera towards player when player lands Or distances himself from the last grounded position
+	if (abs(App->player->player.lastGroundedPos.y - App->player->player.positionP1.y) > 100 || App->player->player.playerGrounded == false) {
+		if (goalPos.y != camera.y) {
+			if (goalPos.y > camera.y) {
+				camera.y += 5; //Magic Number?
+				if (goalPos.y < camera.y) camera.y = goalPos.y;
+			}
+			else {
+				camera.y -= 5;
+				if (goalPos.y > camera.y) camera.y = goalPos.y;
+			}
+		}
 	}
 	return true;
 }

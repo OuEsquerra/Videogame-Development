@@ -73,6 +73,12 @@ bool j1Player::PreUpdate()
 	{
 		player.playerState = jumping;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) 
+	{
+		player.playerState = falling;
+		player.drop_plat = true;
+	}
 	
 	return true;
 };
@@ -82,6 +88,10 @@ bool j1Player::Update(float dt)
 	frames++;
 
 	player.prevpositionP1 = player.positionP1;
+	if ((player.positionP1.y - player.collider->rect.h) > (player.lastGroundedPos.y + App->collisions->platform_h)) {
+		player.drop_plat = false;
+	}
+	
 	switch (player.playerState)
 	{
 
@@ -198,26 +208,44 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		return;
 	}
 
-	// ------------ Player Colliding against the wall ------------------
+	// ------------ Player Colliding against solids ------------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
-		player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
-		player.SetGroundState(true);
-	}
-	/*if (A->type == ObjectType::SOLID && B->type == ObjectType::PLAYER) {
-		player.positionP1.y = A->rect.y - player.collider->rect.h + 1;
-		player.SetGroundState(true);
-	}*/
-
-	// ------------ Player Colliding against a platform -----------------
-	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLATFORM) {
-		if (player.positionP1.y >= player.prevpositionP1.y) {
+		//from above
+		if (player.prevpositionP1.y < B->rect.y || player.positionP1.y == B->rect.y - player.collider->rect.h + 1) {
 			player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
 			player.SetGroundState(true);
 		}
+		//from below
+		else if (player.prevpositionP1.y > (B->rect.y + B->rect.h)) {
+			player.positionP1.y = B->rect.y + B->rect.h;
+		}
+		//from a side
+		//if ((player.positionP1.y+player.collider->rect.h) > B->rect.y || player.positionP1.y < (B->rect.y + B->rect.h)) {
+		else if((player.positionP1.x < B->rect.x + B->rect.w && player.positionP1.x > B->rect.x) || 
+			(player.positionP1.x + player.collider->rect.w < B->rect.x + B->rect.w && player.positionP1.x + player.collider->rect.w > B->rect.x)){
+			LOG("Touching WALL");
+			//if ((player.prevpositionP1.x + player.collider->rect.w) < B->rect.x) {
+			if ((player.positionP1.x + player.collider->rect.w) < (B->rect.x + B->rect.w/2)) { //Player to the left 
+				player.positionP1.x = B->rect.x - player.collider->rect.w;
+			}
+			else if (player.positionP1.x < (B->rect.x + B->rect.w)) {
+				player.positionP1.x = B->rect.x + B->rect.w;
+			}
+		}
+	
+		
 	}
-	/*if (A->type == ObjectType::PLATFORM && B->type == ObjectType::PLAYER) {
-		player.positionP1.y = A->rect.y - player.collider->rect.h + 1;
-		player.SetGroundState(true);
-	}*/
+
+
+	// ------------ Player Colliding against a platform -----------------
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLATFORM) {
+		if (player.drop_plat == false) {
+			if (player.positionP1.y >= player.prevpositionP1.y) {
+				player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
+				player.SetGroundState(true);
+			}
+		}
+	}
+
 }
 

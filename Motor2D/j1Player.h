@@ -40,6 +40,8 @@ struct Player {
 
 	Collider*	collider;
 
+	bool drop_plat; //Checks if the player is dropping from a platform.
+
 	bool playerGrounded;
 	p2Point<float> lastGroundedPos;
 
