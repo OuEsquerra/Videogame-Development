@@ -89,7 +89,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset)
 	App->player->player.positionP1.x , App->player->player.positionP1.y , //drawn at player position
 	animTileset->PlayerTileRect(currentanim->frames[i]) ); //draw frames tile id
 
-	if (frameCount % 20 == 0) //counts frames each loop (60 fps using vsync)
+	if (frameCount % (currentanim->speed/15) == 0) //counts frames each loop (60 fps using vsync)
 	{
 		i++;
 	}
@@ -386,7 +386,7 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 		for (pugi::xml_node iterator_node_anim = iterator_node.child("animation").child("frame"); iterator_node_anim; j++ ) { //Enters the frame of the animation child inside the tile we are in
 
 			newAnimation->frames[j] = iterator_node_anim.attribute("tileid").as_uint(); //Set frames ids
-			
+			newAnimation->speed = iterator_node_anim.attribute("duration").as_uint();//set animation speed
 			iterator_node_anim = iterator_node_anim.next_sibling("frame"); // next frame
 		}
 
