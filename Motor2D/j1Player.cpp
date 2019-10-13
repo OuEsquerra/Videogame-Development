@@ -28,11 +28,17 @@ bool j1Player::Init()
 
 bool j1Player::Awake(pugi::xml_node& conf) 
 {
-	player.acceleration = conf.child("acceleration").attribute("value").as_float();
+	player.acceleration.x = conf.child("acceleration").attribute("x").as_float();
 
-	player.speedX = conf.child("speedX").attribute("value").as_float();
+	player.acceleration.y = conf.child("acceleration").attribute("y").as_float();
 
-	player.maxSpeed = conf.child("maxSpeed").attribute("value").as_float();
+	player.speed.x = conf.child("speed").attribute("x").as_float();
+
+	player.speed.y = conf.child("speed").attribute("y").as_float();
+
+	player.maxSpeed.x = conf.child("maxSpeed").attribute("x").as_float();
+
+	player.maxSpeed.y = conf.child("maxSpeed").attribute("y").as_float();
 
 	return true;
 }; 
@@ -54,10 +60,7 @@ bool j1Player::Start()
 bool j1Player::PreUpdate() 
 {
 	player.SetGroundState(false);
-	player.playerState = falling;
-	
-
-
+	player.playerState = idle;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) 
 	{
@@ -71,7 +74,13 @@ bool j1Player::PreUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 	{
-		player.playerState = jumping;
+		if (!player.able_to_jump)
+		{
+			player.playerState = jumping;
+			player.jumpStart = player.positionP1.y; //Gets position at start of jump
+			player.speed.y = 0;
+			player.able_to_jump = true;
+		}
 	}
 	
 	return true;
@@ -79,7 +88,8 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt) 
 {
-	frames++;
+
+	time +=  1 / 60;
 
 	player.prevpositionP1 = player.positionP1;
 	switch (player.playerState)
@@ -87,21 +97,21 @@ bool j1Player::Update(float dt)
 
 	case idle:
 
-		player.speedX = 0;
+		player.speed.x = 0;
 
 		break;
 
 	case runningRight:
 
 
-		player.speedX += player.acceleration;
+		player.speed.x += player.acceleration.x;
 
-		if (player.speedX > player.maxSpeed)
+		if (player.speed.x > player.maxSpeed.x)
 		{
-			player.speedX = player.maxSpeed;
+			player.speed.x = player.maxSpeed.x;
 		}
 
-		player.positionP1.x += player.speedX; // Move Right at Speed
+		player.positionP1.x += player.speed.x; // Move Right at Speed
 
 
 		break;
@@ -109,45 +119,57 @@ bool j1Player::Update(float dt)
 	case runningLeft:
 
 		
-		player.speedX -= player.acceleration; //non linear acceleration
+		player.speed.x -= player.acceleration.x; //non linear acceleration
 
-		if (player.speedX < -player.maxSpeed)
+		if (player.speed.x < -player.maxSpeed.x)
 		{
-			player.speedX = -player.maxSpeed;
+			player.speed.x = -player.maxSpeed.x;
 		}
 
-		player.positionP1.x += player.speedX; // Mode Left at -Speed
+		player.positionP1.x += player.speed.x; // Mode Left at -Speed
 
 
 		break;
 
 	case jumping:
 
+		if (player.positionP1.y > player.jumpStart - player.jumpHeight)
+		{
 
-		player.speedY = -player.acceleration*12;
-
-		player.positionP1.y += player.speedY*5;
-		 
+			player.speed.y -= player.acceleration.y * 30;
+			
+		}
+		else {
+			player.playerState = falling;
+		}
+		
 		player.SetGroundState(false);
+
 		break; 	
+	case falling:
+
+
+
+
+
+		break;
 	}
 
 	//The player is falling
-	if (player.playerGrounded == false) {
+	if ( player.playerGrounded  == false) {
 
-		player.speedY += player.acceleration;
+		player.speed.y += player.acceleration.y ; // Seed is +acceleration when not grounded
 
-		if (player.speedY > player.maxSpeed)
+		if (player.speed.y >= player.maxSpeed.y)
 		{
-			player.speedY = player.maxSpeed;
+			player.speed.y = player.maxSpeed.y;
 		}
-
-		player.positionP1.y += player.speedY;
-
+		
 	}
-
+	player.positionP1.y += player.speed.y;
 
 	player.playerBox.x = player.positionP1.x;
+	player.playerBox.y = player.positionP1.y;
 
 	//App->render->DrawQuad(player.playerBox,255,200,0);
 
@@ -155,7 +177,7 @@ bool j1Player::Update(float dt)
 	{
 		player.positionP1.y = player.floor;
 	}*/
-	if (player.playerState == falling) 
+	if (player.playerState == idle) 
 	{
 		App->map->DrawAnimation("idle","adventurer 64"); //we'll send the animation we need
 		
@@ -200,8 +222,9 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 	// ------------ Player Colliding against the wall ------------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
-		player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
+		player.positionP1.y = B->rect.y - player.collider->rect.h - 9;
 		player.SetGroundState(true);
+		player.able_to_jump =false;
 	}
 	/*if (A->type == ObjectType::SOLID && B->type == ObjectType::PLAYER) {
 		player.positionP1.y = A->rect.y - player.collider->rect.h + 1;
@@ -213,6 +236,7 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		if (player.positionP1.y >= player.prevpositionP1.y) {
 			player.positionP1.y = B->rect.y - player.collider->rect.h + 1;
 			player.SetGroundState(true);
+			player.able_to_jump = false;
 		}
 	}
 	/*if (A->type == ObjectType::PLATFORM && B->type == ObjectType::PLAYER) {
@@ -221,3 +245,8 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 	}*/
 }
 
+bool j1Player::startTimer() 
+{
+	time = 0;
+	return true;
+}
