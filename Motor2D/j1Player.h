@@ -85,7 +85,9 @@ public:// methods
 
 	bool cleanUp();
 
-	bool startTimer();
+	void MoveRight();
+
+	void MoveLeft();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
