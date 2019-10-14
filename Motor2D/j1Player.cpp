@@ -72,12 +72,13 @@ bool j1Player::PreUpdate()
 			player.playerState = running;
 			player.flip = false;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			player.playerState = running;
 			player.flip = true;
 		}
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 	{
 		if (player.able_to_jump)
@@ -87,6 +88,7 @@ bool j1Player::PreUpdate()
 			
 		}
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		player.drop_plat = true;
@@ -94,6 +96,11 @@ bool j1Player::PreUpdate()
 	else 
 	{
 		player.drop_plat = false;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		GodMode();
 	}
 	return true;
 };
@@ -110,6 +117,7 @@ bool j1Player::Update(float dt)
 	{
 		MoveLeft();
 	}
+
 	switch (player.playerState)
 	{
 	case idle:
@@ -120,7 +128,6 @@ bool j1Player::Update(float dt)
 	case running:
 		player.animation = "run";
 		break;
-
 
 	case crouch:
 		player.animation = "crouch";
@@ -141,7 +148,8 @@ bool j1Player::Update(float dt)
 		break;
 	}
 
-	if (player.jumping) //Logic for when player is jumping
+	//Logic for when player is jumping
+	if (player.jumping) 
 	{
 		player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
 
@@ -159,8 +167,9 @@ bool j1Player::Update(float dt)
 			player.animation = "fall";
 		}
 	}
-	
-	if(player.playerGrounded) // Grounded logic to check some bools and states
+
+	// Grounded logic to check some bools and states
+	if(player.playerGrounded) 
 	{
 		player.able_to_jump = true;
 		player.playerState = idle;
@@ -171,13 +180,13 @@ bool j1Player::Update(float dt)
 		player.playerState = falling;
 	}
 
-	
+	//Update player collider and position
 	player.position.y += player.speed.y;
-
 	player.playerBox.x = player.position.x;
 	player.playerBox.y = player.position.y;
 
-	App->map->DrawAnimation(player.animation,"Adventurer",player.flip); // We'll draw the animation we need
+	//Draw player
+	App->map->DrawAnimation(player.animation,"Adventurer",player.flip);
 	
 	//Update Player Collider after updating its position
 	player.collider->SetPos(player.position.x, player.position.y);
@@ -273,4 +282,16 @@ void j1Player::MoveLeft() // Move Left the player at speed
 		player.speed.x = -player.maxSpeed.x;
 	}
 	player.position.x += player.speed.x; 
+}
+
+void j1Player::GodMode()
+{
+	if (player.godMode)
+	{
+		player.godMode = false;
+	}
+	else
+	{
+		player.godMode = true;
+	}
 }

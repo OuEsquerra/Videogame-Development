@@ -35,9 +35,10 @@ struct Player {
 	bool drop_plat; //Checks if the player is dropping from a platform.
 	bool playerGrounded;
 	bool flip = false;
+	bool godMode = false;
 
-	int boxW ;
-	int boxH ;
+	int boxW;
+	int boxH;
 
 	SDL_Rect playerBox;
 	PlayerState playerState;
@@ -78,6 +79,8 @@ public:// methods
 	void MoveRight();
 
 	void MoveLeft();
+
+	void GodMode();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);

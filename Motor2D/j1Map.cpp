@@ -70,7 +70,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 		}
 		TilesetIter = TilesetIter->next;
 	}
-	// I have the adventurer 64 Tileset inside I have animation
+	// I have the adventurer Tileset inside I have animation
 
 	Animations* currentanim = nullptr;
 
