@@ -80,6 +80,10 @@ public:// methods
 
 	void MoveLeft();
 
+	void MoveUp();
+
+	void MoveDown();
+
 	void GodMode();
 
 	// Collision handling -----

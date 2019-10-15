@@ -79,17 +79,19 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+	if (!player.godMode)
 	{
-		if (player.able_to_jump)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			player.playerState = jumping;
-			player.speed.y = 0;
-			
+			if (player.able_to_jump)
+			{
+				player.playerState = jumping;
+				player.speed.y = 0;
+
+			}
 		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) //If player has to drop from platform
 	{
 		player.drop_plat = true;
 	}
@@ -98,90 +100,114 @@ bool j1Player::PreUpdate()
 		player.drop_plat = false;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) // Able/Disable GodMode
 	{
 		GodMode();
 	}
 	return true;
 };
 
-bool j1Player::Update(float dt) 
+bool j1Player::Update(float dt)
 {
 	player.prevposition = player.position;
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		MoveRight();
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		MoveLeft();
-	}
+	
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			MoveRight();
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			MoveLeft();
+		}
 
-	switch (player.playerState)
+	if (!player.godMode)
 	{
-	case idle:
+
+		if (!player.godMode)
+		{
+			switch (player.playerState)
+			{
+			case idle:
+				player.animation = "idle";
+				player.speed.x = 0;
+				break;
+
+			case running:
+				player.animation = "run";
+				break;
+
+			case crouch:
+				player.animation = "crouch";
+
+				break;
+			case jumping:
+
+				player.speed.y -= player.acceleration.y;
+				player.jumping = true;
+				player.able_to_jump = false;
+				LOG("Player y acceleration: %f   Player y speed: %f", player.acceleration.y, player.speed.y);
+				break;
+
+			case falling:
+				player.jumping = true;
+				player.able_to_jump = false;
+
+				break;
+			}
+		}
+
+		//Logic for when player is jumping
+		if (player.jumping)
+		{
+			player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
+
+			if (player.speed.y >= player.maxSpeed.y) // Speed.y is capped an maxSpeed
+			{
+				player.speed.y = player.maxSpeed.y;
+			}
+
+			if (player.speed.y < 0) // If on jump is going up uses jump animation
+			{
+				player.animation = "jump";
+			}
+			else // If on jump is going down uses fall animation
+			{
+				player.animation = "fall";
+			}
+		}
+
+		// Grounded logic to check some bools and states
+		if (player.playerGrounded)
+		{
+			player.able_to_jump = true;
+			player.playerState = idle;
+			player.jumping = false;
+		}
+		else
+		{
+
+			player.playerState = falling;
+
+		}
+
+		player.position.y += player.speed.y;
+	}
+	else
+	{
 		player.animation = "idle";
-		player.speed.x = 0;
-		break;
-
-	case running:
-		player.animation = "run";
-		break;
-
-	case crouch:
-		player.animation = "crouch";
-
-		break;
-	case jumping:
-		
-		player.speed.y -= player.acceleration.y;
-		player.jumping = true;
-		player.able_to_jump = false;
-		LOG("Player y acceleration: %f   Player y speed: %f", player.acceleration.y, player.speed.y);
-		break;
-
-	case falling:
-		player.jumping = true;
-		player.able_to_jump = false;
-		
-		break;
-	}
-
-	//Logic for when player is jumping
-	if (player.jumping) 
-	{
-		player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
-
-		if (player.speed.y >= player.maxSpeed.y) // Speed.y is capped an maxSpeed
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			player.speed.y = player.maxSpeed.y;
+			MoveUp();
 		}
-
-		if (player.speed.y < 0) // If on jump is going up uses jump animation
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			player.animation = "jump";
+			MoveDown();
 		}
-		else // If on jump is going down uses fall animation
-		{
-			player.animation = "fall";
-		}
-	}
-
-	// Grounded logic to check some bools and states
-	if(player.playerGrounded) 
-	{
-		player.able_to_jump = true;
-		player.playerState = idle;
-		player.jumping = false;
-	}
-	else 
-	{
-		player.playerState = falling;
 	}
 
 	//Update player collider and position
-	player.position.y += player.speed.y;
+	//player.position.y += player.speed.y;
 	player.playerBox.x = player.position.x;
 	player.playerBox.y = player.position.y;
 
@@ -284,6 +310,21 @@ void j1Player::MoveLeft() // Move Left the player at speed
 	player.position.x += player.speed.x; 
 }
 
+void j1Player::MoveDown() // Move Right the player at set speed
+{
+	
+
+	player.position.y += player.maxSpeed.y;
+}
+
+void j1Player::MoveUp() // Move Right the player at set speed
+{
+	
+	
+	
+	
+	player.position.y -= player.maxSpeed.y;
+}
 void j1Player::GodMode()
 {
 	if (player.godMode)
