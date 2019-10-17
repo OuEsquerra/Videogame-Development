@@ -14,7 +14,9 @@ enum PlayerState {
 	running,
 	jumping,
 	falling,
-	crouch
+	crouch,
+	dashLeft,
+	dashRight
 };
 
 struct Player {

@@ -44,7 +44,7 @@ bool j1Player::Awake(pugi::xml_node& conf)
 bool j1Player::Start() 
 {
 
-	player.position = {100.0f,400.0f }; //Starting position
+	player.position = {250.0f,1100.0f }; //Starting position
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
 
@@ -62,6 +62,7 @@ bool j1Player::PreUpdate()
 	if (player.playerState != jumping && player.playerState != falling)
 	{
 		player.playerState = idle;
+
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
 			player.playerState = crouch;
@@ -78,6 +79,19 @@ bool j1Player::PreUpdate()
 			player.flip = true;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		if (player.flip)
+		{
+			player.playerState = dashLeft;
+		}
+		else 
+		{
+			player.playerState = dashRight;
+		}
+
+
+	}
 
 	if (!player.godMode)
 	{
@@ -91,6 +105,7 @@ bool j1Player::PreUpdate()
 			}
 		}
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) //If player has to drop from platform
 	{
 		player.drop_plat = true;
@@ -112,14 +127,14 @@ bool j1Player::Update(float dt)
 	player.prevposition = player.position;
 
 	
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			MoveRight();
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			MoveLeft();
-		}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		MoveRight();
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		MoveLeft();
+	}
 
 	if (!player.godMode)
 	{
@@ -312,19 +327,14 @@ void j1Player::MoveLeft() // Move Left the player at speed
 
 void j1Player::MoveDown() // Move Right the player at set speed
 {
-	
-
 	player.position.y += player.maxSpeed.y;
 }
 
 void j1Player::MoveUp() // Move Right the player at set speed
 {
-	
-	
-	
-	
 	player.position.y -= player.maxSpeed.y;
 }
+
 void j1Player::GodMode()
 {
 	if (player.godMode)

@@ -4,6 +4,7 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Player.h"
+#include "j1Map.h"
 
 #define VSYNC true
 
@@ -76,25 +77,43 @@ bool j1Render::Update(float dt)
 	uint winWidth, winHeight;
 	App->win->GetWindowSize(winWidth, winHeight);
 	
-	p2Point<int> goalPos;
-	goalPos.x = -(App->player->player.position.x - (1.0f / 3.0f)*winWidth);
-	goalPos.y = -(App->player->player.position.y - (2.0f / 3.0f)*winHeight);
-	
-	camera.x = -(App->player->player.position.x - (1.0f/3.0f)*winWidth);
+	//p2Point<int> goalPos;
+	//goalPos.x = -(App->player->player.position.x - (1.0f / 3.0f)*winWidth);
+	//goalPos.y = -(App->player->player.position.y - (2.0f / 3.0f)*winHeight);
+	//
+	//camera.x = -(App->player->player.position.x - (1.0f/3.0f)*winWidth);
 
-	//Pan camera towards player when player lands Or distances himself from the last grounded position
-	if (abs(App->player->player.lastGroundedPos.y - App->player->player.position.y) > 100 || App->player->player.playerGrounded == false) {
-		if (goalPos.y != camera.y) {
-			if (goalPos.y > camera.y) {
-				camera.y += 5; //Magic Number?
-				if (goalPos.y < camera.y) camera.y = goalPos.y;
-			}
-			else {
-				camera.y -= 5;
-				if (goalPos.y > camera.y) camera.y = goalPos.y;
-			}
-		}
+	////Pan camera towards player when player lands Or distances himself from the last grounded position
+	//if (abs(App->player->player.lastGroundedPos.y - App->player->player.position.y) > 100 || App->player->player.playerGrounded == false) {
+	//	if (goalPos.y != camera.y) {
+	//		if (goalPos.y > camera.y) {
+	//			camera.y += 5; //Magic Number?
+	//			if (goalPos.y < camera.y) camera.y = goalPos.y;
+	//		}
+	//		else {
+	//			camera.y -= 5;
+	//			if (goalPos.y > camera.y) camera.y = goalPos.y;
+	//		}
+	//	}
+	//}
+
+	camera.x = -App->player->player.position.x + winWidth/2 - App->player->player.boxW;
+	camera.y = -App->player->player.position.y + winHeight/2 - App->player->player.boxH / 2;
+
+	if (camera.x >= 0)
+	{
+		camera.x = 0;
 	}
+
+	if (camera.y < (-1344) + winHeight && camera.y < 0)
+	{
+		camera.y = - 1344 + winHeight;	
+	}
+	if(camera.y > 0)
+	{
+		camera.y = 0;
+	}
+
 	return true;
 }
 
