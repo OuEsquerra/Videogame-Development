@@ -98,16 +98,16 @@ bool j1Render::Update(float dt)
 	//}
 
 	camera.x = -App->player->player.position.x + winWidth/2 - App->player->player.boxW;
-	camera.y = -App->player->player.position.y + winHeight/2 - App->player->player.boxH / 2;
+	camera.y = -App->player->player.position.y + (winHeight/2) - App->player->player.boxH / 2;
 
 	if (camera.x >= 0)
 	{
 		camera.x = 0;
 	}
 
-	if (camera.y < (-1344) + winHeight && camera.y < 0)
+	if (camera.y < -(32 * 50) + winHeight && camera.y < 0)
 	{
-		camera.y = - 1344 + winHeight;	
+		camera.y = - (32*50) + winHeight;	
 	}
 	if(camera.y > 0)
 	{
