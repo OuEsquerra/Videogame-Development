@@ -5,11 +5,15 @@
 #include "j1FadeToBlack.h"
 #include "p2Log.h"
 #include "j1Render.h"
+#include "j1Player.h"
+#include "j1Collisions.h"
+#include "j1Map.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
 
 j1FadeToBlack::j1FadeToBlack()
 {
+	name.create("fade");
 	screen = {0, 0, 1000, 1000}; //Magic Numbers
 }
 
@@ -25,8 +29,9 @@ bool j1FadeToBlack::Start()
 }
 
 // Update: draw background
-bool j1FadeToBlack::Update()
+bool j1FadeToBlack::Update(float dt)
 {
+	
 	if(current_step == fade_step::none)
 		return true;
 
@@ -39,12 +44,16 @@ bool j1FadeToBlack::Update()
 		{
 			if(now >= total_time)
 			{
-				// TODO 3: enable / disable the modules received when FadeToBlacks() gets called
 
 				//moduleoff->Disable();
 				//moduleon->Enable();
+				App->map->data = {0}; //Empty all map data. 
+				App->collisions->colliders.clear();
 				
-				// ---
+				App->map->Load(map_name);
+				App->collisions->LoadFromMap();
+				App->player->InitPlayer();
+				
 				total_time += total_time;
 				start_time = SDL_GetTicks();
 				current_step = fade_step::fade_from_black;
@@ -60,7 +69,6 @@ bool j1FadeToBlack::Update()
 		} break;
 	}
 
-	// Finally render the black square with alpha on the screen
 	SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, (Uint8)(normalized * 255.0f));
 	SDL_RenderFillRect(App->render->renderer, &screen);
 
@@ -68,13 +76,11 @@ bool j1FadeToBlack::Update()
 }
 
 // Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(j1Module* module_off, j1Module* module_on, float time)
+bool j1FadeToBlack::FadeToBlack(const char* mapname, float time)
 {
 	bool ret = false;
 	
-	moduleoff = module_off;
-	moduleon = module_on;
-
+	map_name = mapname;
 
 	if(current_step == fade_step::none)
 	{

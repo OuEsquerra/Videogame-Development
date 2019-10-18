@@ -79,14 +79,12 @@ public:// methods
 	bool cleanUp();
 
 	void MoveRight();
-
 	void MoveLeft();
-
 	void MoveUp();
-
 	void MoveDown();
 
 	void GodMode();
+	bool InitPlayer();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
