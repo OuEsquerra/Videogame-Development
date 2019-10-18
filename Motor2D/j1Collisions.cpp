@@ -22,18 +22,8 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 
 bool j1Collisions::Start() {
 
-	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
-	while (list_i != nullptr) {
-		for (int i = 0; i < list_i->data->objects_size; i++) {
-			
-			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr);
-		}
-		
-		list_i = list_i->next;
-	}
+	LoadFromMap();
 
-	
-	
 	return true;
 };
 
@@ -133,30 +123,6 @@ bool j1Collisions::Update(float dt) {
 void j1Collisions::DebugDraw() {
 	if (debug_colliders == false)
 		return;
-	/*
-
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] == nullptr)
-			continue;
-
-		switch (colliders[i]->type)
-		{
-		case ObjectType::PLATFORM : // white
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
-			break;
-		case ObjectType::SOLID: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			break;
-		case ObjectType::DAMAGE: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-		case ObjectType::PLAYER: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-			break;
-		}
-	}
-	*/
 
 	Uint8 alpha = 80; 	//MAGIC NUMBER
 	p2List_item<Collider*>* Coll_iterator = colliders.start;
@@ -206,7 +172,18 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* ca
 	return ret;
 }
 
+//Add Colliders to the list from the map
+void j1Collisions::LoadFromMap() {
+	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
+	while (list_i != nullptr) {
+		for (int i = 0; i < list_i->data->objects_size; i++) {
 
+			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr);
+		}
+
+		list_i = list_i->next;
+	}
+}
 
 //  Struct Collider Methods --------------------------------------
 bool Collider::CheckCollision(const SDL_Rect& r) const

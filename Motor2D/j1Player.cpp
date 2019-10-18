@@ -43,17 +43,12 @@ bool j1Player::Awake(pugi::xml_node& conf)
 
 bool j1Player::Start() 
 {
-
-	player.position = {250.0f,1100.0f }; //Starting position
-
-	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
-
-	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
-
-	bool LoadAnimation("player.tmx");
+	InitPlayer();
 
 	return true;
 };
+
+
 
 bool j1Player::PreUpdate() 
 {
@@ -246,6 +241,19 @@ bool j1Player::cleanUp()
 
 	return true;
 };
+
+
+bool j1Player::InitPlayer() {
+
+	player.position = { 250.0f,1100.0f }; //Starting position
+
+	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
+
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
+	
+	return true;
+}
+
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
 
