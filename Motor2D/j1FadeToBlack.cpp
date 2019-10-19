@@ -48,11 +48,11 @@ bool j1FadeToBlack::Update(float dt)
 				//moduleoff->Disable();
 				//moduleon->Enable();
 				App->map->data = {0}; //Empty all map data. 
-				App->collisions->colliders.clear();
+				App->collisions->colliders.clear(); //Clear colliders
 				
-				App->map->Load(map_name);
-				App->collisions->LoadFromMap();
-				App->player->InitPlayer();
+				App->map->Load(map_name); //Load specified map
+				App->collisions->LoadFromMap(); //Load Collisions
+				App->player->InitPlayer();		//Reset Player
 				
 				total_time += total_time;
 				start_time = SDL_GetTicks();

@@ -307,24 +307,29 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
 
 		//from above
-		if (player.prevposition.y < B->rect.y || player.position.y == B->rect.y - player.collider->rect.h + 1) {
+	
+		/*if (player.prevposition.y < B->rect.y || (player.position.y == B->rect.y - player.collider->rect.h + 1 && player.prevposition.y != player.position.y)) {
 			player.position.y = B->rect.y - player.collider->rect.h + 1;
 			player.SetGroundState(true);
-		}
+		}*/
 		//from below
-		else if (player.prevposition.y > (B->rect.y + B->rect.h)) {
+		if (player.prevposition.y > (B->rect.y + B->rect.h)) {
 			player.position.y = B->rect.y + B->rect.h;
+			player.speed.y = 0;
 		}
 		//from a side
-		else if ((player.position.x < B->rect.x + B->rect.w && player.position.x > B->rect.x) ||
-			(player.position.x + player.collider->rect.w < B->rect.x + B->rect.w && player.position.x + player.collider->rect.w > B->rect.x)) {
+		else if (player.position.y + (player.collider->rect.h* 3.0f/4.0f) < B->rect.y + B->rect.h  && player.position.y + (player.collider->rect.h* 3.0f / 4.0f) > B->rect.y ) {
 			LOG("Touching WALL");
 			if ((player.position.x + player.collider->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
 				player.position.x = B->rect.x - player.collider->rect.w;
 			}
-			else if (player.position.x < (B->rect.x + B->rect.w)) {
+			else if (player.position.x < (B->rect.x + B->rect.w)) { //Player to the right
 				player.position.x = B->rect.x + B->rect.w;
 			}
+		}
+		else if (player.prevposition.y < B->rect.y) {
+			player.position.y = B->rect.y - player.collider->rect.h + 1;
+			player.SetGroundState(true);
 		}
 	}
 
