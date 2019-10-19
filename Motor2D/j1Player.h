@@ -84,6 +84,7 @@ public:// methods
 	void MoveLeft();
 	void MoveUp();
 	void MoveDown();
+	void startDashTime();
 
 	void GodMode();
 	bool InitPlayer();
@@ -100,6 +101,7 @@ public://variables
 	
 private:
 
+	int dashTime = 0;
 	//j1Input playerInput;
 };
 
