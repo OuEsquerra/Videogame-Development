@@ -33,6 +33,8 @@ struct Player {
 	float gravity; 
 
 	bool able_to_jump = false; //Only lets the player jump if it's true
+	bool able_to_dash = false;
+	bool dashing = false;
 	bool jumping = false; //True when the player is jumping
 	bool drop_plat; //Checks if the player is dropping from a platform.
 	bool playerGrounded;

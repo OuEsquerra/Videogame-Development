@@ -74,18 +74,28 @@ bool j1Player::PreUpdate()
 			player.flip = true;
 		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if (player.able_to_dash && !player.dashing )
 	{
-		if (player.flip)
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		{
-			player.playerState = dashLeft;
+			if (player.flip)
+			{
+				player.playerState = dashLeft;
+			}
+			else
+			{
+				player.playerState = dashRight;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			{
+				player.playerState = dashRight;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			{
+				player.playerState = dashLeft;
+			}
+			player.able_to_dash = false;
 		}
-		else 
-		{
-			player.playerState = dashRight;
-		}
-
-
 	}
 
 	if (!player.godMode)
@@ -121,7 +131,13 @@ bool j1Player::Update(float dt)
 {
 	player.prevposition = player.position;
 
+	player.dashing = false;
 	
+
+
+
+
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		MoveRight();
@@ -164,6 +180,24 @@ bool j1Player::Update(float dt)
 				player.able_to_jump = false;
 
 				break;
+
+			case dashLeft:
+
+				player.speed.x -= player.maxSpeed.x;
+
+				player.position.x += player.speed.x;
+
+				player.dashing = true;
+				break;
+
+			case dashRight:
+
+				player.speed.x = player.maxSpeed.x;
+
+				player.position.x += player.speed.x;
+
+				player.dashing = true;
+				break;
 			}
 		}
 
@@ -193,19 +227,22 @@ bool j1Player::Update(float dt)
 			player.able_to_jump = true;
 			player.playerState = idle;
 			player.jumping = false;
+			if (!player.dashing)
+			{
+				player.able_to_dash = true;
+			}
 		}
 		else
 		{
-
 			player.playerState = falling;
-
 		}
 
 		player.position.y += player.speed.y;
 	}
-	else
+	else //When GodMode is active
 	{
 		player.animation = "idle";
+
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
 			MoveUp();
@@ -217,7 +254,6 @@ bool j1Player::Update(float dt)
 	}
 
 	//Update player collider and position
-	//player.position.y += player.speed.y;
 	player.playerBox.x = player.position.x;
 	player.playerBox.y = player.position.y;
 
@@ -226,6 +262,7 @@ bool j1Player::Update(float dt)
 	
 	//Update Player Collider after updating its position
 	player.collider->SetPos(player.position.x, player.position.y);
+
 	return true;
 	
 };

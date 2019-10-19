@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="48">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="60">
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="666" columns="18">
   <image source="DarkTileset.png" width="576" height="1184"/>
  </tileset>
@@ -20076,16 +20076,28 @@
   <object id="32" name="Ground" type="solid" x="1858.67" y="1473.67" width="286" height="126.667"/>
   <object id="33" name="Ground" type="solid" x="2339.67" y="1472.67" width="398.97" height="126.667"/>
   <object id="34" name="Ground" type="solid" x="2625" y="1344.67" width="116.667" height="128"/>
-  <object id="35" name="Ground" type="solid" x="2465.67" y="1214.67" width="124.667" height="33.3333"/>
-  <object id="36" name="Ground" type="solid" x="2625.67" y="1090" width="124.667" height="33.3333"/>
-  <object id="37" name="Ground" type="solid" x="2467" y="959.333" width="124.667" height="33.3333"/>
+  <object id="35" name="Ground" type="solid" x="2468.33" y="1213.33" width="124.667" height="33.3333"/>
+  <object id="36" name="Ground" type="solid" x="2721.67" y="1088.67" width="124.667" height="33.3333"/>
+  <object id="37" name="Ground" type="solid" x="2496.33" y="958" width="124.667" height="33.3333"/>
   <object id="38" name="Ground" type="solid" x="2143" y="960.667" width="131.334" height="33.3333"/>
   <object id="39" name="Platform" type="platform" x="2142.33" y="800.667" width="131.334" height="33.3333"/>
   <object id="40" name="Ground" type="solid" x="2495" y="734" width="580.425" height="65.3333"/>
   <object id="41" name="Ground" type="solid" x="3199.97" y="737.636" width="62.0003" height="29.3333"/>
-  <object id="43" name="Ground" type="solid" x="3461" y="738.667" width="128.667" height="29.3333"/>
+  <object id="43" name="Ground" type="solid" x="3521" y="737.333" width="128.667" height="29.3333"/>
   <object id="45" name="Ground" type="solid" x="3906.33" y="897.333" width="159.334" height="704"/>
-  <object id="46" name="Ground" type="solid" x="4066.33" y="1120" width="707.334" height="480.667"/>
-  <object id="47" name="Ground" type="solid" x="4064.88" y="1024.61" width="161.334" height="95.8788"/>
+  <object id="46" name="Ground" type="solid" x="4066.33" y="1377.58" width="413.334" height="223.091"/>
+  <object id="47" name="Ground" type="solid" x="4064.88" y="1120.61" width="161.334" height="256.515"/>
+  <object id="48" name="Ground" type="solid" x="5826.33" y="-0.3335" width="575.334" height="192.031"/>
+  <object id="49" name="Ground" type="solid" x="5823.33" y="415.606" width="577.334" height="1182.73"/>
+  <object id="50" name="Ground" type="solid" x="4672.33" y="1248.74" width="161.334" height="66.515"/>
+  <object id="51" name="Ground" type="solid" x="4479.83" y="1472.74" width="352.334" height="127.515"/>
+  <object id="52" name="Ground" type="solid" x="5090" y="1248.08" width="161.334" height="66.515"/>
+  <object id="53" name="Ground" type="solid" x="5664.67" y="1440.08" width="161.334" height="66.515"/>
+  <object id="54" name="Platform" type="platform" x="5182.33" y="1086" width="68.6673" height="33.3333"/>
+  <object id="55" name="Platform" type="platform" x="5760.33" y="1279.33" width="63.334" height="33.3333"/>
+  <object id="56" name="Platform" type="platform" x="5696.33" y="1147.33" width="127.334" height="33.3333"/>
+  <object id="57" name="Platform" type="platform" x="5759" y="1023.33" width="64.6673" height="33.3333"/>
+  <object id="58" name="Platform" type="platform" x="5632.33" y="895.333" width="192.667" height="33.3333"/>
+  <object id="59" name="Ground" type="solid" x="5376.67" y="769.409" width="161.334" height="59.8483"/>
  </objectgroup>
 </map>
