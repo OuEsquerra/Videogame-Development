@@ -58,6 +58,8 @@ void j1Map::Draw()
 
 void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 {
+
+
 	TileSet* animTileset = nullptr;
 
 	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
@@ -80,16 +82,24 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 	{
 		if (name == animIter->data->name)
 		{
-			currentanim = animIter->data; //gets the animation with the name we send
+			currentanim = animIter->data; //gets the animation with the name we sent
 		}
 		animIter = animIter->next;
 	}
+
+	if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
+	{
+		i = 0;
+		frameCount = 1;
+	}
+
+	prev_Anim_Name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,//Texture of the animation(tileset) 
 	App->player->player.position.x , App->player->player.position.y , //drawn at player position
 	animTileset->PlayerTileRect(currentanim->frames[i]),flip ); //draw frames tile id
 
-	if (frameCount % (currentanim->speed/15) == 0) //counts frames each loop (60 fps using vsync)
+	if (frameCount % (currentanim->speed/10) == 0) //counts frames each loop (60 fps using vsync)
 	{
 		i++;
 	}

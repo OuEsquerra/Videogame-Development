@@ -53,7 +53,17 @@ bool j1Player::Start()
 bool j1Player::PreUpdate() 
 {
 	player.SetGroundState(false);
-	
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		
+		player.flip = false;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		
+		player.flip = true;
+	}
+
 	if (player.playerState != jumping && player.playerState != falling && !player.dashing)
 	{
 		player.playerState = idle;
@@ -66,12 +76,12 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			player.playerState = running;
-			player.flip = false;
+			//player.flip = false;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			player.playerState = running;
-			player.flip = true;
+			//player.flip = true;
 		}
 	}
 
@@ -190,6 +200,8 @@ bool j1Player::Update(float dt)
 
 			case dashLeft:
 
+				player.animation = "dash";
+
 				player.speed.x = -player.maxSpeed.x * 3/2;
 
 				player.position.x += player.speed.x;
@@ -206,6 +218,8 @@ bool j1Player::Update(float dt)
 				break;
 
 			case dashRight:
+
+				player.animation = "dash";
 
 				player.speed.x = player.maxSpeed.x * 3/2;
 
@@ -292,7 +306,7 @@ bool j1Player::Update(float dt)
 	App->map->DrawAnimation(player.animation,"Adventurer",player.flip);
 	
 	//Update Player Collider after updating its position
-	player.collider->SetPos(player.position.x, player.position.y);
+	player.collider->SetPos(player.position.x + 20, player.position.y);
 
 	return true;
 	
@@ -351,15 +365,15 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		//from a side
 		else if (player.position.y + (player.collider->rect.h* 3.0f/4.0f) < B->rect.y + B->rect.h  && player.position.y + (player.collider->rect.h* 3.0f / 4.0f) > B->rect.y ) {
 			LOG("Touching WALL");
-			if ((player.position.x + player.collider->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
-				player.position.x = B->rect.x - player.collider->rect.w;
+			if ((player.collider->rect.x + player.collider->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
+				player.position.x = B->rect.x - player.collider->rect.w -20;
 			}
-			else if (player.position.x < (B->rect.x + B->rect.w)) { //Player to the right
-				player.position.x = B->rect.x + B->rect.w;
+			else if (player.collider->rect.x < (B->rect.x + B->rect.w)) { //Player to the right
+				player.position.x = B->rect.x + B->rect.w -20;
 			}
 		}
-		else if (player.prevposition.y < B->rect.y) {
-			player.position.y = B->rect.y - player.collider->rect.h + 1;
+		else if (player.position.y < B->rect.y) { // from above
+			player.position.y = B->rect.y - player.collider->rect.h - 1;
 			player.SetGroundState(true);
 		}
 	}
