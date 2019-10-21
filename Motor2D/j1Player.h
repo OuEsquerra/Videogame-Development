@@ -66,6 +66,9 @@ public:// methods
 	// Destructor
 	virtual ~j1Player();
 
+	bool Save(pugi::xml_node&) const;
+	bool Load(pugi::xml_node&);
+
 	bool Init();
 
 	bool Awake(pugi::xml_node&);

@@ -1,9 +1,22 @@
-<!-- Save game for the game -->
-
+<?xml version="1.0"?>
 <game_state>
-
-  <renderer>
-    <camera x="100" y="0"/>
-  </renderer>
-
+	<input />
+	<window />
+	<textures />
+	<audio />
+	<map />
+	<scene />
+	<player playerstate="3">
+		<points>
+			<position x="958" y="1252.5" />
+			<prevposition x="958" y="1246.5" />
+			<lastGroundedPos x="958" y="1398" />
+		</points>
+		<flags able_to_jump="false" able_to_dash="true" dashing="false" jumping="true" drop_plat="false" flip="true" godMode="false" />
+	</player>
+	<collisions />
+	<fade />
+	<renderer>
+		<camera x="-492" y="-832" />
+	</renderer>
 </game_state>

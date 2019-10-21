@@ -15,6 +15,62 @@ j1Player::j1Player()
 
 };
 
+bool j1Player::Save(pugi::xml_node& node) const {
+	
+	LOG("Saving Player...");
+	pugi::xml_node points = node.append_child("points");
+	
+	points.append_child("position").append_attribute("x") = player.position.x;
+	points.child("position").append_attribute("y") = player.position.y;
+	
+	points.append_child("prevposition").append_attribute("x") = player.prevposition.x;
+	points.child("prevposition").append_attribute("y") = player.prevposition.y;
+	
+	points.append_child("lastGroundedPos").append_attribute("x") = player.lastGroundedPos.x;
+	points.child("lastGroundedPos").append_attribute("y") = player.lastGroundedPos.y;
+
+
+	pugi::xml_node flags = node.append_child("flags");
+	flags.append_attribute("able_to_jump") = player.able_to_jump;
+	flags.append_attribute("able_to_dash") = player.able_to_dash;
+	flags.append_attribute("dashing") = player.dashing;
+	flags.append_attribute("jumping") = player.jumping;
+	flags.append_attribute("drop_plat") = player.drop_plat;
+	flags.append_attribute("playerGrounded") = player.playerGrounded;
+	flags.append_attribute("flip") = player.flip;
+	flags.append_attribute("godMode") = player.godMode;
+
+	node.append_attribute("playerstate") = player.playerState;
+
+	return true;
+}
+
+bool j1Player::Load(pugi::xml_node& node) {
+	
+	LOG("Loading Player...");
+	pugi::xml_node points = node.child("points");
+
+	player.position.x = points.child("position").attribute("x").as_float();
+	player.position.y = points.child("position").attribute("y").as_float();
+
+	player.prevposition.x = points.child("prevposition").attribute("x").as_float();
+	player.prevposition.y = points.child("prevposition").attribute("y").as_float();
+
+	player.lastGroundedPos.x = points.child("lastGroundedPos").attribute("x").as_float();
+	player.lastGroundedPos.y = points.child("lastGroundedPos").attribute("y").as_float();
+	
+	pugi::xml_node flags = node.child("flags");
+	player.able_to_dash		= flags.attribute("able_to_dash").as_bool();
+	player.able_to_jump		= flags.attribute("able_to_jump").as_bool();
+	player.drop_plat		= flags.attribute("drop_plat").as_bool();
+	player.dashing			= flags.attribute("dashing").as_bool();
+	player.jumping			= flags.attribute("jumping").as_bool();
+	player.playerGrounded	= flags.attribute("playerGrounded").as_bool();
+
+	player.playerState = (PlayerState)node.attribute("playerstate").as_int();
+	return true;
+}
+
 j1Player::~j1Player() 
 {
 
@@ -31,13 +87,13 @@ bool j1Player::Awake(pugi::xml_node& conf)
 {
 	player.acceleration.x = conf.child("acceleration").attribute("x").as_float();
 	player.acceleration.y = conf.child("acceleration").attribute("y").as_float();
-	player.speed.x = conf.child("speed").attribute("x").as_float();
-	player.speed.y = conf.child("speed").attribute("y").as_float();
-	player.maxSpeed.x = conf.child("maxSpeed").attribute("x").as_float();
-	player.maxSpeed.y = conf.child("maxSpeed").attribute("y").as_float();
-	player.gravity = conf.child("gravity").attribute("value").as_float();
-	player.boxW = conf.child("box").attribute("w").as_int();
-	player.boxH = conf.child("box").attribute("h").as_int();
+	player.speed.x =		conf.child("speed").attribute("x").as_float();
+	player.speed.y =		conf.child("speed").attribute("y").as_float();
+	player.maxSpeed.x =		conf.child("maxSpeed").attribute("x").as_float();
+	player.maxSpeed.y =		conf.child("maxSpeed").attribute("y").as_float();
+	player.gravity =		conf.child("gravity").attribute("value").as_float();
+	player.boxW =			conf.child("box").attribute("w").as_int();
+	player.boxH =			conf.child("box").attribute("h").as_int();
 	return true;
 }; 
 
@@ -330,7 +386,7 @@ bool j1Player::cleanUp()
 
 bool j1Player::InitPlayer() {
 
-	player.position = { 250.0f,1100.0f }; //Starting position
+	player.position = { 250.0f,1100.0f }; //Starting position //Magic Numbers
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
 

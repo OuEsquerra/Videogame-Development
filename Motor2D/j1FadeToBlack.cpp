@@ -45,8 +45,6 @@ bool j1FadeToBlack::Update(float dt)
 			if(now >= total_time)
 			{
 
-				//moduleoff->Disable();
-				//moduleon->Enable();
 				App->map->data = {0}; //Empty all map data. 
 				App->collisions->colliders.clear(); //Clear colliders
 				
