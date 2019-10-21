@@ -1,7 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="27">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="27">
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="666" columns="18">
   <image source="DarkTileset.png" width="576" height="1184"/>
+ </tileset>
+ <tileset firstgid="667" name="Adventurer" tilewidth="92" tileheight="60" tilecount="21" columns="7">
+  <image source="Adventurer.png" width="644" height="180"/>
+  <tile id="0">
+   <properties>
+    <property name="idle" value=""/>
+   </properties>
+   <animation>
+    <frame tileid="0" duration="100"/>
+    <frame tileid="1" duration="100"/>
+    <frame tileid="2" duration="100"/>
+    <frame tileid="3" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="crouch" value=""/>
+   </properties>
+   <animation>
+    <frame tileid="4" duration="100"/>
+    <frame tileid="5" duration="100"/>
+    <frame tileid="6" duration="100"/>
+    <frame tileid="7" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="run" value=""/>
+   </properties>
+   <animation>
+    <frame tileid="8" duration="100"/>
+    <frame tileid="9" duration="100"/>
+    <frame tileid="10" duration="100"/>
+    <frame tileid="11" duration="100"/>
+    <frame tileid="12" duration="100"/>
+    <frame tileid="13" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="jump" value=""/>
+   </properties>
+   <animation>
+    <frame tileid="14" duration="100"/>
+    <frame tileid="15" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="fall" value=""/>
+   </properties>
+   <animation>
+    <frame tileid="16" duration="100"/>
+    <frame tileid="17" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="dash" value=""/>
+   </properties>
+   <animation>
+    <frame tileid="18" duration="100"/>
+    <frame tileid="19" duration="100"/>
+    <frame tileid="20" duration="100"/>
+   </animation>
+  </tile>
  </tileset>
  <layer id="6" name="Background" width="100" height="50">
   <data>

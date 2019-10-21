@@ -86,13 +86,13 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 		}
 		animIter = animIter->next;
 	}
-
-	if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
-	{
-		i = 0;
-		frameCount = 1;
-	}
-
+	
+		if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
+		{
+			i = 0;
+			frameCount = 1;
+		}
+	
 	prev_Anim_Name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,//Texture of the animation(tileset) 

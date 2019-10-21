@@ -199,7 +199,7 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-	p2SString prev_Anim_Name;
+	p2SString prev_Anim_Name = "idle";
 };
 
 #endif // __j1MAP_H__
