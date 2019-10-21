@@ -435,10 +435,11 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			}
 		}
 		else if (player.position.y < B->rect.y + B->rect.h) { // from above
-			LOG("player y = %f", player.position.y);
-			LOG("collider y = %d", B->rect.y);
-			LOG("collider h = %d", B->rect.h);
-			player.speed.y = 0;
+			if (player.speed.y > 0)
+			{
+				player.speed.y = 0;
+			}
+			
 			player.position.y = B->rect.y - player.collider->rect.h + 1 ;
 
 			player.SetGroundState(true);
