@@ -23,7 +23,7 @@
     <gravity value="0.75" />
     <speed x="0" y="0" />
     <maxSpeed x="6" y="15"/>
-    <box w="46" h="70"/>
+    <box w="46" h="61"/>
   </player>
   
   <file_system>
