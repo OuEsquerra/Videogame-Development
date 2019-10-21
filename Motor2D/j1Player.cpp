@@ -417,13 +417,14 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			player.SetGroundState(true);
 		}*/
 		//from below
-		if (player.prevposition.y > (B->rect.y + B->rect.h)) 
+		if (player.prevposition.y > (B->rect.y + B->rect.h - 1)) 
 		{
 			player.position.y = B->rect.y + B->rect.h;
 			
 		}
 		//from a side
-		else if (player.position.y + (player.collider->rect.h* 3.0f/4.0f) < B->rect.y + B->rect.h  && player.position.y + (player.collider->rect.h* 3.0f / 4.0f) > B->rect.y ) 
+		else if (player.position.y + (player.collider->rect.h* 3.0f/4.0f) < B->rect.y + B->rect.h  
+			&& player.position.y + (player.collider->rect.h* 3.0f / 4.0f) > B->rect.y ) 
 		{
 			LOG("Touching WALL");
 			if ((player.collider->rect.x + player.collider->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
