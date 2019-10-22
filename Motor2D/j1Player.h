@@ -40,6 +40,8 @@ struct Player {
 	bool playerGrounded;
 	bool flip = false;
 	bool godMode = false;
+	bool cealing = false;
+	bool wall = false;
 
 	int boxW;
 	int boxH;
