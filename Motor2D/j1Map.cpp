@@ -490,6 +490,15 @@ bool j1Map::LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup)
 		{
 			objectgroup->objects[i].type = ObjectType::DAMAGE;
 		}
+		else if (type == "warp")
+		{
+			objectgroup->objects[i].type = ObjectType::WARP;
+			
+			Properties::Property* temp = new Properties::Property;
+			temp->name = iterator_node.child("properties").child("property").attribute("name").as_string();
+			temp->data.v_string = iterator_node.child("properties").child("property").attribute("value").as_string();
+			objectgroup->objects[i].properties.list.add(temp);
+		}
 		else
 		{
 			objectgroup->objects[i].type = ObjectType::UNKNOWN;
@@ -498,4 +507,19 @@ bool j1Map::LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup)
 	}
 	
 	return true;
+}
+
+//Property data retrieving function------------------------------
+value Properties::Get(const char* name, value* default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == name)
+			return item->data->data;
+		item = item->next;
+	}
+
+	return *default_value;
 }

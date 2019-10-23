@@ -8,6 +8,39 @@
 #include "j1Collisions.h"
 
 // ----------------------------------------------------
+union value {
+	const char* v_string;
+	int			v_int;
+	float		v_float;
+};
+
+struct Properties //Properties
+{
+	struct Property
+	{
+		p2SString name;
+		value data;
+	};
+
+	~Properties()
+	{
+		p2List_item<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	value Get(const char* name, value* default_value = nullptr) const;
+
+	p2List<Property*>	list;
+};
+
 // Object for Colliders
 enum class ObjectType {
 	UNKNOWN = 0,
@@ -15,8 +48,9 @@ enum class ObjectType {
 	SOLID,
 	DAMAGE,
 	PLAYER,
+	WARP,
 
-	MAX_OBJECTS = 5
+	MAX_OBJECTS = 6
 };
 
 struct Animations
@@ -35,6 +69,7 @@ struct Object
 	ObjectType			type;
 	SDL_Rect*			box;
 	SDL_Texture*		texture;
+	Properties			properties;
 };
 
 

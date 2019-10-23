@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1FadeToBlack.h"
 #include "p2Animation.h"
 #include "j1Collisions.h"
 #include "p2Log.h"
@@ -471,6 +472,12 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 				
 			}
 		}
+
+	}
+
+	// ------------ Player Colliding against a warp -----------------
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::WARP) {
+		App->fade->FadeToBlack(B->userdata->Get("MapToLoad").v_string);
 
 	}
 }
