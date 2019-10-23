@@ -42,12 +42,12 @@ bool j1Render::Awake(pugi::xml_node& config)
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
-	else
+	else //Define Camera Rect
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = 0;
-		camera.y = 0;
+		camera.x = 100;
+		camera.y = 100;
 	}
 
 	return ret;
@@ -104,15 +104,21 @@ bool j1Render::Update(float dt)
 	{
 		camera.x = 0;
 	}
-
-	if (camera.y < -(32 * 50) + winHeight && camera.y < 0)
+	else if (camera.x <= -App->map->data.tile_width * App->map->data.width + winWidth )
 	{
-		camera.y = - (32*50) + winHeight;	
+		camera.x = -App->map->data.tile_width * App->map->data.width + winWidth;
 	}
-	if(camera.y > 0)
+
+	if (camera.y < -(App->map->data.tile_height * App->map->data.height) + winHeight && camera.y < 0)
+	{
+		camera.y = - (App->map->data.tile_height * App->map->data.height) + winHeight;
+	}
+	else if(camera.y > 0)
 	{
 		camera.y = 0;
 	}
+
+	App->map->camera_collider.SetPos(200, 500);
 
 	return true;
 }

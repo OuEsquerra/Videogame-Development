@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Collisions.h"
 
 // ----------------------------------------------------
 // Object for Colliders
@@ -189,6 +190,8 @@ private:
 public:
 
 	MapData data;
+	Collider camera_collider;
+	SDL_Rect tile_rect;
 
 private:
 
@@ -200,6 +203,7 @@ private:
 	p2SString			folder;
 	bool				map_loaded;
 	p2SString prev_Anim_Name = "idle";
+	
 };
 
 #endif // __j1MAP_H__

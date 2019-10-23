@@ -6,17 +6,17 @@
 	<audio />
 	<map />
 	<scene />
-	<player playerstate="3">
+	<player playerstate="0">
 		<points>
-			<position x="958" y="1252.5" />
-			<prevposition x="958" y="1246.5" />
-			<lastGroundedPos x="958" y="1398" />
+			<position x="250" y="1413" />
+			<prevposition x="250" y="1413" />
+			<lastGroundedPos x="250" y="1413" />
 		</points>
-		<flags able_to_jump="false" able_to_dash="true" dashing="false" jumping="true" drop_plat="false" flip="true" godMode="false" />
+		<flags able_to_jump="true" able_to_dash="true" dashing="false" jumping="false" drop_plat="false" playerGrounded="true" flip="false" godMode="false" />
 	</player>
 	<collisions />
 	<fade />
 	<renderer>
-		<camera x="-492" y="-832" />
+		<camera x="0" y="-832" />
 	</renderer>
 </game_state>

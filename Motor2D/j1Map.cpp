@@ -6,6 +6,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -25,6 +26,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 
+
+	
 	return ret;
 }
 
@@ -33,6 +36,15 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 	
+	
+	
+	uint winWidth, winHeight;
+
+	App->win->GetWindowSize(winWidth,winHeight );
+	
+	camera_collider.rect.w = winWidth;
+	camera_collider.rect.h = winHeight;
+
 	MapLayer* mapLayer = data.layers[0];
 
 	p2List_item<MapLayer*>* layerIter = data.layers.start;
@@ -45,15 +57,23 @@ void j1Map::Draw()
 		for (int y = 0; y < data.height; y++) {
 			for (int x = 0; x < data.width; x++) {
 
-				App->render->Blit(data.tilesets[0]->texture,
-					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-					data.tilesets[0]->TileRect(gid_list[i]));
+				tile_rect.x = data.tilesets[0]->GetPos(x, y).x;
+				tile_rect.y = data.tilesets[0]->GetPos(x, y).y;
+				tile_rect.h = 32; //Magic Numbers
+				tile_rect.w = 32;
+
+				if ( camera_collider.CheckCollision(tile_rect) )
+				{
+					App->render->Blit(data.tilesets[0]->texture,
+						data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
+						data.tilesets[0]->TileRect(gid_list[i]));
+				}
 				i++;
-				
 			}
 		}
 		layerIter = layerIter->next;//go to next layer
 	}
+	//App->render->DrawQuad(camera_collider.rect, 255, 255, 0);
 }
 
 void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)

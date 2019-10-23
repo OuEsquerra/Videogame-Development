@@ -121,6 +121,7 @@ bool j1Collisions::Update(float dt) {
 };
 
 void j1Collisions::DebugDraw() {
+
 	if (debug_colliders == false)
 		return;
 

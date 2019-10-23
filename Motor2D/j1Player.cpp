@@ -109,16 +109,8 @@ bool j1Player::Start()
 bool j1Player::PreUpdate() 
 {
 	player.SetGroundState(false);
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		player.flip = false;
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
-		player.flip = true;
-	}
 
-	if (player.playerState != jumping && player.playerState != falling && !player.dashing)
+	if (player.playerState != jumping && player.playerState != falling && !player.dashing) //
 	{
 		player.playerState = idle;
 
@@ -130,16 +122,16 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			player.playerState = running;
-			//player.flip = false;
+			
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			player.playerState = running;
-			//player.flip = true;
+			
 		}
 	}
 
-	if (player.able_to_dash && !player.dashing )
+	if (player.able_to_dash && !player.dashing ) //Logic For when player can dash
 	{
 		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		{
@@ -165,13 +157,13 @@ bool j1Player::PreUpdate()
 
 	if (!player.godMode)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) //Jump if not on godmode
 		{
 			if (player.able_to_jump)
 			{
 				player.playerState = jumping;
 				player.speed.y = 0;
-				//player.position.y+=2;
+				
 			}
 		}
 	}
@@ -200,7 +192,6 @@ bool j1Player::Update(float dt)
 
 	if ((player.playerState == dashRight || player.playerState == dashLeft) && !player.dashing)
 	{
-		//player.dashing = true;
 		dashTime = 0;
 	}
 
@@ -209,10 +200,12 @@ bool j1Player::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 			MoveRight();
+			player.flip = false;
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			MoveLeft();
+			player.flip = true;
 		}
 		else
 		{
@@ -241,13 +234,14 @@ bool j1Player::Update(float dt)
 
 				break;
 			case jumping:
+
 				player.speed.y -= player.acceleration.y;
 				player.jumping = true;
 				player.able_to_jump = false;
 				
-				//LOG("Player y acceleration: %f   Player y speed: %f", player.acceleration.y, player.speed.y);
 				break;
 			case falling:
+
 				player.jumping = true;
 				player.able_to_jump = false;
 
@@ -256,9 +250,7 @@ bool j1Player::Update(float dt)
 
 				player.animation = "dash";
 
-				player.speed.x = -player.maxSpeed.x * 3/2;
-
-				
+				player.speed.x = -player.maxSpeed.x * 2;
 
 				player.dashing = true;
 
@@ -275,9 +267,7 @@ bool j1Player::Update(float dt)
 
 				player.animation = "dash";
 
-				player.speed.x = player.maxSpeed.x * 3/2;
-
-				//player.position.x += player.speed.x;
+				player.speed.x = player.maxSpeed.x * 2;
 
 				player.dashing = true;
 
@@ -303,15 +293,13 @@ bool j1Player::Update(float dt)
 				player.playerState = idle;
 			}
 		}
-		else
+		else //When not touching ground and dashing, fall
 		{
 			if (!player.dashing)
 			{
 				player.playerState = falling;
 			}
 		}
-
-		
 
 		if (!player.dashing)
 		{
@@ -351,9 +339,6 @@ bool j1Player::Update(float dt)
 			player.speed.x = 0;
 		}
 		
-		
-		
-		
 	}
 	else //When GodMode is active
 	{
@@ -367,7 +352,7 @@ bool j1Player::Update(float dt)
 		{
 			MoveDown();
 		}
-		player.position.x += player.speed.x;
+		player.position.x += player.speed.x * 2;
 	}
 
 	//Update player collider and position
@@ -382,8 +367,8 @@ bool j1Player::Update(float dt)
 
 	player.cealing = false;
 	player.wall = false;
+
 	return true;
-	
 };
 
 bool j1Player::PostUpdate() 
@@ -445,13 +430,15 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			player.wall = true;
 			LOG("Touching WALL");
 			if ((A->rect.x +A->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
-				player.position.x = B->rect.x -A->rect.w -19;
+				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
 			}
 			else if (A->rect.x + player.maxSpeed.x < (B->rect.x + B->rect.w)) { //Player to the right
-				player.position.x = B->rect.x + B->rect.w -19;
+				player.position.x = B->rect.x + B->rect.w - 21; //Magic Numbers
 			}
 		}
-		else if (player.position.y + A->rect.h -player.maxSpeed.y < B->rect.y  && A->rect.x < B->rect.x + B->rect.w && A->rect.x + A->rect.w > B->rect.x ) { // from above
+		else if (player.position.y + A->rect.h -player.maxSpeed.y < B->rect.y  
+			&& A->rect.x < B->rect.x + B->rect.w 
+			&& A->rect.x + A->rect.w > B->rect.x ) { // from above
 
 			if (player.speed.y > 0)
 			{
