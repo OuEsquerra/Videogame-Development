@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="60">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="62">
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="666" columns="18">
   <image source="DarkTileset.png" width="576" height="1184"/>
  </tileset>
@@ -20109,5 +20109,10 @@
   <object id="57" name="Platform" type="platform" x="5759" y="1023.33" width="64.6673" height="33.3333"/>
   <object id="58" name="Platform" type="platform" x="5632.33" y="895.333" width="192.667" height="33.3333"/>
   <object id="59" name="Ground" type="solid" x="5376.67" y="769.409" width="161.334" height="59.8483"/>
+  <object id="60" name="Warp" type="warp" x="6232" y="228" width="176" height="152">
+   <properties>
+    <property name="MapToLoad" value="Dark_Map2.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

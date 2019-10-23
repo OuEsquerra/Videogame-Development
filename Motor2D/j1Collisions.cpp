@@ -77,40 +77,8 @@ bool j1Collisions::PreUpdate() {
 			}
 			Coll_iterator2 = Coll_iterator2->next;
 		}
-
 		Coll_iterator = Coll_iterator->next;
 	}
-
-	/*
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		// skip empty colliders
-		if (colliders[i] == nullptr)
-			continue;
-
-		c1 = colliders[i];
-
-		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
-		{
-			// skip empty colliders
-			if (colliders[k] == nullptr)
-				continue;
-
-			c2 = colliders[k];
-
-			if (c1->CheckCollision(c2->rect) == true)
-			{
-				if (c1->callback)
-					c1->callback->OnCollision(c1, c2);
-
-				if (c2->callback)
-					c2->callback->OnCollision(c2, c1);
-			}
-		}
-	}
-	*/
-
 	return true;
 };
 
@@ -136,16 +104,19 @@ void j1Collisions::DebugDraw() {
 		case ObjectType::SOLID: // red
 			App->render->DrawQuad(Coll_iterator->data->rect, 255, 0, 0, alpha);
 			break;
-		case ObjectType::DAMAGE: // green
+		case ObjectType::DAMAGE: // blue
 			App->render->DrawQuad(Coll_iterator->data->rect, 0, 0, 255, alpha);
 			break;
-		case ObjectType::PLAYER: // blue
+		case ObjectType::PLAYER: // green
 			App->render->DrawQuad(Coll_iterator->data->rect, 0, 255, 0, alpha);
 			break;
+		case ObjectType::WARP: // pink
+			App->render->DrawQuad(Coll_iterator->data->rect, 255, 128, 128, alpha);
+			break;
 		}
-
 		Coll_iterator = Coll_iterator->next;
 	}
+	
 }
 
 bool j1Collisions::PostUpdate() {
@@ -159,13 +130,14 @@ bool j1Collisions::CleanUp() {
 };
 
 
-Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback)
+Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Properties* userdata)
 {
 	Collider* ret = new Collider;
 
 	ret->callback = callback;
 	ret->rect = rect;
 	ret->type = type;
+	ret->userdata = userdata;
 
 	colliders.add(ret);
 	
@@ -178,9 +150,8 @@ void j1Collisions::LoadFromMap() {
 	while (list_i != nullptr) {
 		for (int i = 0; i < list_i->data->objects_size; i++) {
 
-			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr);
+			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, &list_i->data->objects[i].properties);
 		}
-
 		list_i = list_i->next;
 	}
 }

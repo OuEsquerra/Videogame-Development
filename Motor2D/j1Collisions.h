@@ -8,7 +8,7 @@
 
 enum class ObjectType;
 struct Object;
-
+struct Properties;
 
 
 struct Collider
@@ -17,6 +17,7 @@ struct Collider
 	bool to_delete = false;
 	ObjectType type;
 	j1Module* callback = nullptr;
+	Properties* userdata;
 
 	Collider(SDL_Rect rectangle, ObjectType type, j1Module* callback = nullptr) :
 		rect(rectangle),
@@ -62,7 +63,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback);
+	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Properties* userdata = nullptr);
 	void LoadFromMap();
 private:
 	
