@@ -111,6 +111,8 @@ bool j1Player::PreUpdate()
 {
 	player.SetGroundState(false);
 
+	
+
 	if (player.playerState != jumping && player.playerState != falling && !player.dashing) //
 	{
 		player.playerState = idle;
@@ -189,6 +191,8 @@ bool j1Player::Update(float dt)
 {
 	player.prevposition = player.position;
 
+	
+
 	dashTime++;
 
 	if ((player.playerState == dashRight || player.playerState == dashLeft) && !player.dashing)
@@ -255,15 +259,7 @@ bool j1Player::Update(float dt)
 
 				player.dashing = true;
 
-				if (dashTime > 10)
-				{
-					player.playerState = falling;
-					player.dashing = false;
-					player.speed.y = 0;
-				}
-
 				break;
-
 			case dashRight:
 
 				player.animation = "dash";
@@ -272,16 +268,10 @@ bool j1Player::Update(float dt)
 
 				player.dashing = true;
 
-				if (dashTime > 10)
-				{
-					player.playerState = falling;
-					player.dashing = false;
-					player.speed.y = 0;
-				}
 				break;
 			}
 		}
-
+		
 		// Grounded logic to check some bools and states
 		if (player.playerGrounded)
 		{
@@ -302,7 +292,17 @@ bool j1Player::Update(float dt)
 			}
 		}
 
-		if (!player.dashing)
+		if (player.dashing)
+		{
+			//Dash Check
+			if (dashTime > 10)
+			{
+				player.playerState = falling;
+				player.dashing = false;
+				player.speed.y = 0;
+			}
+		}
+		else //Player not Dashing
 		{
 			//Logic for when player is jumping
 			if (player.jumping)
@@ -327,7 +327,7 @@ bool j1Player::Update(float dt)
 
 			player.position.y += player.speed.y; //Update position y
 
-			if (player.cealing) 
+			if (player.cealing)
 			{
 				player.speed.y = 0;
 			}

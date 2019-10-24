@@ -36,14 +36,13 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 	
-	
-	
 	uint winWidth, winHeight;
 
 	App->win->GetWindowSize(winWidth,winHeight );
 	
 	camera_collider.rect.w = winWidth;
 	camera_collider.rect.h = winHeight;
+	App->map->camera_collider.SetPos(-App->render->camera.x, -App->render->camera.y);
 
 	MapLayer* mapLayer = data.layers[0];
 
@@ -59,8 +58,8 @@ void j1Map::Draw()
 
 				tile_rect.x = data.tilesets[0]->GetPos(x, y).x;
 				tile_rect.y = data.tilesets[0]->GetPos(x, y).y;
-				tile_rect.h = 32; //Magic Numbers
-				tile_rect.w = 32;
+				tile_rect.h = App->map->data.tile_height; //Magic Numbers
+				tile_rect.w = App->map->data.tile_height;
 
 				if ( camera_collider.CheckCollision(tile_rect) )
 				{
@@ -73,7 +72,7 @@ void j1Map::Draw()
 		}
 		layerIter = layerIter->next;//go to next layer
 	}
-	//App->render->DrawQuad(camera_collider.rect, 255, 255, 0);
+	
 }
 
 void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
@@ -119,7 +118,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 	App->player->player.position.x , App->player->player.position.y , //drawn at player position
 	animTileset->PlayerTileRect(currentanim->frames[i]),flip ); //draw frames tile id
 
-	if (frameCount % (currentanim->speed/10) == 0) //counts frames each loop (60 fps using vsync)
+	if (frameCount % (currentanim->speed/15) == 0) //counts frames each loop (60 fps using vsync) Magic Numbers
 	{
 		i++;
 	}

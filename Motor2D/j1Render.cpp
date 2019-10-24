@@ -118,7 +118,7 @@ bool j1Render::Update(float dt)
 		camera.y = 0;
 	}
 
-	App->map->camera_collider.SetPos(200, 500);
+	
 
 	return true;
 }
