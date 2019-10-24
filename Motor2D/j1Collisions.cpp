@@ -2,6 +2,7 @@
 #include "j1Collisions.h"
 #include "j1Map.h"
 #include "j1Render.h"
+#include "j1Input.h"
 
 j1Collisions::j1Collisions() : j1Module(), debug_colliders(true)
 {
@@ -89,6 +90,18 @@ bool j1Collisions::Update(float dt) {
 };
 
 void j1Collisions::DebugDraw() {
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+	{
+		if (debug_colliders)
+		{
+			debug_colliders = false;
+		}
+		else 
+		{
+			debug_colliders = true;
+		}
+	}
+
 
 	if (debug_colliders == false)
 		return;

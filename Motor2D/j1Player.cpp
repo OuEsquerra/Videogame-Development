@@ -117,26 +117,24 @@ bool j1Player::PreUpdate()
 	{
 		player.playerState = idle;
 
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
 			player.playerState = crouch;
 			player.drop_plat = true;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT 
+			|| App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT 
+			||App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT 
+			|| App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
 			player.playerState = running;
-			
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			player.playerState = running;
-			
-		}
+		
 	}
 
 	if (player.able_to_dash && !player.dashing ) //Logic For when player can dash
 	{
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		{
 			if (player.flip)
 			{
@@ -146,11 +144,11 @@ bool j1Player::PreUpdate()
 			{
 				player.playerState = dashRight;
 			}
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			{
 				player.playerState = dashRight;
 			}
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 			{
 				player.playerState = dashLeft;
 			}
@@ -180,7 +178,7 @@ bool j1Player::PreUpdate()
 		player.drop_plat = false;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) // Able/Disable GodMode
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) // Able/Disable GodMode
 	{
 		GodMode();
 	}
@@ -202,20 +200,7 @@ bool j1Player::Update(float dt)
 
 	if (!player.dashing)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			MoveRight();
-			player.flip = false;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			MoveLeft();
-			player.flip = true;
-		}
-		else
-		{
-			player.speed.x = 0;
-		}
+		check_x_move();
 	}
 
 	if (!player.godMode)
@@ -425,19 +410,19 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			
 		}
 		//from a side
-		else if (player.position.y + (A->rect.h* 3.0f/4.0f) < B->rect.y + B->rect.h  
+		else if (player.position.y + (A->rect.h* 1.0f/4.0f) < B->rect.y + B->rect.h  
 			&& player.position.y + (A->rect.h* 3.0f / 4.0f) > B->rect.y ) 
 		{
 			player.wall = true;
 			LOG("Touching WALL");
-			if ((A->rect.x +A->rect.w) < (B->rect.x + B->rect.w / 2)) { //Player to the left 
+			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
 				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
 			}
-			else if (A->rect.x + player.maxSpeed.x < (B->rect.x + B->rect.w)) { //Player to the right
-				player.position.x = B->rect.x + B->rect.w - 21; //Magic Numbers
+			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) { //Player to the right
+				player.position.x = B->rect.x + B->rect.w - 19; //Magic Numbers
 			}
 		}
-		else if (player.position.y + A->rect.h -player.maxSpeed.y < B->rect.y  
+		else if (player.position.y + A->rect.h -player.maxSpeed.y -2 < B->rect.y  
 			&& A->rect.x < B->rect.x + B->rect.w 
 			&& A->rect.x + A->rect.w > B->rect.x ) { // from above
 
@@ -458,14 +443,19 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		
 		if (player.drop_plat == false ) {
 
-			if ((player.prevposition.y + player.collider->rect.h) < B->rect.y + (B->rect.h/2.0f) && (player.prevposition.y + player.collider->rect.h) > B->rect.y && player.speed.y >= 0) {//this won't ever happen
+			if ((A->rect.y + A->rect.h) < B->rect.y + (B->rect.h /4.0f) 
+				&& (A->rect.y + A->rect.h) > B->rect.y 
+				&& player.speed.y >= 0) 
+			{//this won't ever happen
 
-				player.position.y = B->rect.y - player.collider->rect.h + 1;
+				player.position.y = B->rect.y - A->rect.h + 1;
 				player.SetGroundState(true);
 				player.able_to_jump = false;
 				
 			}
-			else if (player.position.y < B->rect.y + B->rect.h && player.playerState  && player.speed.y >= 0) {
+			else if (A->rect.y < B->rect.y + B->rect.h 
+				&& player.speed.y >= 0) 
+			{
 
 				player.position.y = B->rect.y - player.collider->rect.h + 1;
 				player.SetGroundState(true);
@@ -482,6 +472,25 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 	}
 }
 
+void j1Player::check_x_move()
+{
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		player.movingRight = true;
+		MoveRight();
+		player.flip = false;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		player.movingLeft = true;
+		MoveLeft();
+		player.flip = true;
+	}
+	else
+	{
+		player.speed.x = 0;
+	}
+}
 
 void j1Player::MoveRight() // Move Right the player at set speed
 {

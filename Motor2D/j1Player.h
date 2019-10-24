@@ -42,6 +42,8 @@ struct Player {
 	bool godMode = false;
 	bool cealing = false;
 	bool wall = false;
+	bool movingRight = false;
+	bool movingLeft = false;
 
 	int boxW;
 	int boxH;
@@ -85,6 +87,7 @@ public:// methods
 
 	bool cleanUp();
 
+	void check_x_move();
 	void MoveRight();
 	void MoveLeft();
 	void MoveUp();

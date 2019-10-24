@@ -26,8 +26,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 
-
-	
 	return ret;
 }
 
@@ -56,23 +54,32 @@ void j1Map::Draw()
 		for (int y = 0; y < data.height; y++) {
 			for (int x = 0; x < data.width; x++) {
 
-				tile_rect.x = data.tilesets[0]->GetPos(x, y).x;
-				tile_rect.y = data.tilesets[0]->GetPos(x, y).y;
+				if (layerIter->data->speed != 1.0f)
+				{
+					tile_rect.x = (App->render->camera.x * layerIter->data->speed) +data.tilesets[0]->GetPos(x, y).x -App->render->camera.x; 
+					tile_rect.y = (App->render->camera.y * layerIter->data->speed) + data.tilesets[0]->GetPos(x, y).y - App->render->camera.y;
+				}
+				else
+				{
+					tile_rect.x = data.tilesets[0]->GetPos(x, y).x;
+					tile_rect.y = data.tilesets[0]->GetPos(x, y).y ;
+				}
 				tile_rect.h = App->map->data.tile_height; //Magic Numbers
 				tile_rect.w = App->map->data.tile_height;
 
-				if ( camera_collider.CheckCollision(tile_rect) )
+				if (camera_collider.CheckCollision(tile_rect))
 				{
 					App->render->Blit(data.tilesets[0]->texture,
 						data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-						data.tilesets[0]->TileRect(gid_list[i]));
+						data.tilesets[0]->TileRect(gid_list[i]), false, layerIter->data->speed);
 				}
+				
 				i++;
 			}
 		}
 		layerIter = layerIter->next;//go to next layer
 	}
-	
+	//App->render->DrawQuad(camera_collider.rect, 255, 0, 0,100); Debug camera_collider
 }
 
 void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
@@ -436,6 +443,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name		= node.attribute("name").as_string();
 	layer->height	= node.attribute("height").as_uint();
 	layer->width	= node.attribute("width").as_uint();
+	layer->speed = node.child("properties").child("property").attribute("value").as_float();
 
 	layer->data = new uint[layer->height*layer->width];
 	

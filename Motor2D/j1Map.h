@@ -89,6 +89,7 @@ struct MapLayer
 	uint				width;
 	uint				height;
 	uint*				data; //Tile Ids
+	float				speed;
 	inline uint Get(int x, int y) const
 	{
 		return x + y * width;
