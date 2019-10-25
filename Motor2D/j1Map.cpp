@@ -6,6 +6,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1FadeToBlack.h"
 #include "j1Window.h"
 #include <math.h>
 
@@ -17,6 +18,24 @@ j1Map::j1Map() : j1Module(), map_loaded(false)
 // Destructor
 j1Map::~j1Map()
 {}
+
+bool j1Map::Save(pugi::xml_node& node) const
+{
+	LOG("Saving Map...");
+	node.append_child("map_name").append_attribute("filename") = data.name;
+
+	return true;
+}
+
+bool j1Map::Load(pugi::xml_node& node) 
+{
+	LOG("Loading Map...");
+
+	App->fade->FadeToBlack(node.child("map_name").attribute("filename").as_string(), false);
+
+
+	return true;
+}
 
 // Called before render is available
 bool j1Map::Awake(pugi::xml_node& config)
@@ -179,6 +198,7 @@ bool j1Map::Load(const char* file_name)
 	// Load general info ----------------------------------------------
 	if(ret == true)
 	{
+		data.name = file_name;
 		ret = LoadMap();
 	}
 
@@ -283,6 +303,7 @@ bool j1Map::LoadMap()
 	}
 	else
 	{
+		
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();

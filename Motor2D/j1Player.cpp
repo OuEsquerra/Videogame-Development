@@ -46,6 +46,10 @@ bool j1Player::Save(pugi::xml_node& node) const {
 bool j1Player::Load(pugi::xml_node& node) {
 	
 	LOG("Loading Player...");
+
+	
+	player.justLoaded = true;
+
 	pugi::xml_node points = node.child("points");
 
 	player.position.x = points.child("position").attribute("x").as_float();
@@ -66,6 +70,7 @@ bool j1Player::Load(pugi::xml_node& node) {
 	player.playerGrounded	= flags.attribute("playerGrounded").as_bool();
 
 	player.playerState = (PlayerState)node.attribute("playerstate").as_int();
+	
 	return true;
 }
 
@@ -97,7 +102,6 @@ bool j1Player::Awake(pugi::xml_node& conf)
 bool j1Player::Start() 
 {
 	InitPlayer();
-
 	return true;
 };
 
@@ -154,7 +158,11 @@ bool j1Player::PreUpdate()
 			if (player.able_to_jump)
 			{
 				player.playerState = jumping;
+<<<<<<< HEAD
 				player.speed.y = 0;
+=======
+				player.speed.y = 0;	
+>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 			}
 		}
 	}
@@ -344,6 +352,14 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate() 
 {
+<<<<<<< HEAD
+=======
+
+	if (player.justLoaded == true) { //This has to be switched after collisions, hence the post-update.
+		player.justLoaded = false;
+	}
+
+>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 	return true;
 };
 
@@ -354,6 +370,7 @@ bool j1Player::cleanUp()
 
 bool j1Player::InitPlayer() {
 
+	if(App->fade->playerReset == true)
 	player.position = { 250.0f,1100.0f }; //Starting position //Magic Numbers
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
@@ -364,6 +381,10 @@ bool j1Player::InitPlayer() {
 }
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
+
+
+	
+
 
 	if (B->type == ObjectType::PLAYER) {
 		Collider temp = *A;
@@ -376,12 +397,15 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 	// ------------ Player Colliding against solids ------------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
+<<<<<<< HEAD
 
 		//from above
 		/*if (player.prevposition.y < B->rect.y || (player.position.y == B->rect.y - player.collider->rect.h + 1 && player.prevposition.y != player.position.y)) {
 			player.position.y = B->rect.y - player.collider->rect.h + 1;
 			player.SetGroundState(true);
 		}*/
+=======
+>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 		//from below
 		if (player.prevposition.y > (B->rect.y + B->rect.h - 1)) 
 		{
@@ -395,19 +419,32 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		{
 			player.wall = true;
 			LOG("Touching WALL");
+<<<<<<< HEAD
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
 			{ //Player to the left 
 				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
+=======
+			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
+				player.position.x = B->rect.x -A->rect.w - 19; //Magic Numbers
+>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 			}
 			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
 			{ //Player to the right
 				player.position.x = B->rect.x + B->rect.w - 19; //Magic Numbers
 			}
 		}
+<<<<<<< HEAD
 		else if (player.position.y + A->rect.h -player.maxSpeed.y -5 < B->rect.y  
 			&& A->rect.x < B->rect.x + B->rect.w 
 			&& A->rect.x + A->rect.w > B->rect.x ) 
 		{ // from above
+=======
+		//from above
+		else if (player.position.y + A->rect.h -player.maxSpeed.y -2 < B->rect.y  
+			&& A->rect.x < B->rect.x + B->rect.w 
+			&& A->rect.x + A->rect.w > B->rect.x 
+			&& player.justLoaded == false) {
+>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 
 			if (player.speed.y > 0)
 			{
@@ -424,33 +461,28 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		
 		if (player.drop_plat == false ) {
 
-			if ((A->rect.y + A->rect.h) < B->rect.y + (B->rect.h /4.0f) 
-				&& (A->rect.y + A->rect.h) > B->rect.y 
-				&& player.speed.y >= 0) 
-			{//this won't ever happen
-
-				player.position.y = B->rect.y - A->rect.h + 1;
-				player.SetGroundState(true);
-				player.able_to_jump = false;
-				
-			}
-			else if (A->rect.y < B->rect.y + B->rect.h 
-				&& player.speed.y >= 0) 
-			{
-
+			if ((player.prevposition.y + player.collider->rect.h) < B->rect.y + (B->rect.h / 2.0f) && (player.prevposition.y + player.collider->rect.h) > B->rect.y) {//this won't ever happen
 				player.position.y = B->rect.y - player.collider->rect.h + 1;
 				player.SetGroundState(true);
-				
+				player.able_to_jump = false;
+			}
+			else if ((player.position.y >= player.prevposition.y) && (player.prevposition.y + player.collider->rect.h) < B->rect.y) {
+				player.position.y = B->rect.y - player.collider->rect.h + 1;
+				player.SetGroundState(true);
+				player.able_to_jump = false;
 			}
 		}
 
 	}
 
-	// ------------ Player Colliding against a warp -----------------
+	// ------------ Player Colliding against a warp zone -----------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::WARP) {
 		App->fade->FadeToBlack(B->userdata->Get("MapToLoad").v_string);
-
 	}
+
+
+	
+
 }
 
 void j1Player::check_x_move()

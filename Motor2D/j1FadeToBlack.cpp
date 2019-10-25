@@ -69,10 +69,11 @@ bool j1FadeToBlack::Update(float dt)
 }
 
 // Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(const char* mapname, float time)
+bool j1FadeToBlack::FadeToBlack(const char* mapname, bool reset_player, float time)
 {
 	bool ret = false;
 	
+	playerReset = reset_player;
 	map_name = mapname;
 
 	if(current_step == fade_step::none)
@@ -96,6 +97,6 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 	ret = App->map->Load(mapname);		//Load specified map
 	App->collisions->LoadFromMap();		//Load Collisions
 	ret = App->player->InitPlayer();	//Reset Player
-
+	
 	return ret;
 }

@@ -12,7 +12,7 @@ public:
 
 	bool Start();
 	bool Update(float dt);
-	bool FadeToBlack(const char* mapname, float time = 2.0f);
+	bool FadeToBlack(const char* mapname,  bool reset_player = true, float time = 0.5f);
 	bool SwitchMap(const char* mapname);
 
 private:
@@ -24,10 +24,18 @@ private:
 		fade_from_black
 	} current_step = fade_step::none;
 
+public:
+
+	bool playerReset = true;
+
+private:
+	
 	Uint32 start_time = 0;
 	Uint32 total_time = 0;
 	SDL_Rect screen;
+	
 	const char* map_name;
+
 };
 
 #endif //__MODULEFADETOBLACK_H__
