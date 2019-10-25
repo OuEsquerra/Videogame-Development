@@ -4,7 +4,7 @@
 #include "j1Render.h"
 #include "j1Input.h"
 
-j1Collisions::j1Collisions() : j1Module(), debug_colliders(true)
+j1Collisions::j1Collisions() : j1Module(), debug_colliders(false)
 {
 	name.create("collisions");
 
@@ -62,6 +62,7 @@ bool j1Collisions::PreUpdate() {
 		c1 = Coll_iterator->data;
 		
 		p2List_item<Collider*>* Coll_iterator2 = colliders.start;
+
 		while (Coll_iterator2 != nullptr) {
 
 			c2 = Coll_iterator2->data;

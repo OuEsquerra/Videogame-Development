@@ -11,9 +11,7 @@
 
 j1Player::j1Player() 
 {
-
 	name.create("player");
-
 };
 
 bool j1Player::Save(pugi::xml_node& node) const {
@@ -29,7 +27,6 @@ bool j1Player::Save(pugi::xml_node& node) const {
 	
 	points.append_child("lastGroundedPos").append_attribute("x") = player.lastGroundedPos.x;
 	points.child("lastGroundedPos").append_attribute("y") = player.lastGroundedPos.y;
-
 
 	pugi::xml_node flags = node.append_child("flags");
 	flags.append_attribute("able_to_jump") = player.able_to_jump;
@@ -75,12 +72,10 @@ bool j1Player::Load(pugi::xml_node& node) {
 j1Player::~j1Player() 
 {
 
-
 };
 
 bool j1Player::Init() 
 {
-	
 	return true;
 };
 
@@ -95,6 +90,7 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	player.gravity =		conf.child("gravity").attribute("value").as_float();
 	player.boxW =			conf.child("box").attribute("w").as_int();
 	player.boxH =			conf.child("box").attribute("h").as_int();
+
 	return true;
 }; 
 
@@ -105,13 +101,9 @@ bool j1Player::Start()
 	return true;
 };
 
-
-
 bool j1Player::PreUpdate() 
 {
 	player.SetGroundState(false);
-
-	
 
 	if (player.playerState != jumping && player.playerState != falling && !player.dashing) //
 	{
@@ -124,12 +116,11 @@ bool j1Player::PreUpdate()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT 
 			|| App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT 
-			||App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT 
+			|| App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT 
 			|| App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
 			player.playerState = running;
 		}
-		
 	}
 
 	if (player.able_to_dash && !player.dashing ) //Logic For when player can dash
@@ -164,7 +155,6 @@ bool j1Player::PreUpdate()
 			{
 				player.playerState = jumping;
 				player.speed.y = 0;
-				
 			}
 		}
 	}
@@ -189,8 +179,6 @@ bool j1Player::Update(float dt)
 {
 	player.prevposition = player.position;
 
-	
-
 	dashTime++;
 
 	if ((player.playerState == dashRight || player.playerState == dashLeft) && !player.dashing)
@@ -205,21 +193,23 @@ bool j1Player::Update(float dt)
 
 	if (!player.godMode)
 	{
-
 		if (!player.godMode)
 		{
 			switch (player.playerState)
 			{
 			case idle:
+
 				player.animation = "idle";
 				player.speed.x = 0;
 
 				break;
 			case running:
+
 				player.animation = "run";
 
 				break;
 			case crouch:
+
 				player.animation = "crouch";
 
 				break;
@@ -239,18 +229,14 @@ bool j1Player::Update(float dt)
 			case dashLeft:
 
 				player.animation = "dash";
-
 				player.speed.x = -player.maxSpeed.x * 2;
-
 				player.dashing = true;
 
 				break;
 			case dashRight:
 
 				player.animation = "dash";
-
 				player.speed.x = player.maxSpeed.x * 2;
-
 				player.dashing = true;
 
 				break;
@@ -324,7 +310,6 @@ bool j1Player::Update(float dt)
 		{
 			player.speed.x = 0;
 		}
-		
 	}
 	else //When GodMode is active
 	{
@@ -359,16 +344,13 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate() 
 {
-
 	return true;
 };
 
 bool j1Player::cleanUp() 
 {
-
 	return true;
 };
-
 
 bool j1Player::InitPlayer() {
 
@@ -380,7 +362,6 @@ bool j1Player::InitPlayer() {
 	
 	return true;
 }
-
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
 
@@ -397,7 +378,6 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
 
 		//from above
-	
 		/*if (player.prevposition.y < B->rect.y || (player.position.y == B->rect.y - player.collider->rect.h + 1 && player.prevposition.y != player.position.y)) {
 			player.position.y = B->rect.y - player.collider->rect.h + 1;
 			player.SetGroundState(true);
@@ -415,24 +395,25 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		{
 			player.wall = true;
 			LOG("Touching WALL");
-			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
+			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
+			{ //Player to the left 
 				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
 			}
-			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) { //Player to the right
+			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
+			{ //Player to the right
 				player.position.x = B->rect.x + B->rect.w - 19; //Magic Numbers
 			}
 		}
-		else if (player.position.y + A->rect.h -player.maxSpeed.y -2 < B->rect.y  
+		else if (player.position.y + A->rect.h -player.maxSpeed.y -5 < B->rect.y  
 			&& A->rect.x < B->rect.x + B->rect.w 
-			&& A->rect.x + A->rect.w > B->rect.x ) { // from above
+			&& A->rect.x + A->rect.w > B->rect.x ) 
+		{ // from above
 
 			if (player.speed.y > 0)
 			{
 				player.speed.y = 0;
 			}
-			
 			player.position.y = B->rect.y - player.collider->rect.h + 1 ;
-
 			player.SetGroundState(true);
 		}
 	}
@@ -511,7 +492,6 @@ void j1Player::MoveLeft() // Move Left the player at speed
 	{
 		player.speed.x = -player.maxSpeed.x;
 	}
-	
 }
 
 void j1Player::MoveDown() // Move Right the player at set speed

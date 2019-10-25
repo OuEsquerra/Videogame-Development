@@ -64,7 +64,7 @@ void j1Map::Draw()
 					tile_rect.x = data.tilesets[0]->GetPos(x, y).x;
 					tile_rect.y = data.tilesets[0]->GetPos(x, y).y ;
 				}
-				tile_rect.h = App->map->data.tile_height; //Magic Numbers
+				tile_rect.h = App->map->data.tile_height; 
 				tile_rect.w = App->map->data.tile_height;
 
 				if (camera_collider.CheckCollision(tile_rect))
@@ -79,7 +79,7 @@ void j1Map::Draw()
 		}
 		layerIter = layerIter->next;//go to next layer
 	}
-	//App->render->DrawQuad(camera_collider.rect, 255, 0, 0,100); Debug camera_collider
+	
 }
 
 void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
@@ -98,8 +98,8 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 		}
 		TilesetIter = TilesetIter->next;
 	}
-	// I have the adventurer Tileset inside I have animation
 
+	// I have the adventurer Tileset inside I have animation
 	Animations* currentanim = nullptr;
 
 	p2List_item<Animations*>* animIter = animTileset->animations.start;
