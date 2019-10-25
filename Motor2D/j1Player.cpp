@@ -158,11 +158,9 @@ bool j1Player::PreUpdate()
 			if (player.able_to_jump)
 			{
 				player.playerState = jumping;
-<<<<<<< HEAD
-				player.speed.y = 0;
-=======
+
 				player.speed.y = 0;	
->>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
+//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 			}
 		}
 	}
@@ -352,14 +350,14 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate() 
 {
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 
 	if (player.justLoaded == true) { //This has to be switched after collisions, hence the post-update.
 		player.justLoaded = false;
 	}
 
->>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
+//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 	return true;
 };
 
@@ -397,15 +395,7 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 	// ------------ Player Colliding against solids ------------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
-<<<<<<< HEAD
 
-		//from above
-		/*if (player.prevposition.y < B->rect.y || (player.position.y == B->rect.y - player.collider->rect.h + 1 && player.prevposition.y != player.position.y)) {
-			player.position.y = B->rect.y - player.collider->rect.h + 1;
-			player.SetGroundState(true);
-		}*/
-=======
->>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 		//from below
 		if (player.prevposition.y > (B->rect.y + B->rect.h - 1)) 
 		{
@@ -419,32 +409,32 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		{
 			player.wall = true;
 			LOG("Touching WALL");
-<<<<<<< HEAD
-			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
-			{ //Player to the left 
-				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
-=======
+//<<<<<<< HEAD
+//			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
+//			{ //Player to the left 
+//				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
+//=======
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
 				player.position.x = B->rect.x -A->rect.w - 19; //Magic Numbers
->>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
+//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 			}
 			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
 			{ //Player to the right
 				player.position.x = B->rect.x + B->rect.w - 19; //Magic Numbers
 			}
 		}
-<<<<<<< HEAD
-		else if (player.position.y + A->rect.h -player.maxSpeed.y -5 < B->rect.y  
-			&& A->rect.x < B->rect.x + B->rect.w 
-			&& A->rect.x + A->rect.w > B->rect.x ) 
-		{ // from above
-=======
+//<<<<<<< HEAD
+//		else if (player.position.y + A->rect.h -player.maxSpeed.y -5 < B->rect.y  
+//			&& A->rect.x < B->rect.x + B->rect.w 
+//			&& A->rect.x + A->rect.w > B->rect.x ) 
+//		{ // from above
+//=======
 		//from above
 		else if (player.position.y + A->rect.h -player.maxSpeed.y -2 < B->rect.y  
 			&& A->rect.x < B->rect.x + B->rect.w 
 			&& A->rect.x + A->rect.w > B->rect.x 
 			&& player.justLoaded == false) {
->>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
+//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 
 			if (player.speed.y > 0)
 			{
