@@ -124,8 +124,6 @@ struct TileSet
 
 		SDL_Rect* ret = PlayerTilerect;
 
-		/*int x = ((tile_id - firstgid) % num_tiles_width);
-		int y = ((tile_id - firstgid) / num_tiles_width);*/
 		int num_t_width = tex_width / tile_width;
 		int num_t_height = tex_height / tile_height;
 
@@ -185,6 +183,7 @@ struct MapData
 	p2List<MapLayer*>		layers;
 	p2List<MapObjectgroup*> objectgroups;
 	
+	const char*				name;
 };
 
 // ----------------------------------------------------
@@ -211,7 +210,10 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
+	
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	
 
 private:

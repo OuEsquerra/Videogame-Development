@@ -30,17 +30,6 @@ bool j1Collisions::Start() {
 
 bool j1Collisions::PreUpdate() {
 
-	/* Old code for reference
-
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] != nullptr && colliders[i]->to_delete == true)
-		{
-			delete colliders[i];
-			colliders[i] = nullptr;
-		}
-	}*/
-
 	p2List_item<Collider*>* Coll_iterator = colliders.start;
 	while (Coll_iterator != nullptr) {
 

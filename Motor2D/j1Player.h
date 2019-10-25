@@ -44,6 +44,8 @@ struct Player {
 	bool wall = false;
 	bool movingRight = false;
 	bool movingLeft = false;
+	bool justLoaded = false;
+
 
 	int boxW;
 	int boxH;
