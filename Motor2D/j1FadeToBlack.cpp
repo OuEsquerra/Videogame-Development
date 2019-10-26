@@ -72,6 +72,7 @@ bool j1FadeToBlack::Update(float dt)
 
 			if(now >= total_time)
 				current_step = fade_step::none;
+				App->player->player.freeze = false;
 		} break;
 	}
 
@@ -95,6 +96,8 @@ bool j1FadeToBlack::FadeToBlack(const char* mapname, bool reset_player, float ti
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		ret = true;
+
+		App->player->player.freeze = true;
 	}
 
 	return ret;
@@ -104,8 +107,9 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 	bool ret = true;
 	LOG("Switching Maps...");
 
-	App->map->data = { 0 };				//Empty all map data. 
 	App->collisions->colliders.clear(); //Clear colliders
+	App->map->CleanUp();				//Empty all map data. 
+	
 
 	ret = App->map->Load(mapname);		//Load specified map
 	App->collisions->LoadFromMap();		//Load Collisions
