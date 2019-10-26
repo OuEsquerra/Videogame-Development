@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.5" name="Adventurer" tilewidth="92" tileheight="60" tilecount="21" columns="7">
- <image source="Adventurer.png" width="644" height="180"/>
+ <image source="Adventurer2.png" width="644" height="180"/>
  <tile id="0">
   <properties>
    <property name="idle" value=""/>
