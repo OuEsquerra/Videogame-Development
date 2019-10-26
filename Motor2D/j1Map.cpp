@@ -104,7 +104,6 @@ void j1Map::Draw()
 void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 {
 
-
 	TileSet* animTileset = nullptr;
 
 	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
@@ -140,15 +139,15 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 	
 	prev_Anim_Name = currentanim->name;
 
-	App->render->Blit(animTileset->texture,//Texture of the animation(tileset) 
-	App->player->player.position.x , App->player->player.position.y , //drawn at player position
-	animTileset->PlayerTileRect(currentanim->frames[i]),flip ); //draw frames tile id
+	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
+	App->player->player.position.x , App->player->player.position.y,	//drawn at player position
+	animTileset->PlayerTileRect(currentanim->frames[i]),flip );			//draw frames tile id
 
-	if (frameCount % (currentanim->speed/15) == 0) //counts frames each loop (60 fps using vsync) Magic Numbers
+	if (frameCount % (currentanim->speed/15) == 0)	//counts frames each loop (60 fps using vsync) Magic Numbers
 	{
 		i++;
 	}
-	if (i >= currentanim->nFrames) { //Iterate from 0 to nFrames (number of frames in animation)
+	if (i >= currentanim->nFrames) {				//Iterate from 0 to nFrames (number of frames in animation)
 		i = 0;
 	}
 
@@ -187,6 +186,8 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
+	p2SString* fileName = new p2SString(file_name);
+
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if(result == NULL)
@@ -198,7 +199,7 @@ bool j1Map::Load(const char* file_name)
 	// Load general info ----------------------------------------------
 	if(ret == true)
 	{
-		data.name = file_name;
+		data.name = fileName->GetString();
 		ret = LoadMap();
 	}
 
@@ -259,7 +260,7 @@ bool j1Map::Load(const char* file_name)
 	//LOG of xml data.
 	if(ret == true)
 	{
-		LOG("Successfully parsed map XML file: %s", file_name);
+		LOG("Successfully parsed map XML file: %s", fileName->GetString());
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 

@@ -4,8 +4,8 @@
   <app>
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
+    
   </app>
-	
   <renderer>
     <vsync value="true"/>
   </renderer>
@@ -28,6 +28,8 @@
   
   <file_system>
     <path>data.zip</path>
+    <loadTo>save_game.xml</loadTo>
+    <saveTo>save_game.xml</saveTo>
   </file_system>
 
   <map>

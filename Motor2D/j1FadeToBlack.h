@@ -11,6 +11,7 @@ public:
 	~j1FadeToBlack();
 
 	bool Start();
+	bool Awake(pugi::xml_node& conf);
 	bool Update(float dt);
 	bool FadeToBlack(const char* mapname,  bool reset_player = true, float time = 0.5f);
 	bool SwitchMap(const char* mapname);

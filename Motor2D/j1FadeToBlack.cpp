@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Module.h"
 #include "j1FadeToBlack.h"
+#include "j1Window.h"
 #include "p2Log.h"
 #include "j1Render.h"
 #include "j1Player.h"
@@ -14,11 +15,23 @@
 j1FadeToBlack::j1FadeToBlack()
 {
 	name.create("fade");
-	screen = {0, 0, 1000, 1000}; //Magic Numbers
+
 }
 
 j1FadeToBlack::~j1FadeToBlack()
 {}
+
+bool j1FadeToBlack::Awake(pugi::xml_node& conf) {
+
+	
+	uint width, height;
+	App->win->GetWindowSize(width, height);
+	screen.w = width;
+	screen.h = height;
+	screen.x = screen.y = 0;
+
+	return true;
+}
 
 // Load assets
 bool j1FadeToBlack::Start()

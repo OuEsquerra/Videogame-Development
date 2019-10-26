@@ -96,7 +96,7 @@ void j1Collisions::DebugDraw() {
 	if (debug_colliders == false)
 		return;
 
-	Uint8 alpha = 80; 	//MAGIC NUMBER
+	Uint8 alpha = 80; 	//Alpha value for all debug colliders
 	p2List_item<Collider*>* Coll_iterator = colliders.start;
 	while (Coll_iterator != nullptr) {
 

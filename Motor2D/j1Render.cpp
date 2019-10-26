@@ -76,26 +76,6 @@ bool j1Render::Update(float dt)
 	//Get size of window
 	uint winWidth, winHeight;
 	App->win->GetWindowSize(winWidth, winHeight);
-	
-	//p2Point<int> goalPos;
-	//goalPos.x = -(App->player->player.position.x - (1.0f / 3.0f)*winWidth);
-	//goalPos.y = -(App->player->player.position.y - (2.0f / 3.0f)*winHeight);
-	//
-	//camera.x = -(App->player->player.position.x - (1.0f/3.0f)*winWidth);
-
-	////Pan camera towards player when player lands Or distances himself from the last grounded position
-	//if (abs(App->player->player.lastGroundedPos.y - App->player->player.position.y) > 100 || App->player->player.playerGrounded == false) {
-	//	if (goalPos.y != camera.y) {
-	//		if (goalPos.y > camera.y) {
-	//			camera.y += 5; //Magic Number?
-	//			if (goalPos.y < camera.y) camera.y = goalPos.y;
-	//		}
-	//		else {
-	//			camera.y -= 5;
-	//			if (goalPos.y > camera.y) camera.y = goalPos.y;
-	//		}
-	//	}
-	//}
 
 	camera.x = -App->player->player.position.x + winWidth/2 - App->player->player.boxW;
 	camera.y = -App->player->player.position.y + (winHeight/2) - App->player->player.boxH / 2;

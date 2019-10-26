@@ -8,17 +8,17 @@
 		<map_name filename="Dark_Map.tmx" />
 	</map>
 	<scene />
-	<player playerstate="0">
+	<player playerstate="3">
 		<points>
-			<position x="250" y="1413" />
-			<prevposition x="250" y="1413" />
-			<lastGroundedPos x="250" y="1413" />
+			<position x="550" y="1261.5" />
+			<prevposition x="544" y="1256.25" />
+			<lastGroundedPos x="382" y="1398" />
 		</points>
-		<flags able_to_jump="true" able_to_dash="true" dashing="false" jumping="false" drop_plat="false" playerGrounded="true" flip="false" godMode="false" />
+		<flags able_to_jump="false" able_to_dash="true" dashing="false" jumping="true" drop_plat="false" playerGrounded="false" flip="false" godMode="false" />
 	</player>
 	<collisions />
 	<fade />
 	<renderer>
-		<camera x="0" y="-832" />
+		<camera x="-84" y="-832" />
 	</renderer>
 </game_state>

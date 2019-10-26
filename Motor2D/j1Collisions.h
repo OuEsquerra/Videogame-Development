@@ -74,7 +74,6 @@ public:
 
 	p2List<Collider*> colliders;
 	bool debug_colliders;
-	uint platform_h = 25; //MAGIC NUMBER
 
 private:
 
