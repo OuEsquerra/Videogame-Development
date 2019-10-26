@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="108">
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="702" columns="18">
-  <image source="DarkTileset.png" width="576" height="1248"/>
+  <image source="Game/maps/DarkTileset.png" width="576" height="1248"/>
  </tileset>
  <tileset firstgid="703" name="Adventurer" tilewidth="92" tileheight="60" tilecount="21" columns="7">
-  <image source="Adventurer2.png" width="644" height="180"/>
+  <image source="Game/maps/Adventurer.png" width="644" height="180"/>
   <tile id="0">
    <properties>
     <property name="idle" value=""/>
