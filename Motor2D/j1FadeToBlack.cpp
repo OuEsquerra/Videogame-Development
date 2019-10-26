@@ -109,7 +109,7 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 
 	ret = App->map->Load(mapname);		//Load specified map
 	App->collisions->LoadFromMap();		//Load Collisions
-	ret = App->player->InitPlayer();	//Reset Player
+	ret = App->player->StartPlayer();	//Reset Player
 	
 	return ret;
 }

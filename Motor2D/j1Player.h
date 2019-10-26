@@ -32,19 +32,20 @@ struct Player {
 
 	float gravity; 
 
-	bool able_to_jump = false; //Only lets the player jump if it's true
-	bool able_to_dash = false;
-	bool dashing = false;
-	bool jumping = false; //True when the player is jumping
+	bool able_to_jump; //Only lets the player jump if it's true
+	bool able_to_dash;
+	bool dashing;
+	bool jumping; //True when the player is jumping
 	bool drop_plat; //Checks if the player is dropping from a platform.
 	bool playerGrounded;
-	bool flip = false;
-	bool godMode = false;
-	bool cealing = false;
-	bool wall = false;
-	bool movingRight = false;
-	bool movingLeft = false;
-	bool justLoaded = false;
+	bool flip;
+	bool godMode;
+	bool cealing;
+	bool wall;
+	bool onPlatform;
+	bool movingRight;
+	bool movingLeft;
+	bool justLoaded;
 
 
 	int boxW;
@@ -97,7 +98,7 @@ public:// methods
 	void startDashTime();
 
 	void GodMode();
-	bool InitPlayer();
+	bool StartPlayer();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);

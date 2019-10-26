@@ -47,7 +47,6 @@ bool j1Player::Load(pugi::xml_node& node) {
 	
 	LOG("Loading Player...");
 
-	
 	player.justLoaded = true;
 
 	pugi::xml_node points = node.child("points");
@@ -101,7 +100,7 @@ bool j1Player::Awake(pugi::xml_node& conf)
 
 bool j1Player::Start() 
 {
-	InitPlayer();
+	StartPlayer();
 	return true;
 };
 
@@ -160,7 +159,7 @@ bool j1Player::PreUpdate()
 				player.playerState = jumping;
 
 				player.speed.y = 0;	
-//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
+
 			}
 		}
 	}
@@ -186,6 +185,11 @@ bool j1Player::Update(float dt)
 	player.prevposition = player.position;
 
 	dashTime++;
+
+	if (player.cealing || player.onPlatform && !player.jumping)
+	{
+		player.speed.y = 0;
+	}
 
 	if ((player.playerState == dashRight || player.playerState == dashLeft) && !player.dashing)
 	{
@@ -250,7 +254,7 @@ bool j1Player::Update(float dt)
 		}
 		
 		// Grounded logic to check some bools and states
-		if (player.playerGrounded)
+		if (player.playerGrounded || player.onPlatform)
 		{
 			player.able_to_jump = true;
 			player.jumping = false;
@@ -282,7 +286,7 @@ bool j1Player::Update(float dt)
 		else //Player not Dashing
 		{
 			//Logic for when player is jumping
-			if (player.jumping)
+			if (player.jumping )
 			{
 				player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
 
@@ -294,7 +298,6 @@ bool j1Player::Update(float dt)
 				if (player.speed.y < 0) // If on jump is going up uses jump animation
 				{
 					player.animation = "jump";
-
 				}
 				else // If on jump is going down uses fall animation
 				{
@@ -303,11 +306,6 @@ bool j1Player::Update(float dt)
 			}
 
 			player.position.y += player.speed.y; //Update position y
-
-			if (player.cealing)
-			{
-				player.speed.y = 0;
-			}
 		}
 
 		player.position.x += player.speed.x;
@@ -316,6 +314,7 @@ bool j1Player::Update(float dt)
 		{
 			player.speed.x = 0;
 		}
+		
 	}
 	else //When GodMode is active
 	{
@@ -340,24 +339,21 @@ bool j1Player::Update(float dt)
 	App->map->DrawAnimation(player.animation,"Adventurer",player.flip);
 	
 	//Update Player Collider after updating its position
-	player.collider->SetPos(player.position.x + 20, player.position.y);
+	player.collider->SetPos(player.position.x + 20, player.position.y); //Magic Numbers
 
 	player.cealing = false;
 	player.wall = false;
+	player.onPlatform = false;
 
 	return true;
 };
 
 bool j1Player::PostUpdate() 
 {
-//<<<<<<< HEAD
-//=======
-
 	if (player.justLoaded == true) { //This has to be switched after collisions, hence the post-update.
 		player.justLoaded = false;
 	}
 
-//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 	return true;
 };
 
@@ -366,23 +362,34 @@ bool j1Player::cleanUp()
 	return true;
 };
 
-bool j1Player::InitPlayer() {
+bool j1Player::StartPlayer() {
 
 	if(App->fade->playerReset == true)
-	player.position = { 250.0f,1100.0f }; //Starting position //Magic Numbers
+
+	player.position = { 250.0f,1100.0f }; //Starting position 
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
 
 	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
+
+	player.able_to_jump = false; //Only lets the player jump if it's true
+	player.able_to_dash = false;
+	player.dashing = false;
+	player.jumping = false; //True when the player is jumping
+	player.drop_plat; //Checks if the player is dropping from a platform.
+	player.flip = false;
+	player.godMode = false;
+	player.cealing = false;
+	player.wall = false;
+	player.onPlatform = false;
+	player.movingRight = false;
+	player.movingLeft = false;
+	player.justLoaded = false;
 	
 	return true;
 }
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
-
-
-	
-
 
 	if (B->type == ObjectType::PLAYER) {
 		Collider temp = *A;
@@ -409,37 +416,28 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		{
 			player.wall = true;
 			LOG("Touching WALL");
-//<<<<<<< HEAD
-//			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
-//			{ //Player to the left 
-//				player.position.x = B->rect.x -A->rect.w -19; //Magic Numbers
-//=======
+
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
 				player.position.x = B->rect.x -A->rect.w - 19; //Magic Numbers
-//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
+
 			}
 			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
 			{ //Player to the right
 				player.position.x = B->rect.x + B->rect.w - 19; //Magic Numbers
 			}
 		}
-//<<<<<<< HEAD
-//		else if (player.position.y + A->rect.h -player.maxSpeed.y -5 < B->rect.y  
-//			&& A->rect.x < B->rect.x + B->rect.w 
-//			&& A->rect.x + A->rect.w > B->rect.x ) 
-//		{ // from above
-//=======
+
 		//from above
-		else if (player.position.y + A->rect.h -player.maxSpeed.y -2 < B->rect.y  
+		else if (player.position.y + A->rect.h - player.maxSpeed.y -5 < B->rect.y  
 			&& A->rect.x < B->rect.x + B->rect.w 
 			&& A->rect.x + A->rect.w > B->rect.x 
 			&& player.justLoaded == false) {
-//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 
 			if (player.speed.y > 0)
 			{
 				player.speed.y = 0;
 			}
+
 			player.position.y = B->rect.y - player.collider->rect.h + 1 ;
 			player.SetGroundState(true);
 		}
@@ -451,15 +449,17 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		
 		if (player.drop_plat == false ) {
 
-			if ((player.prevposition.y + player.collider->rect.h) < B->rect.y + (B->rect.h / 2.0f) && (player.prevposition.y + player.collider->rect.h) > B->rect.y) {//this won't ever happen
+			if ((player.prevposition.y + player.collider->rect.h) < B->rect.y + (B->rect.h / 2.0f) && (player.prevposition.y + player.collider->rect.h) > B->rect.y && player.speed.y >= 0) {//this won't ever happen
 				player.position.y = B->rect.y - player.collider->rect.h + 1;
 				player.SetGroundState(true);
 				player.able_to_jump = false;
+				player.onPlatform = true;
 			}
-			else if ((player.position.y >= player.prevposition.y) && (player.prevposition.y + player.collider->rect.h) < B->rect.y) {
+			else if ((player.position.y >= player.prevposition.y) && (player.prevposition.y + player.collider->rect.h) < B->rect.y && player.speed.y >= 0) {
 				player.position.y = B->rect.y - player.collider->rect.h + 1;
 				player.SetGroundState(true);
 				player.able_to_jump = false;
+				player.onPlatform = true;
 			}
 		}
 
