@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="108">
+ <properties>
+  <property name="startX" type="int" value="250"/>
+  <property name="startY" type="int" value="1100"/>
+ </properties>
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="702" columns="18">
   <image source="DarkTileset.png" width="576" height="1248"/>
  </tileset>
@@ -30094,17 +30098,17 @@
   <properties>
    <property name="Speed" type="float" value="1"/>
   </properties>
-  <object id="18" name="Ground" type="solid" x="0" y="1473.33" width="1761.02" height="132.667"/>
-  <object id="27" name="Ground" type="solid" x="673" y="1345.67" width="129" height="31.667"/>
-  <object id="28" name="Ground" type="solid" x="798" y="1279.67" width="132" height="97.667"/>
-  <object id="29" name="Ground" type="solid" x="1153" y="1280.67" width="124" height="63.667"/>
+  <object id="18" name="Ground" type="solid" x="0" y="1472" width="1761.02" height="128"/>
+  <object id="27" name="Ground" type="solid" x="672" y="1344" width="128" height="32"/>
+  <object id="28" name="Ground" type="solid" x="800" y="1279.67" width="128" height="96.33"/>
+  <object id="29" name="Ground" type="solid" x="1152" y="1280" width="128" height="63.667"/>
   <object id="31" name="Ground" type="solid" x="1632.41" y="1279.67" width="128" height="192.667"/>
   <object id="33" name="Ground" type="solid" x="2271.67" y="1472.67" width="472.97" height="126.667"/>
   <object id="34" name="Ground" type="solid" x="2625" y="1344.67" width="127.334" height="128"/>
   <object id="35" name="Ground" type="solid" x="2977.66" y="1118.66" width="124.667" height="64"/>
   <object id="38" name="Ground" type="solid" x="2592.33" y="1024" width="63.334" height="65.3333"/>
-  <object id="39" name="Platform" type="platform" x="1439.66" y="576.667" width="128.667" height="31.3333"/>
-  <object id="41" name="Ground" type="solid" x="1663.12" y="833.272" width="480.334" height="93.3333"/>
+  <object id="39" name="Platform" type="platform" x="1440" y="576" width="128" height="32"/>
+  <object id="41" name="Ground" type="solid" x="1663.12" y="832" width="480.334" height="96"/>
   <object id="43" name="Ground" type="solid" x="3199.5" y="576.833" width="97.5003" height="62.8333"/>
   <object id="48" name="Ground" type="solid" x="5055.66" y="-0.3335" width="1344" height="192.031"/>
   <object id="49" name="Ground" type="solid" x="5824" y="416.606" width="578.667" height="1184.4"/>
@@ -30117,40 +30121,39 @@
   <object id="65" name="Platform" type="platform" x="2622.67" y="1215" width="131.334" height="33.3333"/>
   <object id="66" name="Ground" type="solid" x="2144.17" y="1023.33" width="191.501" height="64.3333"/>
   <object id="67" name="Ground" type="solid" x="2015" y="928" width="128.501" height="127.333"/>
-  <object id="68" name="Ground" type="solid" x="1409.17" y="704.333" width="253.667" height="221"/>
-  <object id="69" name="Platform" type="platform" x="1568.33" y="447" width="95.3343" height="31.3333"/>
+  <object id="68" name="Ground" type="solid" x="1408" y="704.333" width="254.837" height="223.667"/>
+  <object id="69" name="Platform" type="platform" x="1568.33" y="448" width="95.3343" height="32"/>
   <object id="71" name="Platform" type="platform" x="2144.33" y="927" width="130.001" height="31.3333"/>
-  <object id="72" name="Ground" type="solid" x="1662.83" y="768" width="66.667" height="65.3333"/>
+  <object id="72" name="Ground" type="solid" x="1662.83" y="768" width="65.17" height="65.3333"/>
   <object id="73" name="Ground" type="solid" x="1983.17" y="479.333" width="289.667" height="63.3333"/>
   <object id="74" name="Ground" type="solid" x="1951.17" y="0.666667" width="516.334" height="382.667"/>
   <object id="75" name="Ground" type="solid" x="1729.17" y="-1.33333" width="221.667" height="161.333"/>
-  <object id="76" name="Ground" type="solid" x="1792.67" y="160.167" width="158.334" height="63.333"/>
+  <object id="76" name="Ground" type="solid" x="1792" y="160.167" width="159.004" height="63.333"/>
   <object id="77" name="Ground" type="solid" x="2047.17" y="512.667" width="453.667" height="62.6666"/>
   <object id="78" name="Ground" type="solid" x="1760.83" y="1376.5" width="124.5" height="225.667"/>
   <object id="79" name="Ground" type="solid" x="2466.5" y="0.666667" width="511" height="321.333"/>
   <object id="80" name="Ground" type="solid" x="2369.17" y="544.667" width="416.334" height="65.3333"/>
   <object id="81" name="Ground" type="solid" x="3329" y="673.333" width="128.667" height="93.3333"/>
-  <object id="83" name="Ground" type="solid" x="3551.67" y="898.667" width="128.667" height="61.3333"/>
-  <object id="84" name="Ground" type="solid" x="4062.33" y="862.667" width="128.667" height="64.6666"/>
-  <object id="85" name="Ground" type="solid" x="4609" y="1087.67" width="94.0003" height="62.6666"/>
-  <object id="86" name="Platform" type="platform" x="4703.67" y="1120.67" width="194" height="30.6666"/>
-  <object id="87" name="Ground" type="solid" x="4446.33" y="737.333" width="98" height="446.667"/>
-  <object id="88" name="Ground" type="solid" x="4898.33" y="-1.33333" width="158" height="1152"/>
-  <object id="89" name="Ground" type="solid" x="4703" y="1278.67" width="195.334" height="34.6666"/>
+  <object id="83" name="Ground" type="solid" x="3552" y="896" width="128.667" height="64"/>
+  <object id="84" name="Ground" type="solid" x="4064" y="864" width="128" height="64"/>
+  <object id="85" name="Ground" type="solid" x="4608" y="1088" width="96" height="64"/>
+  <object id="86" name="Platform" type="platform" x="4704" y="1120" width="192.33" height="32"/>
+  <object id="87" name="Ground" type="solid" x="4448" y="736" width="96.33" height="448"/>
+  <object id="88" name="Ground" type="solid" x="4896" y="-1.33333" width="160.33" height="1153.33"/>
+  <object id="89" name="Ground" type="solid" x="4704" y="1280" width="192" height="32"/>
   <object id="90" name="Ground" type="solid" x="5057" y="1279.67" width="64.3336" height="32.6666"/>
-  <object id="91" name="Ground" type="solid" x="5617.67" y="1504.34" width="206.667" height="96.0003"/>
-  <object id="92" name="Ground" type="solid" x="2976.5" y="3.3335" width="1507" height="257.333"/>
-  <object id="93" name="Ground" type="solid" x="4486.5" y="1.3335" width="411" height="447.333"/>
-  <object id="94" name="Ground" type="solid" x="4736.5" y="450.333" width="161" height="126"/>
-  <object id="96" name="Ground" type="solid" x="4545.67" y="898.667" width="63.3333" height="252.666"/>
-  <object id="97" name="Platform" type="platform" x="5695" y="1314" width="127.333" height="30.6666"/>
+  <object id="92" name="Ground" type="solid" x="2976.5" y="0" width="1503.5" height="256"/>
+  <object id="93" name="Ground" type="solid" x="4480" y="1.3335" width="417.5" height="447.333"/>
+  <object id="94" name="Ground" type="solid" x="4736.5" y="450.333" width="159.5" height="126"/>
+  <object id="96" name="Ground" type="solid" x="4544" y="896" width="64" height="256"/>
+  <object id="97" name="Platform" type="platform" x="5696" y="1312" width="127.333" height="30.6666"/>
   <object id="98" name="Ground" type="solid" x="5536.67" y="416.076" width="128" height="287.848"/>
   <object id="99" name="Ground" type="solid" x="5728.67" y="864.076" width="94.6673" height="95.848"/>
-  <object id="101" name="Platform" type="platform" x="5760.33" y="1186.67" width="62.6663" height="30.6666"/>
+  <object id="101" name="Platform" type="platform" x="5760" y="1184" width="62.6663" height="30.6666"/>
   <object id="102" name="Ground" type="solid" x="5344.5" y="1055.94" width="63.4852" height="32.1818"/>
   <object id="103" name="Ground" type="solid" x="5056.01" y="895.909" width="64.2352" height="32.6818"/>
-  <object id="104" name="Ground" type="solid" x="5534.55" y="830.326" width="132.235" height="32.6818"/>
-  <object id="105" name="Ground" type="solid" x="5600.17" y="1472" width="223.667" height="32.667"/>
+  <object id="104" name="Ground" type="solid" x="5536" y="832" width="128" height="32"/>
+  <object id="105" name="Ground" type="solid" x="5600.17" y="1472" width="223.667" height="128"/>
   <object id="106" name="Ground" type="solid" x="5374.92" y="673.242" width="63.4852" height="32.1818"/>
   <object id="107" name="Ground" type="solid" x="5120.26" y="510.576" width="63.4852" height="32.1818"/>
  </objectgroup>

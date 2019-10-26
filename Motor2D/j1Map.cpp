@@ -170,6 +170,7 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
 
+	data.objectgroups.clear();
 	
 	// Remove all layers
 	data.layers.clear();
@@ -305,6 +306,9 @@ bool j1Map::LoadMap()
 	else
 	{
 		
+		data.start_position.x = map.child("properties").child("property").attribute("value").as_float();
+		data.start_position.y = map.child("properties").child("property").next_sibling().attribute("value").as_float();
+
 		data.width = map.attribute("width").as_int();
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
@@ -456,10 +460,6 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 };
 
-
-
-
-// TODO 3: Create the definition for a function that loads a single layer
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	layer->name		= node.attribute("name").as_string();

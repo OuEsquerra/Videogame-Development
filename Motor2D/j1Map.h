@@ -177,13 +177,17 @@ struct MapData
 	int						height;
 	int						tile_width;
 	int						tile_height;
+	
+	const char*				name;
+	fPoint					start_position;
+	
 	SDL_Color				background_color;
 	MapTypes				type;
 	p2List<TileSet*>		tilesets;
 	p2List<MapLayer*>		layers;
 	p2List<MapObjectgroup*> objectgroups;
-	
-	const char*				name;
+
+
 };
 
 // ----------------------------------------------------

@@ -46,6 +46,7 @@ struct Player {
 	bool movingLeft = false;
 	bool justLoaded = false;
 
+	bool freeze = false;
 
 	int boxW;
 	int boxH;
@@ -87,7 +88,7 @@ public:// methods
 
 	bool PostUpdate();
 
-	bool cleanUp();
+	bool CleanUp();
 
 	void check_x_move();
 	void MoveRight();

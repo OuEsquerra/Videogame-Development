@@ -107,6 +107,12 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
+	if (player.freeze == true) //If the player is frozen, Logic won't be updated
+	{
+		return true;
+	} 
+	
+	
 	player.SetGroundState(false);
 
 	if (player.playerState != jumping && player.playerState != falling && !player.dashing) //
@@ -183,6 +189,12 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
+	if (player.freeze == true) //If the player is frozen, Logic won't be updated
+	{
+		return true;
+	}
+	
+	
 	player.prevposition = player.position;
 
 	dashTime++;
@@ -350,18 +362,20 @@ bool j1Player::Update(float dt)
 
 bool j1Player::PostUpdate() 
 {
-//<<<<<<< HEAD
-//=======
+	if (player.freeze == true) //If the player is frozen, Logic won't be updated
+	{
+		return true;
+	}
+
 
 	if (player.justLoaded == true) { //This has to be switched after collisions, hence the post-update.
 		player.justLoaded = false;
 	}
 
-//>>>>>>> 23f3df74c08fb1c97601df2e60e4a596e092b274
 	return true;
 };
 
-bool j1Player::cleanUp() 
+bool j1Player::CleanUp() 
 {
 	return true;
 };
@@ -369,7 +383,7 @@ bool j1Player::cleanUp()
 bool j1Player::InitPlayer() {
 
 	if(App->fade->playerReset == true)
-	player.position = { 250.0f,1100.0f }; //Starting position //Magic Numbers
+	player.position = App->map->data.start_position;
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
 

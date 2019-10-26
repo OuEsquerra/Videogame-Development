@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="182">
  <properties>
-  <property name="startX" type="int" value="0"/>
+  <property name="startX" type="int" value="288"/>
   <property name="startY" type="int" value="0"/>
  </properties>
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="702" columns="18">
