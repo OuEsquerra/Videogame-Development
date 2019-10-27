@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="187">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="189">
  <properties>
   <property name="startX" type="int" value="288"/>
   <property name="startY" type="int" value="0"/>
@@ -30165,5 +30165,10 @@
   <object id="184" name="Ground" type="solid" x="6208" y="1120" width="192" height="466.667"/>
   <object id="185" name="Ground" type="solid" x="5312" y="0" width="128" height="448"/>
   <object id="186" name="Ground" type="solid" x="5440" y="0" width="416" height="224"/>
+  <object id="187" name="Death" type="warp" x="0" y="1600" width="6400" height="32">
+   <properties>
+    <property name="MapToLoad" value="Dark_Map2.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

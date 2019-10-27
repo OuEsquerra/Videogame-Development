@@ -97,7 +97,6 @@ public:// methods
 	void MoveLeft();
 	void MoveUp();
 	void MoveDown();
-	void startDashTime();
 
 	void GodMode();
 	bool StartPlayer();

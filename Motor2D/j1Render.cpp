@@ -77,9 +77,11 @@ bool j1Render::Update(float dt)
 	uint winWidth, winHeight;
 	App->win->GetWindowSize(winWidth, winHeight);
 
+	
 	camera.x = -App->player->player.position.x + winWidth/2 - App->player->player.boxW;
 	camera.y = -App->player->player.position.y + (winHeight/2) - App->player->player.boxH / 2;
 
+	//Keep camera from leaving the map bounds
 	if (camera.x >= 0)
 	{
 		camera.x = 0;
@@ -162,7 +164,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	SDL_Rect rect;
 	if (flip) 
 	{
-		rect.x = ((int)(camera.x * speed) + x * scale) + 92; //Add player width when flipping it
+		rect.x = ((int)(camera.x * speed) + x * scale) + App->player->player.boxW; //Add player width when flipping it
 		rect.y = (int)(camera.y * speed) + y * scale;
 	}
 	else
