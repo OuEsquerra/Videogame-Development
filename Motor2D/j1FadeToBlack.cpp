@@ -108,8 +108,38 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 	LOG("Switching Maps...");
 
 	App->collisions->colliders.clear(); //Clear colliders
-	App->map->data = {0};				//Empty all map data. 
 	
+	//Empty all map data. 
+	p2List_item<TileSet*>* item;
+	item = App->map->data.tilesets.start;
+
+	while (item != NULL)
+	{
+		item->data->animations.clear();
+		delete item->data->Tilerect;
+		delete item->data->PlayerTilerect;
+
+		SDL_DestroyTexture(item->data->texture);
+		RELEASE(item->data);
+		item = item->next;
+	}
+	App->map->data.tilesets.clear();
+	
+	p2List_item<MapObjectgroup*>* item2;
+	item2 = App->map->data.objectgroups.start;
+
+	while (item2 != NULL)
+	{
+		delete[] item2->data->objects;
+
+		RELEASE(item2->data);
+		item2 = item2->next;
+	}
+	App->map->data.objectgroups.clear();
+
+	// Remove all layers
+	App->map->data.layers.clear();
+	App->map->data = { 0 };
 
 	ret = App->map->Load(mapname);		//Load specified map
 	App->collisions->LoadFromMap();		//Load Collisions

@@ -159,18 +159,37 @@ bool j1Map::CleanUp()
 {
 	LOG("Unloading map");
 
-	// Remove all tilesets
+	//Empty all map data. 
+	
+	//Tileset CleanUp
 	p2List_item<TileSet*>* item;
-	item = data.tilesets.start;
+	item = App->map->data.tilesets.start;
 
-	while(item != NULL)
+	while (item != NULL)
 	{
+		item->data->animations.clear();
+		delete item->data->Tilerect;
+		delete item->data->PlayerTilerect;
+
+		SDL_DestroyTexture(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}
-	data.tilesets.clear();
+	App->map->data.tilesets.clear();
 
-	data.objectgroups.clear();
+	
+	//ObjectGroups CleanUp
+	p2List_item<MapObjectgroup*>* item2;
+	item2 = App->map->data.objectgroups.start;
+
+	while (item2 != NULL)
+	{
+		delete[] item2->data->objects;
+
+		RELEASE(item2->data);
+		item2 = item2->next;
+	}
+	App->map->data.objectgroups.clear();
 	
 	// Remove all layers
 	data.layers.clear();
