@@ -51,6 +51,7 @@ struct Player {
 
 	int boxW;
 	int boxH;
+	int boxOffset_x;
 
 	SDL_Rect playerBox;
 	PlayerState playerState;
@@ -113,8 +114,9 @@ public://variables
 	
 private:
 
-	int dashTime = 0;
-	//j1Input playerInput;
+	int dashTime  = 0;
+	int jumpSound = 1;
+	
 };
 
 

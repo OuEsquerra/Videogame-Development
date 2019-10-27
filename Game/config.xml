@@ -24,6 +24,7 @@
     <speed x="0" y="0" />
     <maxSpeed x="6" y="15"/>
     <box w="46" h="61"/>
+    <offset x="20"/>
   </player>
   
   <file_system>
@@ -34,6 +35,7 @@
 
   <map>
     <folder>maps/</folder>
+    <division int="15"/>
   </map>
 
 </config>

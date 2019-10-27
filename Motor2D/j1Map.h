@@ -239,7 +239,9 @@ private:
 
 	int i = 0;
 
-	int frameCount=1;
+	int frameCount = 1;
+
+	int ms_to_frame;
 
 	pugi::xml_document	map_file;
 	p2SString			folder;

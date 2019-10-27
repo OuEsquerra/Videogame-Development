@@ -45,6 +45,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	folder.create(config.child("folder").child_value());
 
+	ms_to_frame = config.child("division").attribute("int").as_int();
+
 	return ret;
 }
 
@@ -143,7 +145,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 	App->player->player.position.x , App->player->player.position.y,	//drawn at player position
 	animTileset->PlayerTileRect(currentanim->frames[i]),flip );			//draw frames tile id
 
-	if (frameCount % (currentanim->speed/15) == 0)	//counts frames each loop (60 fps using vsync) Magic Numbers
+	if (frameCount % (currentanim->speed/ms_to_frame) == 0)	//counts frames each loop (60 fps using vsync)
 	{
 		i++;
 	}

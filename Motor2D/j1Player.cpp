@@ -39,6 +39,7 @@ bool j1Player::Save(pugi::xml_node& node) const {
 	flags.append_attribute("flip") = player.flip;
 	flags.append_attribute("godMode") = player.godMode;
 
+
 	node.append_attribute("playerstate") = player.playerState;
 
 	return true;
@@ -97,10 +98,13 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	player.gravity =		conf.child("gravity").attribute("value").as_float();
 	player.boxW =			conf.child("box").attribute("w").as_int();
 	player.boxH =			conf.child("box").attribute("h").as_int();
+	player.boxOffset_x =	conf.child("offset").attribute("x").as_int();
 
-	
 	App->audio->LoadFx("audio/fx/jump1.wav");
-	App->audio->LoadFx("audio/fx/sword_sound3.wav");
+	App->audio->LoadFx("audio/fx/jump2.wav");
+	App->audio->LoadFx("audio/fx/jump3.wav");
+
+	App->audio->LoadFx("audio/fx/sword_sound.wav");
 	
 	return true;
 }; 
@@ -143,7 +147,7 @@ bool j1Player::PreUpdate()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		{
-			App->audio->PlayFx( 2 , 0 );
+			App->audio->PlayFx( 4 , 0 );
 			if (player.flip)
 			{
 				player.playerState = dashLeft;
@@ -170,7 +174,8 @@ bool j1Player::PreUpdate()
 		{
 			if (player.able_to_jump)
 			{
-				App->audio->PlayFx(1,0);
+				jumpSound = rand() % 3 + 1;
+				App->audio->PlayFx(jumpSound,0);
 
 				player.playerState = jumping;
 
@@ -180,7 +185,7 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) //If player has to drop from platform
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) //If player has to drop from platform
 	{
 		player.drop_plat = true;
 	}
@@ -202,7 +207,6 @@ bool j1Player::Update(float dt)
 	{
 		return true;
 	}
-	
 	
 	player.prevposition = player.position;
 
@@ -361,7 +365,7 @@ bool j1Player::Update(float dt)
 	App->map->DrawAnimation(player.animation,"Adventurer",player.flip);
 	
 	//Update Player Collider after updating its position
-	player.collider->SetPos(player.position.x + 20, player.position.y); //Magic Numbers
+	player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
 
 	player.cealing = false;
 	player.wall = false;
@@ -445,12 +449,12 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			LOG("Touching WALL");
 
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
-				player.position.x = B->rect.x -A->rect.w - 19; //Magic Numbers
+				player.position.x = B->rect.x -A->rect.w - player.boxOffset_x -1;
 
 			}
 			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
 			{ //Player to the right
-				player.position.x = B->rect.x + B->rect.w - 19; //Magic Numbers
+				player.position.x = B->rect.x + B->rect.w - player.boxOffset_x -1; 
 			}
 		}
 
