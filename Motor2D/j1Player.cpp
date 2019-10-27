@@ -8,6 +8,7 @@
 #include "p2Animation.h"
 #include "j1Collisions.h"
 #include "p2Log.h"
+#include "j1Audio.h"
 
 j1Player::j1Player() 
 {
@@ -80,6 +81,8 @@ j1Player::~j1Player()
 
 bool j1Player::Init() 
 {
+	
+
 	return true;
 };
 
@@ -95,9 +98,13 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	player.boxW =			conf.child("box").attribute("w").as_int();
 	player.boxH =			conf.child("box").attribute("h").as_int();
 
+	
+	App->audio->LoadFx("audio/fx/jump1.wav");
+	App->audio->LoadFx("audio/fx/sword_sound3.wav");
+	
 	return true;
 }; 
-
+ 
 bool j1Player::Start() 
 {
 	StartPlayer();
@@ -136,6 +143,7 @@ bool j1Player::PreUpdate()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		{
+			App->audio->PlayFx( 2 , 0 );
 			if (player.flip)
 			{
 				player.playerState = dashLeft;
@@ -162,6 +170,8 @@ bool j1Player::PreUpdate()
 		{
 			if (player.able_to_jump)
 			{
+				App->audio->PlayFx(1,0);
+
 				player.playerState = jumping;
 
 				player.speed.y = 0;	
