@@ -422,6 +422,10 @@ bool j1Player::StartPlayer() {
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
 
+	if (player.godMode) return; //While in God Mode Collisions are disregarded
+	
+	
+	
 	if (B->type == ObjectType::PLAYER) {
 		Collider temp = *A;
 		A = B;

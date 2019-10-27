@@ -53,20 +53,22 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		App->SaveGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->fade->FadeToBlack("Dark_Map.tmx");
 
 	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade->FadeToBlack("Dark_Map2.tmx");
 
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
+	{
+		if(App->map->data.name == "Dark_Map.tmx") App->fade->FadeToBlack("Dark_Map.tmx");
+		else if (App->map->data.name == "Dark_Map2.tmx") App->fade->FadeToBlack("Dark_Map2.tmx");
+	}
+
+
+
 	App->map->Draw();
 
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count());
-
-	App->win->SetTitle(title.GetString());
 	return true;
 }
 

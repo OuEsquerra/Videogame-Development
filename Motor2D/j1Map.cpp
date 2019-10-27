@@ -209,6 +209,7 @@ bool j1Map::Load(const char* file_name)
 
 	p2SString* fileName = new p2SString(file_name);
 
+
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
 
 	if(result == NULL)
@@ -220,7 +221,7 @@ bool j1Map::Load(const char* file_name)
 	// Load general info ----------------------------------------------
 	if(ret == true)
 	{
-		data.name = fileName->GetString();
+		data.name = file_name;
 		ret = LoadMap();
 	}
 
