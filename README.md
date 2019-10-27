@@ -38,4 +38,7 @@ The Github repository can be accesed [here.](https://github.com/OuEsquerra/Video
 This Game falls under GNU General Public License v3.0 (GNU GPLv3.0). For details on the license, please see LICENSE.txt
 
 3rd party resources:
-  
+  - [A64ish 8x8 Tiles(Expanded).](https://flashed.itch.io/a64ish)
+  - [Animated pixel hero](https://rvros.itch.io/animated-pixel-hero)
+  - [Roundabout - 8-bit version](https://www.youtube.com/watch?v=YmLTfeyffok)
+  - [Generic Hero Effort Noises](https://opengameart.org/content/generic-hero-effort-noises)
