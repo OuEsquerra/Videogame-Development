@@ -80,6 +80,7 @@ bool j1Collisions::Update(float dt) {
 };
 
 void j1Collisions::DebugDraw() {
+	
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		if (debug_colliders)
@@ -91,7 +92,6 @@ void j1Collisions::DebugDraw() {
 			debug_colliders = true;
 		}
 	}
-
 
 	if (debug_colliders == false)
 		return;
@@ -115,7 +115,7 @@ void j1Collisions::DebugDraw() {
 			App->render->DrawQuad(Coll_iterator->data->rect, 0, 255, 0, alpha);
 			break;
 		case ObjectType::WARP: // pink
-			App->render->DrawQuad(Coll_iterator->data->rect, 255, 128, 128, alpha);
+			App->render->DrawQuad(Coll_iterator->data->rect, 255, 20, 147, alpha);
 			break;
 		}
 		Coll_iterator = Coll_iterator->next;
@@ -150,6 +150,7 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* ca
 
 //Add Colliders to the list from the map
 void j1Collisions::LoadFromMap() {
+	
 	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
 	while (list_i != nullptr) {
 		for (int i = 0; i < list_i->data->objects_size; i++) {
@@ -158,6 +159,7 @@ void j1Collisions::LoadFromMap() {
 		}
 		list_i = list_i->next;
 	}
+
 }
 
 //  Struct Collider Methods --------------------------------------
