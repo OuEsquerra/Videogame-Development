@@ -105,6 +105,8 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	App->audio->LoadFx("audio/fx/jump3.wav");
 
 	App->audio->LoadFx("audio/fx/sword_sound.wav");
+
+	gravity_tmp = player.gravity;
 	
 	return true;
 }; 
@@ -117,6 +119,8 @@ bool j1Player::Start()
 
 bool j1Player::PreUpdate() 
 {
+	jump_key_down_timer++;
+
 	if (player.freeze == true) //If the player is frozen, Logic won't be updated
 	{
 		return true;
@@ -148,6 +152,7 @@ bool j1Player::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 		{
 			App->audio->PlayFx( 4 , 0 );
+
 			if (player.flip)
 			{
 				player.playerState = dashLeft;
@@ -158,10 +163,12 @@ bool j1Player::PreUpdate()
 			}
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 			{
+				dashTime = 0;
 				player.playerState = dashRight;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 			{
+				dashTime = 0;
 				player.playerState = dashLeft;
 			}
 			player.able_to_dash = false;
@@ -175,13 +182,31 @@ bool j1Player::PreUpdate()
 			if (player.able_to_jump)
 			{
 				jumpSound = rand() % 3 + 1;
-				App->audio->PlayFx(jumpSound,0);
+				App->audio->PlayFx(jumpSound,0);//Sound for the start of the jump
 
 				player.playerState = jumping;
+
+				jump_key_down = true;
+
+				jump_key_down_timer = 0;
 
 				player.speed.y = 0;	
 
 			}
+			player.gravity = gravity_tmp / 2;
+
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer < 11)
+		{
+			player.gravity = gravity_tmp / 2;
+			player.playerState = jumping;
+
+			jump_key_down = true;
+		}
+		else
+		{
+			jump_key_down = false;
+			player.gravity = gravity_tmp;
 		}
 	}
 
@@ -217,11 +242,6 @@ bool j1Player::Update(float dt)
 		player.speed.y = 0;
 	}
 
-	if ((player.playerState == dashRight || player.playerState == dashLeft) && !player.dashing)
-	{
-		dashTime = 0;
-	}
-
 	if (!player.dashing)
 	{
 		check_x_move();
@@ -249,6 +269,7 @@ bool j1Player::Update(float dt)
 				player.animation = "crouch";
 
 				break;
+
 			case jumping:
 
 				player.speed.y -= player.acceleration.y;
@@ -314,13 +335,6 @@ bool j1Player::Update(float dt)
 			//Logic for when player is jumping
 			if (player.jumping )
 			{
-				player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
-
-				if (player.speed.y >= player.maxSpeed.y) // Speed.y is capped an maxSpeed
-				{
-					player.speed.y = player.maxSpeed.y;
-				}
-
 				if (player.speed.y < 0) // If on jump is going up uses jump animation
 				{
 					player.animation = "jump";
@@ -328,6 +342,14 @@ bool j1Player::Update(float dt)
 				else // If on jump is going down uses fall animation
 				{
 					player.animation = "fall";
+					
+				}
+
+				player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
+
+				if (player.speed.y >= player.maxSpeed.y) // Speed.y is capped an maxSpeed
+				{
+					player.speed.y = player.maxSpeed.y;
 				}
 			}
 

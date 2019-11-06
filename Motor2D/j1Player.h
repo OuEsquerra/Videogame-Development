@@ -113,6 +113,9 @@ public://variables
 	
 private:
 
+	bool jump_key_down = false;
+	int jump_key_down_timer = 0;
+	float gravity_tmp = 0;
 	int dashTime  = 0;
 	int jumpSound = 1;
 	
