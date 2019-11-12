@@ -33,7 +33,7 @@ bool j1Scene::Start()
 {
 	App->map->Load("Dark_Map.tmx");
 
-	App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
+	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 
 	return true;
 }
@@ -64,8 +64,6 @@ bool j1Scene::Update(float dt)
 		if(App->map->data.name == "Dark_Map.tmx") App->fade->FadeToBlack("Dark_Map.tmx");
 		else if (App->map->data.name == "Dark_Map2.tmx") App->fade->FadeToBlack("Dark_Map2.tmx");
 	}
-
-
 
 	App->map->Draw();
 

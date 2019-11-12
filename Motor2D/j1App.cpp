@@ -14,6 +14,8 @@
 #include "j1Collisions.h"
 #include "j1FadeToBlack.h"
 #include "j1App.h"
+#include "j1Timer.h"
+#include "j1PerfTimer.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -89,6 +91,15 @@ bool j1App::Awake()
 		organization.create(app_config.child("organization").child_value());
 		load_game = config.child("file_system").child("loadTo").child_value();
 		save_game = config.child("file_system").child("saveTo").child_value();
+
+		if (app_config.attribute("framerate_cap").as_int() == NULL)
+		{
+			frame_rate = 0;
+		}
+		else
+		{
+			frame_rate = app_config.attribute("framerate_cap").as_int();
+		}
 	}
 
 	if(ret == true)
@@ -162,6 +173,13 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
+	frame_count++;
+	last_sec_frame_count++;
+	
+	dt = frame_time.ReadSec();
+
+	LOG("dt=%f", dt);
+	frame_time.Start(); //Restart the single frame time
 }
 
 // ---------------------------------------------
@@ -172,6 +190,33 @@ void j1App::FinishUpdate()
 
 	if(want_to_load == true)
 		LoadGameNow();
+
+	// Framerate calculations --
+
+	if (last_sec_frame_time.Read() > 1000)
+	{
+		last_sec_frame_time.Start();
+		prev_last_sec_frame_count = last_sec_frame_count;
+		last_sec_frame_count = 0;
+	}
+
+	float avg_fps = float(frame_count) / startup_time.ReadSec();
+	float seconds_since_startup = startup_time.ReadSec();
+	uint32 last_frame_ms = frame_time.Read();
+	uint32 frames_on_last_update = prev_last_sec_frame_count;
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
+		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+	App->win->SetTitle(title);
+
+	uint32 frametime_tmp = frame_time.Read();
+
+	delay_timer.Start();
+
+	SDL_Delay((1000 / frame_rate) - frame_time.Read());
+
+	LOG("Frame took: %d and Delayed Time: %lf ", frametime_tmp, delay_timer.ReadMs());
 }
 
 // Call modules before each loop iteration
