@@ -15,66 +15,6 @@ j1Player::j1Player()
 	name.create("player");
 };
 
-bool j1Player::Save(pugi::xml_node& node) const {
-	
-	LOG("Saving Player...");
-	pugi::xml_node points = node.append_child("points");
-	
-	points.append_child("position").append_attribute("x") = player.position.x;
-	points.child("position").append_attribute("y") = player.position.y;
-	
-	points.append_child("prevposition").append_attribute("x") = player.prevposition.x;
-	points.child("prevposition").append_attribute("y") = player.prevposition.y;
-	
-	points.append_child("lastGroundedPos").append_attribute("x") = player.lastGroundedPos.x;
-	points.child("lastGroundedPos").append_attribute("y") = player.lastGroundedPos.y;
-
-	pugi::xml_node flags = node.append_child("flags");
-	flags.append_attribute("able_to_jump") = player.able_to_jump;
-	flags.append_attribute("able_to_dash") = player.able_to_dash;
-	flags.append_attribute("dashing") = player.dashing;
-	flags.append_attribute("jumping") = player.jumping;
-	flags.append_attribute("drop_plat") = player.drop_plat;
-	flags.append_attribute("playerGrounded") = player.playerGrounded;
-	flags.append_attribute("flip") = player.flip;
-	flags.append_attribute("godMode") = player.godMode;
-
-
-	node.append_attribute("playerstate") = player.playerState;
-
-	return true;
-}
-
-bool j1Player::Load(pugi::xml_node& node) {
-	
-	LOG("Loading Player...");
-
-	player.justLoaded = true;
-
-	pugi::xml_node points = node.child("points");
-
-	player.position.x = points.child("position").attribute("x").as_float();
-	player.position.y = points.child("position").attribute("y").as_float();
-
-	player.prevposition.x = points.child("prevposition").attribute("x").as_float();
-	player.prevposition.y = points.child("prevposition").attribute("y").as_float();
-
-	player.lastGroundedPos.x = points.child("lastGroundedPos").attribute("x").as_float();
-	player.lastGroundedPos.y = points.child("lastGroundedPos").attribute("y").as_float();
-	
-	pugi::xml_node flags = node.child("flags");
-	player.able_to_dash		= flags.attribute("able_to_dash").as_bool();
-	player.able_to_jump		= flags.attribute("able_to_jump").as_bool();
-	player.drop_plat		= flags.attribute("drop_plat").as_bool();
-	player.dashing			= flags.attribute("dashing").as_bool();
-	player.jumping			= flags.attribute("jumping").as_bool();
-	player.playerGrounded	= flags.attribute("playerGrounded").as_bool();
-
-	player.playerState = (PlayerState)node.attribute("playerstate").as_int();
-	
-	return true;
-}
-
 j1Player::~j1Player() 
 {
 
@@ -147,34 +87,7 @@ bool j1Player::PreUpdate()
 		}
 	}
 
-	if (player.able_to_dash && !player.dashing ) //Logic For when player can dash
-	{
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		{
-			App->audio->PlayFx( 4 , 0 );
-
-			if (player.flip)
-			{
-				player.playerState = dashLeft;
-			}
-			else
-			{
-				player.playerState = dashRight;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-			{
-				dashTime = 0;
-				player.playerState = dashRight;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-			{
-				dashTime = 0;
-				player.playerState = dashLeft;
-			}
-			player.able_to_dash = false;
-		}
-	}
-
+	
 	if (!player.godMode)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) //Jump if not on godmode
@@ -198,7 +111,7 @@ bool j1Player::PreUpdate()
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer < 11)
 		{
-			player.gravity = gravity_tmp / 2;
+			player.gravity = gravity_tmp * 0.75;
 			player.playerState = jumping;
 
 			jump_key_down = true;
@@ -207,6 +120,34 @@ bool j1Player::PreUpdate()
 		{
 			jump_key_down = false;
 			player.gravity = gravity_tmp;
+		}
+	}
+
+	if (player.able_to_dash && !player.dashing) //Logic For when player can dash
+	{
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		{
+			App->audio->PlayFx(4, 0);
+
+			if (player.flip)
+			{
+				player.playerState = dashLeft;
+			}
+			else
+			{
+				player.playerState = dashRight;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			{
+				dashTime = 0;
+				player.playerState = dashRight;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			{
+				dashTime = 0;
+				player.playerState = dashLeft;
+			}
+			player.able_to_dash = false;
 		}
 	}
 
@@ -527,9 +468,6 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		App->fade->FadeToBlack(B->userdata->Get("MapToLoad").v_string);
 	}
 
-
-	
-
 }
 
 void j1Player::check_x_move()
@@ -593,4 +531,64 @@ void j1Player::GodMode()
 	{
 		player.godMode = true;
 	}
+}
+
+bool j1Player::Save(pugi::xml_node& node) const {
+
+	LOG("Saving Player...");
+	pugi::xml_node points = node.append_child("points");
+
+	points.append_child("position").append_attribute("x") = player.position.x;
+	points.child("position").append_attribute("y") = player.position.y;
+
+	points.append_child("prevposition").append_attribute("x") = player.prevposition.x;
+	points.child("prevposition").append_attribute("y") = player.prevposition.y;
+
+	points.append_child("lastGroundedPos").append_attribute("x") = player.lastGroundedPos.x;
+	points.child("lastGroundedPos").append_attribute("y") = player.lastGroundedPos.y;
+
+	pugi::xml_node flags = node.append_child("flags");
+	flags.append_attribute("able_to_jump") = player.able_to_jump;
+	flags.append_attribute("able_to_dash") = player.able_to_dash;
+	flags.append_attribute("dashing") = player.dashing;
+	flags.append_attribute("jumping") = player.jumping;
+	flags.append_attribute("drop_plat") = player.drop_plat;
+	flags.append_attribute("playerGrounded") = player.playerGrounded;
+	flags.append_attribute("flip") = player.flip;
+	flags.append_attribute("godMode") = player.godMode;
+
+
+	node.append_attribute("playerstate") = player.playerState;
+
+	return true;
+}
+
+bool j1Player::Load(pugi::xml_node& node) {
+
+	LOG("Loading Player...");
+
+	player.justLoaded = true;
+
+	pugi::xml_node points = node.child("points");
+
+	player.position.x = points.child("position").attribute("x").as_float();
+	player.position.y = points.child("position").attribute("y").as_float();
+
+	player.prevposition.x = points.child("prevposition").attribute("x").as_float();
+	player.prevposition.y = points.child("prevposition").attribute("y").as_float();
+
+	player.lastGroundedPos.x = points.child("lastGroundedPos").attribute("x").as_float();
+	player.lastGroundedPos.y = points.child("lastGroundedPos").attribute("y").as_float();
+
+	pugi::xml_node flags = node.child("flags");
+	player.able_to_dash = flags.attribute("able_to_dash").as_bool();
+	player.able_to_jump = flags.attribute("able_to_jump").as_bool();
+	player.drop_plat = flags.attribute("drop_plat").as_bool();
+	player.dashing = flags.attribute("dashing").as_bool();
+	player.jumping = flags.attribute("jumping").as_bool();
+	player.playerGrounded = flags.attribute("playerGrounded").as_bool();
+
+	player.playerState = (PlayerState)node.attribute("playerstate").as_int();
+
+	return true;
 }
