@@ -185,7 +185,7 @@ bool j1Player::Update(float dt)
 
 	if (!player.dashing)
 	{
-		check_x_move();
+		check_x_move(dt);
 	}
 
 	if (!player.godMode)
@@ -213,7 +213,7 @@ bool j1Player::Update(float dt)
 
 			case jumping:
 
-				player.speed.y -= player.acceleration.y;
+				player.speed.y -= player.acceleration.y*dt;
 				player.jumping = true;
 				player.able_to_jump = false;
 				
@@ -227,14 +227,14 @@ bool j1Player::Update(float dt)
 			case dashLeft:
 
 				player.animation = "dash";
-				player.speed.x = -player.maxSpeed.x * 2;
+				player.speed.x = -player.maxSpeed.x * 2 * dt;
 				player.dashing = true;
 
 				break;
 			case dashRight:
 
 				player.animation = "dash";
-				player.speed.x = player.maxSpeed.x * 2;
+				player.speed.x = player.maxSpeed.x * 2 * dt;
 				player.dashing = true;
 
 				break;
@@ -286,11 +286,11 @@ bool j1Player::Update(float dt)
 					
 				}
 
-				player.speed.y += player.gravity; // Speed.y is +gravity when not grounded
+				player.speed.y += player.gravity*dt; // Speed.y is +gravity when not grounded
 
-				if (player.speed.y >= player.maxSpeed.y) // Speed.y is capped an maxSpeed
+				if (player.speed.y >= player.maxSpeed.y*dt) // Speed.y is capped an maxSpeed
 				{
-					player.speed.y = player.maxSpeed.y;
+					player.speed.y = player.maxSpeed.y*dt;
 				}
 			}
 
@@ -311,13 +311,13 @@ bool j1Player::Update(float dt)
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			MoveUp();
+			MoveUp(dt);
 		}
 		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			MoveDown();
+			MoveDown(dt);
 		}
-		player.position.x += player.speed.x * 2;
+		player.position.x += player.speed.x * 2 * dt;
 	}
 
 	//Update player collider and position
@@ -470,18 +470,18 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 }
 
-void j1Player::check_x_move()
+void j1Player::check_x_move(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		player.movingRight = true;
-		MoveRight();
+		MoveRight(dt);
 		player.flip = false;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		player.movingLeft = true;
-		MoveLeft();
+		MoveLeft(dt);
 		player.flip = true;
 	}
 	else
@@ -490,35 +490,35 @@ void j1Player::check_x_move()
 	}
 }
 
-void j1Player::MoveRight() // Move Right the player at set speed
+void j1Player::MoveRight(float dt) // Move Right the player at set speed
 {
-	player.speed.x += player.acceleration.x;
+	player.speed.x += player.acceleration.x * dt;
 
-	if (player.speed.x > player.maxSpeed.x)
+	if (player.speed.x > player.maxSpeed.x*dt)
 	{
-		player.speed.x = player.maxSpeed.x;
+		player.speed.x = player.maxSpeed.x * dt;
 	}
 	
 }
 
-void j1Player::MoveLeft() // Move Left the player at speed
+void j1Player::MoveLeft(float dt) // Move Left the player at speed
 {
-	player.speed.x -= player.acceleration.x; 
+	player.speed.x -= player.acceleration.x*dt; 
 
-	if (player.speed.x < -player.maxSpeed.x)
+	if (player.speed.x < -player.maxSpeed.x*dt)
 	{
-		player.speed.x = -player.maxSpeed.x;
+		player.speed.x = -player.maxSpeed.x*dt;
 	}
 }
 
-void j1Player::MoveDown() // Move Right the player at set speed
+void j1Player::MoveDown(float dt) // Move Right the player at set speed
 {
-	player.position.y += player.maxSpeed.y;
+	player.position.y += player.maxSpeed.y*dt;
 }
 
-void j1Player::MoveUp() // Move Right the player at set speed
+void j1Player::MoveUp(float dt) // Move Right the player at set speed
 {
-	player.position.y -= player.maxSpeed.y;
+	player.position.y -= player.maxSpeed.y*dt;
 }
 
 void j1Player::GodMode()

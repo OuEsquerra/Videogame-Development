@@ -19,10 +19,10 @@
   </window>
 
   <player>
-    <acceleration x="2" y="1.5"/>
-    <gravity value="1" />
+    <acceleration x="50" y="400"/>
+    <gravity value="300" />
     <speed x="0" y="0" />
-    <maxSpeed x="6" y="15"/>
+    <maxSpeed x="300" y="600"/>
     <box w="46" h="61"/>
     <offset x="20"/>
   </player>
