@@ -210,18 +210,43 @@ bool j1Player::Update(float dt)
 				player.animation = "crouch";
 
 				break;
-
 			case jumping:
 
+				player.animation = "jump";
 				player.speed.y -= player.acceleration.y*dt;
 				player.jumping = true;
 				player.able_to_jump = false;
+
+				//Logic for when player is jumping
+				if (player.speed.y > 0) // If on jump is going up uses jump animation
+				{
+					player.playerState = falling;
+				}
+
+				player.speed.y += player.gravity*dt; // Speed.y is +gravity when not grounded
+
+				if (player.speed.y >= player.maxSpeed.y*dt) // Speed.y is capped an maxSpeed
+				{
+					player.speed.y = player.maxSpeed.y*dt;
+				}
+			
+				player.position.y += player.speed.y; //Update position y
 				
 				break;
 			case falling:
 
+				player.animation = "fall";
 				player.jumping = true;
 				player.able_to_jump = false;
+
+				player.speed.y += player.gravity*dt; // Speed.y is +gravity when not grounded
+
+				if (player.speed.y >= player.maxSpeed.y*dt) // Speed.y is capped an maxSpeed
+				{
+					player.speed.y = player.maxSpeed.y*dt;
+				}
+
+				player.position.y += player.speed.y; //Update position y
 
 				break;
 			case dashLeft:
@@ -229,6 +254,7 @@ bool j1Player::Update(float dt)
 				player.animation = "dash";
 				player.speed.x = -player.maxSpeed.x * 2 * dt;
 				player.dashing = true;
+				DashCheck();
 
 				break;
 			case dashRight:
@@ -236,6 +262,12 @@ bool j1Player::Update(float dt)
 				player.animation = "dash";
 				player.speed.x = player.maxSpeed.x * 2 * dt;
 				player.dashing = true;
+				DashCheck();
+
+				break;
+			case godMode:
+
+
 
 				break;
 			}
@@ -259,42 +291,6 @@ bool j1Player::Update(float dt)
 			{
 				player.playerState = falling;
 			}
-		}
-
-		if (player.dashing)
-		{
-			//Dash Check
-			if (dashTime > 10)
-			{
-				player.playerState = falling;
-				player.dashing = false;
-				player.speed.y = 0;
-			}
-		}
-		else //Player not Dashing
-		{
-			//Logic for when player is jumping
-			if (player.jumping )
-			{
-				if (player.speed.y < 0) // If on jump is going up uses jump animation
-				{
-					player.animation = "jump";
-				}
-				else // If on jump is going down uses fall animation
-				{
-					player.animation = "fall";
-					
-				}
-
-				player.speed.y += player.gravity*dt; // Speed.y is +gravity when not grounded
-
-				if (player.speed.y >= player.maxSpeed.y*dt) // Speed.y is capped an maxSpeed
-				{
-					player.speed.y = player.maxSpeed.y*dt;
-				}
-			}
-
-			player.position.y += player.speed.y; //Update position y
 		}
 
 		player.position.x += player.speed.x;
@@ -387,8 +383,6 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 	if (player.godMode) return; //While in God Mode Collisions are disregarded
 	
-	
-	
 	if (B->type == ObjectType::PLAYER) {
 		Collider temp = *A;
 		A = B;
@@ -406,16 +400,17 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		{
 			player.position.y = B->rect.y + B->rect.h ;
 			player.cealing = true;
-			
 		}
+
 		//from a side
-		else if (player.position.y + (A->rect.h* 1.0f/4.0f) < B->rect.y + B->rect.h  
+		if (player.position.y + (A->rect.h* 1.0f/4.0f) < B->rect.y + B->rect.h  
 			&& player.position.y + (A->rect.h* 3.0f / 4.0f) > B->rect.y ) 
 		{
 			player.wall = true;
 			LOG("Touching WALL");
 
-			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) { //Player to the left 
+			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
+			{ //Player to the left 
 				player.position.x = B->rect.x -A->rect.w - player.boxOffset_x -1;
 
 			}
@@ -426,10 +421,12 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		}
 
 		//from above
-		else if (player.position.y + A->rect.h - player.maxSpeed.y -5 < B->rect.y  
+		if (player.position.y + A->rect.h > B->rect.y  
+			&& player.position.y < B->rect.y
 			&& A->rect.x < B->rect.x + B->rect.w 
 			&& A->rect.x + A->rect.w > B->rect.x 
-			&& player.justLoaded == false) {
+			&& player.justLoaded == false) 
+		{
 
 			if (player.speed.y > 0)
 			{
@@ -531,6 +528,18 @@ void j1Player::GodMode()
 	{
 		player.godMode = true;
 	}
+}
+
+bool j1Player::DashCheck()
+{
+	//Dash Check
+	if (dashTime > 10)
+	{
+		player.playerState = falling;
+		player.dashing = false;
+		player.speed.y = 0;
+	}
+	return true;
 }
 
 bool j1Player::Save(pugi::xml_node& node) const {

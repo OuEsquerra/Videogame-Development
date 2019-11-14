@@ -16,7 +16,8 @@ enum PlayerState {
 	falling,
 	crouch,
 	dashLeft,
-	dashRight
+	dashRight,
+	godMode
 };
 
 struct Player {
@@ -100,6 +101,7 @@ public:// methods
 
 	void GodMode();
 	bool StartPlayer();
+	bool DashCheck();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
