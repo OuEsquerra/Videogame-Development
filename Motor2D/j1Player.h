@@ -16,8 +16,7 @@ enum PlayerState {
 	falling,
 	crouch,
 	dashLeft,
-	dashRight,
-	godMode
+	dashRight
 };
 
 struct Player {
@@ -98,6 +97,9 @@ public:// methods
 	void MoveLeft(float dt);
 	void MoveUp(float dt);
 	void MoveDown(float dt);
+	void DashInput();
+	void RunCheck();
+	void JumpInput();
 
 	void GodMode();
 	bool StartPlayer();
