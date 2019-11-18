@@ -92,17 +92,21 @@ public:
 	j1Collisions*		collisions;
 	j1FadeToBlack*		fade;
 
+	float				dt;
+
 private:
 
 	p2List<j1Module*>	modules;
 	uint				frames;
-	float				dt;
+	//float				dt;
 	int					argc;
 	char**				args;
 
 	p2SString			title;
 	p2SString			organization;
 
+	float				accumulated_time=0.0f;
+	bool				do_logic=false;
 	mutable bool		want_to_save;
 	bool				want_to_load;
 	p2SString			load_game; 

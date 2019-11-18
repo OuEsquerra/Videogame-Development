@@ -17,13 +17,10 @@ j1Player::j1Player()
 
 j1Player::~j1Player() 
 {
-
 };
 
 bool j1Player::Init() 
 {
-	
-
 	return true;
 };
 
@@ -43,7 +40,6 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	App->audio->LoadFx("audio/fx/jump1.wav");
 	App->audio->LoadFx("audio/fx/jump2.wav");
 	App->audio->LoadFx("audio/fx/jump3.wav");
-
 	App->audio->LoadFx("audio/fx/sword_sound.wav");
 
 	gravity_tmp = player.gravity;
@@ -51,15 +47,14 @@ bool j1Player::Awake(pugi::xml_node& conf)
 	return true;
 }; 
  
-bool j1Player::Start() 
+bool j1Player::Start()
 {
 	StartPlayer();
 	return true;
 };
 
-bool j1Player::PreUpdate() 
+bool j1Player::PreUpdate()
 {
-	jump_key_down_timer++;
 
 	if (player.freeze == true) //If the player is frozen, Logic won't be updated
 	{
@@ -71,18 +66,17 @@ bool j1Player::PreUpdate()
 	if (player.playerState != jumping && player.playerState != falling && !player.dashing) //If player is not in any major state idle by default and checks for left/right input
 	{
 		player.playerState = idle;
-
 		RunCheck();
 	}
 
-	if (!player.godMode)
+	if (!player.godMode && !player.dashing)
 	{
 		JumpInput();
 	}
 
 	if (player.able_to_dash && !player.dashing) //Logic For when player can dash
 	{
-		
+		DashInput();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) //If player has to drop from platform
@@ -98,19 +92,22 @@ bool j1Player::PreUpdate()
 	{
 		GodMode();
 	}
+
 	return true;
 };
 
 bool j1Player::Update(float dt)
 {
+	jump_key_down_timer += dt;
+
+	dashTime += dt;
+
 	if (player.freeze == true) //If the player is frozen, Logic won't be updated
 	{
 		return true;
 	}
 	
 	player.prevposition = player.position;
-
-	dashTime++;
 
 	if (player.cealing || player.onPlatform && !player.jumping)
 	{
@@ -146,45 +143,22 @@ bool j1Player::Update(float dt)
 				break;
 			case jumping:
 
-				player.animation = "jump";
-				player.jumping = true;
-				player.able_to_jump = false;
-
-				//Logic for when player is jumping
-				if (player.speed.y > 0) // If on jump is going up uses jump animation
-				{
-					player.playerState = falling;
-				}
-
-				player.speed.y -= player.acceleration.y*dt;
-				player.speed.y += player.gravity*dt; // Speed.y is +gravity when not grounded
-				player.position.y += player.speed.y; //Update position y
+				Jump();
 				
 				break;
 			case falling:
 
-				player.animation = "fall";
-				player.jumping = true;
-				player.able_to_jump = false;
-
-				player.speed.y += player.gravity*dt; // Speed.y is +gravity when not grounded
-				player.position.y += player.speed.y; //Update position y
+				Fall();
 
 				break;
 			case dashLeft:
 
-				player.animation = "dash";
-				player.speed.x = -player.maxSpeed.x * 2 * dt;
-				player.dashing = true;
-				DashCheck();
+				Dash();
 
 				break;
 			case dashRight:
 
-				player.animation = "dash";
-				player.speed.x = player.maxSpeed.x * 2 * dt;
-				player.dashing = true;
-				DashCheck();
+				Dash();
 
 				break;
 			}
@@ -324,12 +298,10 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			&& A->rect.x + A->rect.w > B->rect.x
 			&& player.justLoaded == false)
 		{
-
 			if (player.speed.y > 0)
 			{
 				player.speed.y = 0;
 			}
-
 			player.position.y = B->rect.y - player.collider->rect.h + 1;
 			player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
 			player.SetGroundState(true);
@@ -352,12 +324,12 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
 			{ //Player to the left 
-				player.position.x = B->rect.x -A->rect.w - player.boxOffset_x -1;
+				player.position.x = B->rect.x -A->rect.w - player.boxOffset_x  +1;
 
 			}
 			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
 			{ //Player to the right
-				player.position.x = B->rect.x + B->rect.w - player.boxOffset_x -1; 
+				player.position.x = B->rect.x + B->rect.w - player.boxOffset_x + 1; 
 			}
 			player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
 		}
@@ -414,26 +386,26 @@ void j1Player::JumpInput()
 	{
 		if (player.able_to_jump)
 		{
-			jumpSound = rand() % 3 + 1;
-			App->audio->PlayFx(jumpSound, 0);//Sound for the start of the jump
+			//jumpSound = rand() % 3 + 1; //Fix
+			//App->audio->PlayFx(jumpSound, 0);//Sound for the start of the jump
+
 			player.playerState = jumping;
 			jump_key_down = true;
 			jump_key_down_timer = 0;
-			player.speed.y = 0;
+			player.speed.y =0 ;
 		}
-		player.gravity = gravity_tmp / 2;
-
+		//player.gravity = gravity_tmp / 2;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer < 11)
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer < 0.25f && !player.dashing)
 	{
-		player.gravity = gravity_tmp * 0.75;
+		//player.gravity = gravity_tmp * 0.75;
 		player.playerState = jumping;
 		jump_key_down = true;
 	}
 	else
 	{
 		jump_key_down = false;
-		player.gravity = gravity_tmp;
+		//player.gravity = gravity_tmp;
 	}
 }
 
@@ -443,24 +415,16 @@ void j1Player::DashInput()
 	{
 		App->audio->PlayFx(4, 0);
 
-		if (player.flip)
+		if (player.flip || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
 			player.playerState = dashLeft;
 		}
-		else
+		else if(!player.flip || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
 			player.playerState = dashRight;
 		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		{
-			dashTime = 0;
-			player.playerState = dashRight;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		{
-			dashTime = 0;
-			player.playerState = dashLeft;
-		}
+
+		dashTime = 0;
 		player.able_to_dash = false;
 	}
 }
@@ -493,16 +457,46 @@ void j1Player::GodMode()
 	}
 }
 
-bool j1Player::DashCheck()
+bool j1Player::Dash()
 {
+	player.animation = "dash";
+	player.speed.x = -player.maxSpeed.x * 2 * App->dt;
+	player.dashing = true;
 	//Dash Check
-	if (dashTime > 10)
+	if (dashTime > 0.2f)
 	{
 		player.playerState = falling;
 		player.dashing = false;
 		player.speed.y = 0;
 	}
 	return true;
+}
+
+void j1Player::Jump()
+{
+	player.animation = "jump";
+	player.jumping = true;
+	player.able_to_jump = false;
+
+	//Logic for when player is jumping
+	if (player.speed.y > 0) // If on jump is going up uses jump animation
+	{
+		player.playerState = falling;
+	}
+
+	player.speed.y -= player.acceleration.y*dt;
+	player.speed.y += (player.gravity*dt) * 0.75; // Speed.y is +gravity when not grounded
+	player.position.y += player.speed.y; //Update position y
+}
+
+void j1Player::Fall()
+{
+	player.animation = "fall";
+	player.jumping = true;
+	player.able_to_jump = false;
+
+	player.speed.y += player.gravity*  App->dt; // Speed.y is +gravity when not grounded
+	player.position.y += player.speed.y; //Update position y
 }
 
 bool j1Player::Save(pugi::xml_node& node) const {
@@ -528,7 +522,6 @@ bool j1Player::Save(pugi::xml_node& node) const {
 	flags.append_attribute("playerGrounded") = player.playerGrounded;
 	flags.append_attribute("flip") = player.flip;
 	flags.append_attribute("godMode") = player.godMode;
-
 
 	node.append_attribute("playerstate") = player.playerState;
 

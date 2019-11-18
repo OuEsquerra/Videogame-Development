@@ -30,8 +30,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
-	player = new j1Player();
 	collisions = new j1Collisions();
+	player = new j1Player();
 	fade = new j1FadeToBlack();
 
 	// Ordered for awake / Start / Update
@@ -252,6 +252,12 @@ bool j1App::DoUpdate()
 	item = modules.start;
 	j1Module* pModule = NULL;
 
+	accumulated_time += dt;
+	if (accumulated_time > 100.0f)//magic number
+	{
+		do_logic = true;
+	}
+
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{
 		pModule = item->data;
@@ -260,7 +266,12 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = item->data->Update( dt );
+	}
+
+	if (do_logic == true) {
+		accumulated_time = 0.0f;
+		do_logic = false;
 	}
 
 	return ret;

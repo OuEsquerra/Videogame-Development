@@ -59,7 +59,7 @@ struct Animations
 	uint id; //Tile which is animated
 	uint nFrames; //Number of frames of the animation
 	uint* frames;
-	uint speed;
+	float speed;
 };
 
 struct Object 
@@ -239,7 +239,7 @@ private:
 
 	int i = 0;
 
-	int frameCount = 1;
+	float frameCount = 0.0f;
 
 	int ms_to_frame;
 
