@@ -123,6 +123,10 @@ private:
 	float gravity_tmp = 0;
 	float dashTime  = 0.0f;
 	int jumpSound = 1;
+
+	//Flying enemy stuff
+	SDL_Rect enemy_box = { 20,1200,62,60 };
+
 };
 
 

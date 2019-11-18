@@ -112,7 +112,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,boo
 
 	while (TilesetIter != NULL)
 	{
-		if (TilesetIter->data->name, tileset)
+		if (TilesetIter->data->name == tileset)
 		{
 			animTileset = TilesetIter->data;
 		}
@@ -133,6 +133,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,boo
 		animIter = animIter->next;
 	}
 	
+
 	if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
 	{
 		i = 0;

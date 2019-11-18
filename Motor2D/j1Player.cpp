@@ -219,6 +219,9 @@ bool j1Player::Update(float dt)
 	//Draw player
 	App->map->DrawAnimation(player.animation,"Adventurer",player.playerBox,player.flip);
 	
+	//Draw enemy
+	App->map->DrawAnimation("skull_still", "Skull1", enemy_box ,true);
+
 	//Update Player Collider after updating its position
 	player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
 
@@ -460,7 +463,14 @@ void j1Player::GodMode()
 bool j1Player::Dash()
 {
 	player.animation = "dash";
-	player.speed.x = -player.maxSpeed.x * 2 * App->dt;
+	if (player.playerState == dashLeft)
+	{
+		player.speed.x = -player.maxSpeed.x * 2 * App->dt;
+	}
+	else 
+	{
+		player.speed.x = player.maxSpeed.x * 2 * App->dt;
+	}
 	player.dashing = true;
 	//Dash Check
 	if (dashTime > 0.2f)
@@ -484,8 +494,8 @@ void j1Player::Jump()
 		player.playerState = falling;
 	}
 
-	player.speed.y -= player.acceleration.y*dt;
-	player.speed.y += (player.gravity*dt) * 0.75; // Speed.y is +gravity when not grounded
+	player.speed.y -= player.acceleration.y * App->dt;
+	player.speed.y += (player.gravity * App->dt) * 0.75; // Speed.y is +gravity when not grounded
 	player.position.y += player.speed.y; //Update position y
 }
 
