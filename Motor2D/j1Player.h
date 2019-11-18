@@ -6,7 +6,6 @@
 #include "j1Render.h"
 #include "j1Input.h"
 
-
 struct Collider;
 
 enum PlayerState {
@@ -92,6 +91,7 @@ public:// methods
 
 	bool CleanUp();
 
+	//Actions and Checks functions
 	void check_x_move(float dt);
 	void MoveRight(float dt);
 	void MoveLeft(float dt);
@@ -100,17 +100,18 @@ public:// methods
 	void DashInput();
 	void RunCheck();
 	void JumpInput();
+	void Jump();
+	void Fall();
 
 	void GodMode();
 	bool StartPlayer();
-	bool DashCheck();
+	bool Dash();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
 
 private:
 
-	
 public://variables
 
 	Player player;
@@ -118,11 +119,10 @@ public://variables
 private:
 
 	bool jump_key_down = false;
-	int jump_key_down_timer = 0;
+	float jump_key_down_timer = 0.0f;
 	float gravity_tmp = 0;
-	int dashTime  = 0;
+	float dashTime  = 0.0f;
 	int jumpSound = 1;
-	
 };
 
 

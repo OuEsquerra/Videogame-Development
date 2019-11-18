@@ -103,7 +103,7 @@ void j1Map::Draw()
 	
 }
 
-void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
+void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,bool flip)
 {
 
 	TileSet* animTileset = nullptr;
@@ -133,27 +133,28 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 		animIter = animIter->next;
 	}
 	
-		if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
-		{
-			i = 0;
-			frameCount = 1;
-		}
+	if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
+	{
+		i = 0;
+		frameCount = 0.0f;
+	}
 	
 	prev_Anim_Name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
-	App->player->player.position.x , App->player->player.position.y,	//drawn at player position
+	rect.x , rect.y,	//drawn at player position
 	animTileset->PlayerTileRect(currentanim->frames[i]),flip );			//draw frames tile id
 
-	if (frameCount % (currentanim->speed/ms_to_frame) == 0)	//counts frames each loop (60 fps using vsync)
+	if (frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
 	{
 		i++;
+		frameCount = 0.0f;
 	}
 	if (i >= currentanim->nFrames) {				//Iterate from 0 to nFrames (number of frames in animation)
 		i = 0;
 	}
 
-	frameCount++;
+	frameCount += App->dt ;
 }
 
 // Called before quitting
@@ -378,8 +379,6 @@ bool j1Map::LoadMap()
 		{
 			data.type = MAPTYPE_UNKNOWN;
 		}
-
-
 	}
 
 	return ret;
@@ -456,13 +455,9 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 	for (pugi::xml_node iterator_node = tileset_node.child("tile"); iterator_node; iterator_node = iterator_node.next_sibling("tile")) { //Iterator for all animation childs
 		
 		Animations* newAnimation = new Animations;
-		
 		newAnimation->id = iterator_node.attribute("id").as_uint(); // Get the Id of the animated Tile
-
 		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string(); //Get the name of the animation inside extra attribute
-
 		newAnimation->frames = new uint[12]; // new array for frames
-
 		memset(newAnimation->frames, 0, 12); // allocate the new array
 
 		int j = 0;
