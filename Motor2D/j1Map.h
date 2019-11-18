@@ -206,7 +206,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(p2SString name,const char* tileset,bool flip=false);
+	void DrawAnimation(p2SString name,const char* tileset,SDL_Rect rect,bool flip=false);
 
 	// Called before quitting
 	bool CleanUp();

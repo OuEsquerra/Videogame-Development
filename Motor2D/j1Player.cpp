@@ -217,7 +217,7 @@ bool j1Player::Update(float dt)
 	player.playerBox.y = player.position.y;
 
 	//Draw player
-	App->map->DrawAnimation(player.animation,"Adventurer",player.flip);
+	App->map->DrawAnimation(player.animation,"Adventurer",player.playerBox,player.flip);
 	
 	//Update Player Collider after updating its position
 	player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
