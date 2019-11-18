@@ -103,7 +103,7 @@ void j1Map::Draw()
 	
 }
 
-void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
+void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,bool flip)
 {
 
 	TileSet* animTileset = nullptr;
@@ -142,7 +142,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset,bool flip)
 	prev_Anim_Name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
-	App->player->player.position.x , App->player->player.position.y,	//drawn at player position
+	rect.x , rect.y,	//drawn at player position
 	animTileset->PlayerTileRect(currentanim->frames[i]),flip );			//draw frames tile id
 
 	if (frameCount % (currentanim->speed/ms_to_frame) == 0)	//counts frames each loop (60 fps using vsync)

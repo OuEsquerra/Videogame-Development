@@ -164,7 +164,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	SDL_Rect rect;
 	if (flip) 
 	{
-		rect.x = ((int)(camera.x * speed) + x * scale) + App->map->data.tilesets[1]->tile_width; //Add player tile width when flipping it
+		rect.x = ((int)(camera.x * speed) + x * scale) + section->w; //Add player tile width when flipping it
 		rect.y = (int)(camera.y * speed) + y * scale;
 	}
 	else
