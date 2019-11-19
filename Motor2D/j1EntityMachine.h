@@ -5,6 +5,7 @@
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
 #include "p2Point.h"
+#include "SDL/include/SDL.h"
 
 
 enum EntityType 
@@ -17,8 +18,8 @@ enum EntityType
 };
 
 class Entity {
-		//SDL_Rect rect;
-		//SDL_Texture* texture;
+		SDL_Rect rect;
+		SDL_Texture* texture;
 		fPoint speed;
 		fPoint acceleration;
 		EntityType type;
