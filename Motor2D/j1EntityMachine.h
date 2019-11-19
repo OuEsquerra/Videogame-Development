@@ -17,10 +17,8 @@ enum EntityType
 };
 
 class Entity {
-		
-	public:
-		SDL_Rect rect;
-		SDL_Texture* texture;
+		//SDL_Rect rect;
+		//SDL_Texture* texture;
 		fPoint speed;
 		fPoint acceleration;
 		EntityType type;
@@ -40,18 +38,18 @@ public:
 	j1EntityMachine();
 
 	// Destructor
-	virtual ~j1EntityMachine();
+	//virtual ~j1EntityMachine();
 
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 
-	bool Init();
+	//bool Init();
 
 	bool Awake(pugi::xml_node&);
 
 	bool Start();
 
-	Entity* CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityType Type);
+	//Entity* CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityType Type);
 	
 
 	bool Update(float dt);
