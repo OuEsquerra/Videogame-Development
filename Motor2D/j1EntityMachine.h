@@ -46,10 +46,12 @@ public:
 };
 
 class Enemy_ground : public Enemy {
+public:
 	Enemy_ground() : Enemy(GROUND_ENEMY) {};
 };
 
 class Enemy_aerial : public Enemy {
+public:
 	Enemy_aerial() : Enemy(FLYING_ENEMY) {};
 };
 

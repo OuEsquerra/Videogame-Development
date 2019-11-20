@@ -13,7 +13,9 @@ bool j1EntityMachine::Load(pugi::xml_node& conf) {
 	return true;
 };
 
-j1EntityMachine::j1EntityMachine() {};
+j1EntityMachine::j1EntityMachine() {
+	name.create("entities");
+};
 
 bool j1EntityMachine::Start() {
 	return true;
@@ -24,6 +26,11 @@ bool  j1EntityMachine::Awake(pugi::xml_node&) {
 };
 
 bool j1EntityMachine::Update(float dt) {
+	
+	
+	
+	
+	
 	return true;
 };
 
@@ -47,16 +54,18 @@ Entity* j1EntityMachine::CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityTy
 		break;
 		
 		case PARTICLE:
-			//ret = new Particle(Type);
+
+			ret = new Particle();
+
 
 		break;
 		
 		case FLYING_ENEMY: 
-			
+			ret = new Enemy_aerial();
 		break;
 		
 		case GROUND_ENEMY: 
-			
+			ret = new Enemy_ground();
 		break;
 	}
 	
