@@ -22,6 +22,8 @@ enum PlayerState {
 
 struct Player {
 	
+
+
 	p2Point<float> acceleration;
 	p2Point<float> speed;
 	p2Point<float> maxSpeed;
