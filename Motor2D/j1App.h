@@ -95,6 +95,7 @@ public:
 	j1EntityMachine*	entities;
 
 	float				dt;
+	bool				do_logic = false;
 
 private:
 
@@ -108,7 +109,7 @@ private:
 	p2SString			organization;
 
 	float				accumulated_time=0.0f;
-	bool				do_logic=false;
+	
 	mutable bool		want_to_save;
 	bool				want_to_load;
 	p2SString			load_game; 

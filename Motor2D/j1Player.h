@@ -6,6 +6,8 @@
 #include "j1Render.h"
 #include "j1Input.h"
 
+#include "j1PerfTimer.h"
+
 struct Collider;
 
 enum PlayerState {
@@ -119,10 +121,16 @@ public://variables
 private:
 
 	bool jump_key_down = false;
-	float jump_key_down_timer = 0.0f;
+	//float jump_key_down_timer = 0.0f;
 	float gravity_tmp = 0;
-	float dashTime  = 0.0f;
+	
+	int dashTime  = 0;
 	int jumpSound = 1;
+
+
+
+	j1PerfTimer* dashtimercheck;
+	j1PerfTimer* jump_key_down_timer;
 
 	//Flying enemy stuff
 	SDL_Rect enemy_box = { 20,1200,62,60 };

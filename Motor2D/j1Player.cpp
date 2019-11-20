@@ -50,6 +50,10 @@ bool j1Player::Awake(pugi::xml_node& conf)
 bool j1Player::Start()
 {
 	StartPlayer();
+
+	dashtimercheck = new j1PerfTimer;
+	jump_key_down_timer = new j1PerfTimer;
+
 	return true;
 };
 
@@ -98,9 +102,14 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
-	jump_key_down_timer += dt;
+	
 
-	dashTime += dt;
+	player.prevposition = player.position;
+
+	if (App->do_logic)
+	{
+		dashTime += 1;
+	}
 
 	if (player.freeze == true) //If the player is frozen, Logic won't be updated
 	{
@@ -299,6 +308,7 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			&& player.position.y < B->rect.y
 			&& A->rect.x < B->rect.x + B->rect.w
 			&& A->rect.x + A->rect.w > B->rect.x
+			&& player.prevposition.y + player.boxH <= B->rect.y + 1 //MagicNumber
 			&& player.justLoaded == false)
 		{
 			if (player.speed.y > 0)
@@ -319,8 +329,8 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		}
 
 		//from a side
-		if (player.position.y + (A->rect.h* 1.0f/4.0f) < B->rect.y + B->rect.h  
-			&& player.position.y + (A->rect.h* 3.0f / 4.0f) > B->rect.y ) 
+		if (player.position.y + A->rect.h < B->rect.y + B->rect.h  
+			&& player.position.y + A->rect.h > B->rect.y ) 
 		{
 			player.wall = true;
 			LOG("Touching WALL");
@@ -394,12 +404,12 @@ void j1Player::JumpInput()
 
 			player.playerState = jumping;
 			jump_key_down = true;
-			jump_key_down_timer = 0;
+			jump_key_down_timer->Start();
 			player.speed.y =0 ;
 		}
 		//player.gravity = gravity_tmp / 2;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer < 0.25f && !player.dashing)
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer->ReadMs() < 250.0f && !player.dashing)
 	{
 		//player.gravity = gravity_tmp * 0.75;
 		player.playerState = jumping;
@@ -428,6 +438,9 @@ void j1Player::DashInput()
 		}
 
 		dashTime = 0;
+
+		dashtimercheck->Start();
+
 		player.able_to_dash = false;
 	}
 }
@@ -462,6 +475,7 @@ void j1Player::GodMode()
 
 bool j1Player::Dash()
 {
+	
 	player.animation = "dash";
 	if (player.playerState == dashLeft)
 	{
@@ -473,11 +487,13 @@ bool j1Player::Dash()
 	}
 	player.dashing = true;
 	//Dash Check
-	if (dashTime > 0.2f)
+	if (dashtimercheck->ReadMs() >= 200.0f)
 	{
 		player.playerState = falling;
 		player.dashing = false;
 		player.speed.y = 0;
+
+		LOG("Dash took: %lf", dashtimercheck->ReadMs());
 	}
 	return true;
 }

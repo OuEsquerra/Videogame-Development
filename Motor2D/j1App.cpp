@@ -183,7 +183,7 @@ void j1App::PrepareUpdate()
 	
 	dt = frame_time.ReadSec();
 
-	LOG("dt=%f", dt);
+	//LOG("dt=%f", ceil(dt*1000));
 	frame_time.Start(); //Restart the single frame time
 }
 
@@ -224,7 +224,8 @@ void j1App::FinishUpdate()
 	{
 		SDL_Delay((1000 / frame_rate) - frame_time.Read());
 	}
-	LOG("Frame took: %d and Delayed Time: %lf ", frametime_tmp, delay_timer.ReadMs());
+
+	//LOG("Frame took: %d and Delayed Time: %lf ", frametime_tmp, delay_timer.ReadMs());
 }
 
 // Call modules before each loop iteration
@@ -257,8 +258,14 @@ bool j1App::DoUpdate()
 	item = modules.start;
 	j1Module* pModule = NULL;
 
+	if (do_logic == true) {
+		accumulated_time = 0.0f;
+		do_logic = false;
+	}
+
 	accumulated_time += dt;
-	if (accumulated_time > 100.0f)//magic number
+	//LOG("Accumulated time: %d ", accumulated_time);
+	if ( accumulated_time >= 0.1f)//magic number
 	{
 		do_logic = true;
 	}
@@ -274,10 +281,7 @@ bool j1App::DoUpdate()
 		ret = item->data->Update( dt );
 	}
 
-	if (do_logic == true) {
-		accumulated_time = 0.0f;
-		do_logic = false;
-	}
+	
 
 	return ret;
 }
