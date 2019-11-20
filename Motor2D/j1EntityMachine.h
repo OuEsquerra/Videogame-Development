@@ -11,6 +11,7 @@
 enum EntityType 
 {
 	PLAYER = 0,
+	ENEMY,
 	FLYING_ENEMY,
 	GROUND_ENEMY,
 	PARTICLE,
@@ -18,19 +19,39 @@ enum EntityType
 };
 
 class Entity {
-		SDL_Rect rect;
-		SDL_Texture* texture;
-		fPoint speed;
-		fPoint acceleration;
-		EntityType type;
+public:
+	SDL_Rect* rect;
+	SDL_Texture* texture;
+	fPoint speed;
+	fPoint acceleration;
+	EntityType type;
 
+	p2SString animation;
+
+	Entity(EntityType Type) : type(Type) {}
 };
 
 class Particle : public Entity {
-
+public:
+	
+	Particle() : Entity(PARTICLE) {};
 
 };
 
+//Make it unusable
+class Enemy : public Entity {
+public:
+	Enemy(EntityType Type) : Entity(Type) {};
+
+};
+
+class Enemy_ground : public Enemy {
+	Enemy_ground() : Enemy(GROUND_ENEMY) {};
+};
+
+class Enemy_aerial : public Enemy {
+	Enemy_aerial() : Enemy(FLYING_ENEMY) {};
+};
 
 class j1EntityMachine : public j1Module {
 //METHODS
@@ -50,8 +71,10 @@ public:
 
 	bool Start();
 
-	//Entity* CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityType Type);
+	Entity* CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityType Type);
 	
+	void DeleteEntity(Entity* entity);
+
 
 	bool Update(float dt);
 
@@ -62,7 +85,11 @@ private:
 
 //VARIABLES
 public:
+
 private:
+
+	p2List<Entity*>* entity_list;
+	
 };
 
 
