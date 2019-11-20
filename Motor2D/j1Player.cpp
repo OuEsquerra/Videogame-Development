@@ -197,9 +197,9 @@ bool j1Player::Update(float dt)
 		{
 			player.speed.y = player.maxSpeed.y*dt;
 		}
-
+		
 		player.position.x += player.speed.x;
-
+		
 		if (player.wall)
 		{
 			player.speed.x = 0;
@@ -329,8 +329,8 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 		}
 
 		//from a side
-		if (player.position.y + A->rect.h < B->rect.y + B->rect.h  
-			&& player.position.y + A->rect.h > B->rect.y ) 
+		if (player.position.y + (A->rect.h* 0.1f) < B->rect.y + B->rect.h  
+			&& player.position.y + (A->rect.h* 0.9f) > B->rect.y ) 
 		{
 			player.wall = true;
 			LOG("Touching WALL");
@@ -477,13 +477,17 @@ bool j1Player::Dash()
 {
 	
 	player.animation = "dash";
-	if (player.playerState == dashLeft)
+
+	if (!player.wall)
 	{
-		player.speed.x = -player.maxSpeed.x * 2 * App->dt;
-	}
-	else 
-	{
-		player.speed.x = player.maxSpeed.x * 2 * App->dt;
+		if (player.playerState == dashLeft)
+		{
+			player.speed.x = -player.maxSpeed.x * 2 * App->dt;
+		}
+		else
+		{
+			player.speed.x = player.maxSpeed.x * 2 * App->dt;
+		}
 	}
 	player.dashing = true;
 	//Dash Check

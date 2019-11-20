@@ -47,7 +47,7 @@ Entity* j1EntityMachine::CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityTy
 		break;
 		
 		case PARTICLE:
-			ret = new Particle(Type);
+			//ret = new Particle(Type);
 
 		break;
 		
