@@ -9,6 +9,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Window.h"
 #include <math.h>
+#include "BroFiler/Brofiler.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -52,51 +53,47 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("DRAW", Profiler::Color::Aqua)
 	if(map_loaded == false)
 		return;
 	
 	uint winWidth, winHeight;
 
 	App->win->GetWindowSize(winWidth,winHeight );
-	
-	camera_collider.rect.w = winWidth;
-	camera_collider.rect.h = winHeight;
-	App->map->camera_collider.SetPos(-App->render->camera.x, -App->render->camera.y);
 
 	MapLayer* mapLayer = data.layers[0];
 
 	p2List_item<MapLayer*>* layerIter = data.layers.start;
-	
+
+	int camera_h_tile = winHeight / 32;
+	int camera_w_tile = winWidth / 32;
+
 	while(layerIter != nullptr) { //loop for layers
 
 		uint* gid_list = layerIter->data->data;
 
+		int camera_x_tile = (-App->render->camera.x * layerIter->data->speed) / 32; //Magic Number
+		int camera_y_tile = (-App->render->camera.y * layerIter->data->speed) / 32;
+
 		int i = 0;
-		for (int y = 0; y < data.height; y++) {
-			for (int x = 0; x < data.width; x++) {
+		int j = camera_y_tile;
 
-				if (layerIter->data->speed != 1.0f)
-				{
-					tile_rect.x = (App->render->camera.x * layerIter->data->speed) +data.tilesets[0]->GetPos(x, y).x -App->render->camera.x; 
-					tile_rect.y = (App->render->camera.y * layerIter->data->speed) + data.tilesets[0]->GetPos(x, y).y - App->render->camera.y;
-				}
-				else
-				{
-					tile_rect.x = data.tilesets[0]->GetPos(x, y).x;
-					tile_rect.y = data.tilesets[0]->GetPos(x, y).y ;
-				}
-				tile_rect.h = App->map->data.tile_height; 
-				tile_rect.w = App->map->data.tile_height;
+		for (int y = camera_y_tile; y < (camera_y_tile + camera_h_tile) ; y++) {
+			for (int x = camera_x_tile; x < (camera_x_tile + camera_w_tile) ; x++) {
 
-				if (camera_collider.CheckCollision(tile_rect))
-				{
-					App->render->Blit(data.tilesets[0]->texture,
-						data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-						data.tilesets[0]->TileRect(gid_list[i]), false, layerIter->data->speed);
-				}
+				i = j * data.width + x ;
+
+				/*if (camera_collider.CheckCollision(tile_rect))
+				{*/
+				App->render->Blit(data.tilesets[0]->texture,
+					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
+					data.tilesets[0]->TileRect(gid_list[   i   ]), false, layerIter->data->speed); //Get the tile we are currently drawing
+				//}
 				
-				i++;
+				//i++;
+
 			}
+			j++;
 		}
 		layerIter = layerIter->next;//go to next layer
 	}
@@ -119,43 +116,49 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,boo
 		TilesetIter = TilesetIter->next;
 	}
 
+	if (animTileset == NULL)
+		return;
 	// I have the adventurer Tileset inside I have animation
 	Animations* currentanim = nullptr;
 
+	
 	p2List_item<Animations*>* animIter = animTileset->animations.start;
 
 	while (animIter)
 	{
-		if (name == animIter->data->name)
+		if (animIter->data->name == name)
 		{
 			currentanim = animIter->data; //gets the animation with the name we sent
 		}
 		animIter = animIter->next;
 	}
-	
 
-	if (prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
+	if (currentanim->prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
 	{
-		i = 0;
-		frameCount = 0.0f;
+		currentanim->i = 0;
+		currentanim->frameCount = 0.0f;
 	}
 	
-	prev_Anim_Name = currentanim->name;
+	currentanim->prev_Anim_Name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
-	rect.x , rect.y,	//drawn at player position
-	animTileset->PlayerTileRect(currentanim->frames[i]),flip );			//draw frames tile id
+	rect.x , rect.y,	//drawn at rect position
+	animTileset->PlayerTileRect(currentanim->frames[currentanim->i]),flip );			//draw frames tile id
 
-	if (frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
+	if (currentanim->frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
 	{
-		i++;
-		frameCount = 0.0f;
-	}
-	if (i >= currentanim->nFrames) {				//Iterate from 0 to nFrames (number of frames in animation)
-		i = 0;
+		currentanim->i++;
+		currentanim->frameCount = 0.0f;
 	}
 
-	frameCount += App->dt ;
+	if (currentanim->i >= currentanim->nFrames)  //Iterate from 0 to nFrames (number of frames in animation)
+	{				
+		currentanim->i = 0;
+	}
+
+	currentanim->frameCount += App->dt;
+
+	
 }
 
 // Called before quitting

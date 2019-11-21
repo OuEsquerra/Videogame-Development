@@ -342,7 +342,7 @@ void j1Player::OnCollision(Collider* A, Collider* B) {
 			}
 			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
 			{ //Player to the right
-				player.position.x = B->rect.x + B->rect.w - player.boxOffset_x + 1; 
+				player.position.x = B->rect.x + B->rect.w - player.boxOffset_x - 1; 
 			}
 			player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
 		}

@@ -57,7 +57,7 @@ bool j1Collisions::PreUpdate() {
 			c2 = Coll_iterator2->data;
 
 			if (c1 != c2) {
-				if (c1->CheckCollision(c2->rect) == true && (c1->type == ObjectType::PLAYER || c2->type == ObjectType::PLAYER))
+				if (c1->CheckCollision(c2->rect) == true )
 				{
 					if (c1->callback)
 						c1->callback->OnCollision(c1, c2);
@@ -166,7 +166,7 @@ void j1Collisions::LoadFromMap() {
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
 
-	return ((r.x + r.w > rect.x) && (r.x < rect.x + rect.w) &&
+	return ((r.x + r.w > rect.x ) && (r.x < rect.x + rect.w) &&
 		(r.y + r.h > rect.y) && (r.y < rect.y + rect.h));
 
 }

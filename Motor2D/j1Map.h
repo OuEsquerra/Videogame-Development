@@ -59,7 +59,10 @@ struct Animations
 	uint id; //Tile which is animated
 	uint nFrames; //Number of frames of the animation
 	uint* frames;
+	p2SString prev_Anim_Name = "idle";
 	float speed;
+	int i = 0;
+	float frameCount = 0.0f;
 };
 
 struct Object 
@@ -232,21 +235,23 @@ private:
 public:
 
 	MapData data;
-	Collider camera_collider;
-	SDL_Rect tile_rect;
+
 
 private:
 
-	int i = 0;
+	/*int i[2] = { 0,0 };
+	int j=1;
+	int f = 1;
 
-	float frameCount = 0.0f;
+	float frameCount[2] = {0.0f};*/
 
 	int ms_to_frame;
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-	p2SString prev_Anim_Name = "idle";
+
+	
 	
 };
 

@@ -102,7 +102,7 @@ bool j1App::Awake()
 
 		if (app_config.attribute("framerate_cap").as_int() == NULL)
 		{
-			frame_rate = 30;
+			frame_rate = 0;
 		}
 		else
 		{
@@ -222,12 +222,15 @@ void j1App::FinishUpdate()
 
 	delay_timer.Start();
 
-
-	if ( 1000/frame_rate > frame_time.Read())
+	if (frame_rate != 0)
 	{
-		SDL_Delay((1000 / frame_rate) - frame_time.Read());
-	}
+		if (1000 / frame_rate > frame_time.Read())
+		{
 
+			SDL_Delay((1000 / frame_rate) - frame_time.Read());
+
+		}
+	}
 	//LOG("Frame took: %d and Delayed Time: %lf ", frametime_tmp, delay_timer.ReadMs());
 }
 
