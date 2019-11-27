@@ -7,6 +7,8 @@
 #include "j1Module.h"
 #include "j1Collisions.h"
 
+#include "p2Log.h"
+
 // ----------------------------------------------------
 union value {
 	const char* v_string;
@@ -104,11 +106,12 @@ struct MapLayer
 struct TileSet
 {
 	
-	SDL_Rect* Tilerect = new SDL_Rect;
+	SDL_Rect Tilerect ;
 
 	SDL_Rect* TileRect(uint tile_id) {
 
-		SDL_Rect* ret = Tilerect; 
+	//	LOG("Start Tilerect");
+		SDL_Rect* ret = &Tilerect; 
 
 		int x = ((tile_id - firstgid) % num_tiles_width);
 		int y = ((tile_id - firstgid) / num_tiles_width);
@@ -118,14 +121,16 @@ struct TileSet
 		ret->w = tile_width;
 		ret->h = tile_height;
 
+		//LOG("End Tilerect");
+
 		return ret;
 	}
 	
-	SDL_Rect* PlayerTilerect = new SDL_Rect;
+	SDL_Rect PlayerTilerect ;
 
 	SDL_Rect* PlayerTileRect(uint tile_id) {
 
-		SDL_Rect* ret = PlayerTilerect;
+		SDL_Rect* ret = &PlayerTilerect;
 
 		int num_t_width = tex_width / tile_width;
 		int num_t_height = tex_height / tile_height;
@@ -209,7 +214,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(p2SString name,const char* tileset,SDL_Rect rect,bool flip=false);
+	void DrawAnimation(p2SString name,const char* tileset,SDL_Rect* rect,bool flip=false);
 
 	// Called before quitting
 	bool CleanUp();

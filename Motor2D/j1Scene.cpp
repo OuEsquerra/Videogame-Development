@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
+#include "j1EntityMachine.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -32,6 +33,10 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("Dark_Map.tmx");
+
+	SDL_Rect fly_enemy = { 0,0,62,60 };
+
+	App->entities->CreateEntity(100, 1000, &fly_enemy , FLYING_ENEMY);
 
 	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 
@@ -65,7 +70,12 @@ bool j1Scene::Update(float dt)
 		else if (App->map->data.name == "Dark_Map2.tmx") App->fade->FadeToBlack("Dark_Map2.tmx");
 	}
 
+	//LOG("Befor Draw");
+	
 	App->map->Draw();
+
+	//LOG("After Draw");
+
 
 	return true;
 }

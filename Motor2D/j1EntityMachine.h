@@ -50,6 +50,8 @@ public:
 
 //Flying_Enemy Entity
 class Flying_Enemy : public Entity {
+
+//Methods
 public:
 	Flying_Enemy(float x, float y, SDL_Rect* rect, EntityType Type);
 
@@ -57,7 +59,7 @@ public:
 
 	bool Start();
 
-	bool Update();
+	bool Update(float dt);
 
 };
 
@@ -78,7 +80,7 @@ public:
 //};
 
 
-
+//Machine class
 class j1EntityMachine : public j1Module {
 //METHODS
 public:
@@ -95,7 +97,7 @@ public:
 
 	bool Awake(pugi::xml_node&);
 
-	Entity* CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type);
+	void CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type);
 	
 	void DeleteEntity(Entity* entity);
 
@@ -115,7 +117,7 @@ public:
 	Flying_Enemy* flying_enemy = nullptr;
 
 
-	p2List<Entity*>* entity_list;
+	p2List<Entity*> entity_list;
 
 private:
 };

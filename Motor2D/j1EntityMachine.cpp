@@ -29,7 +29,7 @@ bool  j1EntityMachine::Awake(pugi::xml_node&) {
 bool j1EntityMachine::Update(float dt) {
 	
 	
-	
+	entity_list.start->data->Update(dt);
 	
 	
 	return true;
@@ -42,7 +42,7 @@ bool j1EntityMachine::CleanUp() {
 
 
 // Create an Entity and add to the list ----------------------------------------------------
-Entity* j1EntityMachine::CreateEntity(float x, float y,SDL_Rect* Rect, EntityType Type) {
+void j1EntityMachine::CreateEntity(float x, float y,SDL_Rect* Rect, EntityType Type) {
 	
 	static_assert(EntityType::UNKNOWN == 5, " Something broke :( ");
 	
@@ -60,14 +60,16 @@ Entity* j1EntityMachine::CreateEntity(float x, float y,SDL_Rect* Rect, EntityTyp
 		break;
 		
 		case FLYING_ENEMY: 
-			//ret = ;
-
-			flying_enemy = new Flying_Enemy(x, y, Rect, Type);
+			
+			ret = new Flying_Enemy(x, y, Rect, Type);
 
 			if (ret != nullptr)
 			{
-				entity_list->add(ret);
+				entity_list.add(ret);
 			}
+
+			flying_enemy = (Flying_Enemy*)ret;
+
 		break;
 		
 		case GROUND_ENEMY: 
@@ -75,9 +77,7 @@ Entity* j1EntityMachine::CreateEntity(float x, float y,SDL_Rect* Rect, EntityTyp
 		break;
 	}
 
-	entity_list->add(ret);
-
-	return ret;
+	//entity_list->add(ret);
 };
 
 
@@ -86,7 +86,7 @@ void j1EntityMachine::DeleteEntity(Entity* entity) {
 
 	delete entity->rect;
 
-	entity_list->del(entity_list->At(entity_list->find(entity)));
+	entity_list.del(entity_list.At(entity_list.find(entity)));
 }
 
 
@@ -155,8 +155,12 @@ bool Flying_Enemy::Start()
 	return true;
 }
 
-bool Flying_Enemy::Update()
+bool Flying_Enemy::Update(float dt)
 {
+	SDL_Rect tmprec = { 100,100,64,64};
+	
+	//Draw enemy
+	App->map->DrawAnimation("skull_still", "Skull1", &tmprec, false);
 
 	return true;
 }

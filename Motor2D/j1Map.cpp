@@ -87,7 +87,7 @@ void j1Map::Draw()
 				{*/
 				App->render->Blit(data.tilesets[0]->texture,
 					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-					data.tilesets[0]->TileRect(gid_list[   i   ]), false, layerIter->data->speed); //Get the tile we are currently drawing
+					data.tilesets[0]->TileRect(gid_list[i]) , false, layerIter->data->speed); //Get the tile we are currently drawing
 				//}
 				
 				//i++;
@@ -100,7 +100,7 @@ void j1Map::Draw()
 	
 }
 
-void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,bool flip)
+void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bool flip)
 {
 
 	TileSet* animTileset = nullptr;
@@ -142,7 +142,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect rect,boo
 	currentanim->prev_Anim_Name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
-	rect.x , rect.y,	//drawn at rect position
+	rect->x , rect->y,	//drawn at rect position
 	animTileset->PlayerTileRect(currentanim->frames[currentanim->i]),flip );			//draw frames tile id
 
 	if (currentanim->frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
@@ -175,8 +175,8 @@ bool j1Map::CleanUp()
 	while (item != NULL)
 	{
 		item->data->animations.clear();
-		delete item->data->Tilerect;
-		delete item->data->PlayerTilerect;
+		//delete item->data->Tilerect;
+		//delete item->data->PlayerTilerect;
 
 		SDL_DestroyTexture(item->data->texture);
 		RELEASE(item->data);
