@@ -65,8 +65,8 @@ void j1Map::Draw()
 
 	p2List_item<MapLayer*>* layerIter = data.layers.start;
 
-	int camera_h_tile = winHeight / 32;
-	int camera_w_tile = winWidth / 32;
+	int camera_h_tile = winHeight / 32 + 1;
+	int camera_w_tile = winWidth / 32 + 1;
 
 	while(layerIter != nullptr) { //loop for layers
 

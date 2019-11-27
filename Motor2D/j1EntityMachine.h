@@ -6,6 +6,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
+#include "j1Flying_Enemy.h"
 
 
 enum EntityType 
@@ -18,42 +19,65 @@ enum EntityType
 	UNKNOWN
 };
 
+//Entity base
 class Entity {
+//VARS
 public:
+	//Constructor
 	SDL_Rect* rect;
-	SDL_Texture* texture;
-	fPoint speed;
-	fPoint acceleration;
+	fPoint position;
 	EntityType type;
 
+	//Vars
 	p2SString animation;
+	fPoint speed;
 
-	Entity(EntityType Type) : type(Type) {}
-};
-
-class Particle : public Entity {
+//Methods
 public:
+	Entity(float x, float y , SDL_Rect* rect, EntityType Type);
+
+	virtual bool Awake(pugi::xml_node&);
+	virtual bool Start();
+	virtual bool PreUpdate();
+	virtual bool Update(float dt);
+	virtual bool PostUpdate();
+	virtual bool CleanUp();
+	virtual bool Save(pugi::xml_node &);
+	virtual bool Load(pugi::xml_node &);
 	
-	Particle() : Entity(PARTICLE) {};
 
 };
 
-//Make it unusable
-class Enemy : public Entity {
+//Flying_Enemy Entity
+class Flying_Enemy : public Entity {
 public:
-	Enemy(EntityType Type) : Entity(Type) {};
+	Flying_Enemy(float x, float y, SDL_Rect* rect, EntityType Type);
+
+	bool Awake(pugi::xml_node &);
+
+	bool Start();
+
+	bool Update();
 
 };
 
-class Enemy_ground : public Enemy {
-public:
-	Enemy_ground() : Enemy(GROUND_ENEMY) {};
-};
+//class Particle : public Entity {
+//public:
+//	
+//	Particle(float x, float y,SDL_Rect* rect, EntityType Type) : Entity(x, y, rect, Type) {};
+//};
 
-class Enemy_aerial : public Enemy {
-public:
-	Enemy_aerial() : Enemy(FLYING_ENEMY) {};
-};
+//class Enemy : public Entity {
+//public:
+//	Enemy(float x, float y, SDL_Rect* rect, EntityType Type) : Entity(x,y,rect,Type) {};
+//};
+
+//class Enemy_ground : public Enemy {
+//public:
+//	Enemy_ground(float x, float y, SDL_Rect* rect, EntityType Type) : Enemy(x,y,rect,Type) {};
+//};
+
+
 
 class j1EntityMachine : public j1Module {
 //METHODS
@@ -71,12 +95,11 @@ public:
 
 	bool Awake(pugi::xml_node&);
 
-	bool Start();
-
-	Entity* CreateEntity(SDL_Rect* Rect, SDL_Texture* Tex, EntityType Type);
+	Entity* CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type);
 	
 	void DeleteEntity(Entity* entity);
 
+	bool Start();
 
 	bool Update(float dt);
 
@@ -88,10 +111,13 @@ private:
 //VARIABLES
 public:
 
-private:
+
+	Flying_Enemy* flying_enemy = nullptr;
+
 
 	p2List<Entity*>* entity_list;
-	
+
+private:
 };
 
 
