@@ -1,4 +1,6 @@
+
 //#include "j1EntityMachine.h"
+
 #include "j1Entity.h"
 
 //struct SDL_Rect;

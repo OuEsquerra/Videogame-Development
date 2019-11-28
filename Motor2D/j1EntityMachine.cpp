@@ -106,7 +106,7 @@ bool j1EntityMachine::CleanUp() {
 // Create an Entity and add to the list ----------------------------------------------------
 Entity* j1EntityMachine::CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type) {
 
-	static_assert(EntityType::UNKNOWN == 5, " Something broke :( ");
+	static_assert(EntityType::UNKNOWN == 4, " Something broke :( ");
 
 	Entity* ret = nullptr;
 
@@ -123,12 +123,12 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, SDL_Rect* Rect, EntityTy
 
 	case FLYING_ENEMY:
 
-		ret = new Flying_Enemy(x, y, Rect, Type);
+		/*ret = new Flying_Enemy(x, y, Rect, Type);
 
 		if (ret != nullptr)
 		{
 			entity_list.add(ret);
-		}
+		}*/
 
 		//flying_enemy = (Flying_Enemy*)ret;
 

@@ -1,5 +1,11 @@
+
 //#include "j1Flying_Enemy.h"
+
 #include "p2SString.h"
+#include "PugiXml/src/pugixml.hpp"
+#include "p2List.h"
+#include "p2Point.h"
+#include "SDL/include/SDL.h"
 
 //#include "j1EntityMachine.h"
 

@@ -28,7 +28,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
 
-	//bool Init();
+	bool Init();
 
 	bool Awake(pugi::xml_node&);
 
@@ -38,7 +38,11 @@ public:
 
 	bool Start();
 
+	bool PreUpdate();
+
 	bool Update(float dt);
+
+	bool PostUpdate();
 
 	bool CleanUp();
 
