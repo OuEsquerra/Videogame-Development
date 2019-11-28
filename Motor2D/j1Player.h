@@ -8,6 +8,8 @@
 
 #include "j1PerfTimer.h"
 
+
+
 struct Collider;
 
 enum PlayerState {
@@ -70,7 +72,7 @@ struct Player {
 	};
 };
 
-class j1Player : public j1Module {
+class j1Player : public j1Module{
 public:// methods
 
 	j1Player();

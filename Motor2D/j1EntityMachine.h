@@ -6,79 +6,14 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
-#include "j1Flying_Enemy.h"
+
+#include "j1Entity.h"
+//#include "j1Flying_Enemy.h"
 
 
-enum EntityType 
-{
-	PLAYER = 0,
-	ENEMY,
-	FLYING_ENEMY,
-	GROUND_ENEMY,
-	PARTICLE,
-	UNKNOWN
-};
+//class Entity;
 
-//Entity base
-class Entity {
-//VARS
-public:
-	//Constructor
-	SDL_Rect* rect;
-	fPoint position;
-	EntityType type;
-
-	//Vars
-	p2SString animation;
-	fPoint speed;
-
-//Methods
-public:
-	Entity(float x, float y , SDL_Rect* rect, EntityType Type);
-
-	virtual bool Awake(pugi::xml_node&);
-	virtual bool Start();
-	virtual bool PreUpdate();
-	virtual bool Update(float dt);
-	virtual bool PostUpdate();
-	virtual bool CleanUp();
-	virtual bool Save(pugi::xml_node &);
-	virtual bool Load(pugi::xml_node &);
-	
-
-};
-
-//Flying_Enemy Entity
-class Flying_Enemy : public Entity {
-
-//Methods
-public:
-	Flying_Enemy(float x, float y, SDL_Rect* rect, EntityType Type);
-
-	bool Awake(pugi::xml_node &);
-
-	bool Start();
-
-	bool Update(float dt);
-
-};
-
-//class Particle : public Entity {
-//public:
-//	
-//	Particle(float x, float y,SDL_Rect* rect, EntityType Type) : Entity(x, y, rect, Type) {};
-//};
-
-//class Enemy : public Entity {
-//public:
-//	Enemy(float x, float y, SDL_Rect* rect, EntityType Type) : Entity(x,y,rect,Type) {};
-//};
-
-//class Enemy_ground : public Enemy {
-//public:
-//	Enemy_ground(float x, float y, SDL_Rect* rect, EntityType Type) : Enemy(x,y,rect,Type) {};
-//};
-
+//enum EntityType;
 
 //Machine class
 class j1EntityMachine : public j1Module {
@@ -97,7 +32,7 @@ public:
 
 	bool Awake(pugi::xml_node&);
 
-	void CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type);
+	Entity* CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type);
 	
 	void DeleteEntity(Entity* entity);
 
@@ -113,9 +48,7 @@ private:
 //VARIABLES
 public:
 
-
-	Flying_Enemy* flying_enemy = nullptr;
-
+	//Flying_Enemy* flying_enemy = nullptr;
 
 	p2List<Entity*> entity_list;
 

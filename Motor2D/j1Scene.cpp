@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityMachine.h"
+#include "j1Entity.h"
 
 j1Scene::j1Scene() : j1Module()
 {

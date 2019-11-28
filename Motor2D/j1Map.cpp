@@ -102,6 +102,7 @@ void j1Map::Draw()
 
 void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bool flip)
 {
+	
 
 	TileSet* animTileset = nullptr;
 
@@ -109,7 +110,9 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bo
 
 	while (TilesetIter != NULL)
 	{
-		if (TilesetIter->data->name == tileset)
+		
+
+		if ( TilesetIter->data->name == tileset)
 		{
 			animTileset = TilesetIter->data;
 		}
@@ -121,12 +124,11 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bo
 	// I have the adventurer Tileset inside I have animation
 	Animations* currentanim = nullptr;
 
-	
 	p2List_item<Animations*>* animIter = animTileset->animations.start;
 
 	while (animIter)
 	{
-		if (animIter->data->name == name)
+		if ( animIter->data->name == name)
 		{
 			currentanim = animIter->data; //gets the animation with the name we sent
 		}
@@ -158,6 +160,7 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bo
 
 	currentanim->frameCount += App->dt;
 
+	
 	
 }
 

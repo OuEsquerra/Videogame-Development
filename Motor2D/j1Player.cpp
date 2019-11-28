@@ -12,7 +12,7 @@
 
 j1Player::j1Player() 
 {
-	name.create("player");
+	//name.create("player");
 };
 
 j1Player::~j1Player() 
@@ -265,7 +265,7 @@ bool j1Player::StartPlayer() {
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
 
-	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
+	//player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
 
 	player.able_to_jump = false; //Only lets the player jump if it's true
 	player.able_to_dash = false;
