@@ -54,6 +54,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 void j1Map::Draw()
 {
 	BROFILER_CATEGORY("DRAW", Profiler::Color::Aqua)
+
 	if(map_loaded == false)
 		return;
 	
@@ -83,14 +84,9 @@ void j1Map::Draw()
 
 				i = j * data.width + x ;
 
-				/*if (camera_collider.CheckCollision(tile_rect))
-				{*/
 				App->render->Blit(data.tilesets[0]->texture,
 					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
 					data.tilesets[0]->TileRect(gid_list[i]) , false, layerIter->data->speed); //Get the tile we are currently drawing
-				//}
-				
-				//i++;
 
 			}
 			j++;

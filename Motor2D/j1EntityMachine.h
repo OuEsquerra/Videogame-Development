@@ -29,7 +29,7 @@ public:
 
 	bool Init();
 
-	bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node& config);
 
 	Entity* CreateEntity(float x, float y, EntityType Type);
 	
@@ -52,6 +52,8 @@ private:
 
 //VARIABLES
 public:
+
+	pugi::xml_node conf;
 
 	p2List<Entity*> entity_list;
 

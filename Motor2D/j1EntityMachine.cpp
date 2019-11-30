@@ -1,13 +1,10 @@
-
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1FadeToBlack.h"
 
-//#include "j1Flying_Enemy.h"
 #include "j1EntityMachine.h"
-//#include "j1Entity.h"
 
 
 j1EntityMachine::j1EntityMachine() {
@@ -33,7 +30,7 @@ bool j1EntityMachine::Init()
 	return true;
 };
 
-bool  j1EntityMachine::Awake(pugi::xml_node& conf)
+bool  j1EntityMachine::Awake(pugi::xml_node& config)
 {
 	p2List_item<Entity*>* entityIter = entity_list.start;
 
@@ -49,7 +46,6 @@ bool  j1EntityMachine::Awake(pugi::xml_node& conf)
 
 bool j1EntityMachine::PreUpdate()
 {
-
 	p2List_item<Entity*>* entityIter = entity_list.start;
 
 	while (entityIter != NULL)
@@ -64,7 +60,6 @@ bool j1EntityMachine::PreUpdate()
 
 bool j1EntityMachine::Update(float dt)
 {
-
 	p2List_item<Entity*>* entityIter = entity_list.start;
 
 	while (entityIter != NULL)
@@ -122,6 +117,8 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 			entity_list.add(ret);
 		}
 
+
+
 		break;
 
 	case PARTICLE:
@@ -150,8 +147,6 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 
 		break;
 	}
-
-	//entity_list->add(ret);
 	return ret;
 };
 
@@ -193,8 +188,8 @@ void j1EntityMachine::OnCollision(Collider* A, Collider* B)
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
 
 		//from above
-		if (player->player.position.y + A->rect.h > B->rect.y
-			&& player->player.position.y < B->rect.y
+		if (player->position.y + A->rect.h > B->rect.y
+			&& player->position.y < B->rect.y
 			&& A->rect.x < B->rect.x + B->rect.w
 			&& A->rect.x + A->rect.w > B->rect.x
 			&& player->player.prevposition.y + player->player.boxH <= B->rect.y + 1 //MagicNumber
@@ -204,36 +199,36 @@ void j1EntityMachine::OnCollision(Collider* A, Collider* B)
 			{
 				player->player.speed.y = 0;
 			}
-			player->player.position.y = B->rect.y - player->player.collider->rect.h + 1;
-			player->player.collider->SetPos(player->player.position.x + player->player.boxOffset_x, player->player.position.y);
+			player->position.y = B->rect.y - player->player.collider->rect.h + 1;
+			player->player.collider->SetPos(player->position.x + player->player.boxOffset_x, player->position.y);
 			player->player.SetGroundState(true);
 		}
 
 		//from below
 		if (player->player.prevposition.y > (B->rect.y + B->rect.h - 1))
 		{
-			player->player.position.y = B->rect.y + B->rect.h;
+			player->position.y = B->rect.y + B->rect.h;
 			player->player.cealing = true;
-			player->player.collider->SetPos(player->player.position.x + player->player.boxOffset_x, player->player.position.y);
+			player->player.collider->SetPos(player->position.x + player->player.boxOffset_x, player->position.y);
 		}
 
 		//from a side
-		if (player->player.position.y + (A->rect.h* 0.1f) < B->rect.y + B->rect.h
-			&& player->player.position.y + (A->rect.h* 0.9f) > B->rect.y)
+		if (player->position.y + (A->rect.h* 0.1f) < B->rect.y + B->rect.h
+			&& player->position.y + (A->rect.h* 0.9f) > B->rect.y)
 		{
 			player->player.wall = true;
 			LOG("Touching WALL");
 
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4))
 			{ //Player to the left 
-				player->player.position.x = B->rect.x - A->rect.w - player->player.boxOffset_x + 1;
+				player->position.x = B->rect.x - A->rect.w - player->player.boxOffset_x + 1;
 
 			}
 			else if (A->rect.x > (B->rect.x + B->rect.w * 3 / 4))
 			{ //Player to the right
-				player->player.position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1;
+				player->position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1;
 			}
-			player->player.collider->SetPos(player->player.position.x + player->player.boxOffset_x, player->player.position.y);
+			player->player.collider->SetPos(player->position.x + player->player.boxOffset_x, player->position.y);
 		}
 	}
 	// ------------ Player Colliding against a platform -----------------
@@ -242,12 +237,12 @@ void j1EntityMachine::OnCollision(Collider* A, Collider* B)
 		if (player->player.drop_plat == false) {
 
 			if ((player->player.prevposition.y + player->player.collider->rect.h) < B->rect.y + (B->rect.h / 2.0f) && (player->player.prevposition.y + player->player.collider->rect.h) > B->rect.y && player->player.speed.y >= 0) {//this won't ever happen
-				player->player.position.y = B->rect.y - player->player.collider->rect.h + 1;
+				player->position.y = B->rect.y - player->player.collider->rect.h + 1;
 				player->player.able_to_jump = false;
 				player->player.onPlatform = true;
 			}
-			else if ((player->player.position.y >= player->player.prevposition.y) && (player->player.prevposition.y + player->player.collider->rect.h) < B->rect.y && player->player.speed.y >= 0) {
-				player->player.position.y = B->rect.y - player->player.collider->rect.h + 1;
+			else if ((player->position.y >= player->player.prevposition.y) && (player->player.prevposition.y + player->player.collider->rect.h) < B->rect.y && player->player.speed.y >= 0) {
+				player->position.y = B->rect.y - player->player.collider->rect.h + 1;
 				player->player.SetGroundState(true);
 				player->player.able_to_jump = false;
 				player->player.onPlatform = true;

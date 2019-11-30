@@ -12,7 +12,7 @@
 
 j1Player::j1Player(float x, float y, EntityType Type) : Entity(x,y,Type)
 {
-	//name.create("player");
+	
 };
 
 j1Player::~j1Player() 
@@ -26,23 +26,21 @@ bool j1Player::Init()
 
 bool j1Player::Awake(pugi::xml_node& conf) 
 {
-	player.acceleration.x = conf.child("acceleration").attribute("x").as_float();
-	player.acceleration.y = conf.child("acceleration").attribute("y").as_float();
-	player.speed.x =		conf.child("speed").attribute("x").as_float();
-	player.speed.y =		conf.child("speed").attribute("y").as_float();
-	player.maxSpeed.x =		conf.child("maxSpeed").attribute("x").as_float();
-	player.maxSpeed.y =		conf.child("maxSpeed").attribute("y").as_float();
-	player.gravity =		conf.child("gravity").attribute("value").as_float();
-	player.boxW =			conf.child("box").attribute("w").as_int();
-	player.boxH =			conf.child("box").attribute("h").as_int();
-	player.boxOffset_x =	conf.child("offset").attribute("x").as_int();
+	player.acceleration.x = conf.child("player").child("acceleration").attribute("x").as_float();
+	player.acceleration.y = conf.child("player").child("acceleration").attribute("y").as_float();
+	player.speed.x =		conf.child("player").child("speed").attribute("x").as_float();
+	player.speed.y =		conf.child("player").child("speed").attribute("y").as_float();
+	player.maxSpeed.x =		conf.child("player").child("maxSpeed").attribute("x").as_float();
+	player.maxSpeed.y =		conf.child("player").child("maxSpeed").attribute("y").as_float();
+	player.gravity =		conf.child("player").child("gravity").attribute("value").as_float();
+	player.boxW =			conf.child("player").child("box").attribute("w").as_int();
+	player.boxH =			conf.child("player").child("box").attribute("h").as_int();
+	player.boxOffset_x =	conf.child("player").child("offset").attribute("x").as_int();
 
 	App->audio->LoadFx("audio/fx/jump1.wav");
 	App->audio->LoadFx("audio/fx/jump2.wav");
 	App->audio->LoadFx("audio/fx/jump3.wav");
 	App->audio->LoadFx("audio/fx/sword_sound.wav");
-
-	gravity_tmp = player.gravity;
 	
 	return true;
 }; 
@@ -104,7 +102,7 @@ bool j1Player::Update(float dt)
 {
 	
 
-	player.prevposition = player.position;
+	player.prevposition = position;
 
 	if (App->do_logic)
 	{
@@ -116,7 +114,7 @@ bool j1Player::Update(float dt)
 		return true;
 	}
 	
-	player.prevposition = player.position;
+	player.prevposition = position;
 
 	if (player.cealing || player.onPlatform && !player.jumping)
 	{
@@ -198,7 +196,7 @@ bool j1Player::Update(float dt)
 			player.speed.y = player.maxSpeed.y*dt;
 		}
 		
-		player.position.x += player.speed.x;
+		position.x += player.speed.x;
 		
 		if (player.wall)
 		{
@@ -218,18 +216,18 @@ bool j1Player::Update(float dt)
 		{
 			MoveDown(dt);
 		}
-		player.position.x += player.speed.x * 2 * dt;
+		position.x += player.speed.x * 2 * dt;
 	}
 
 	//Update player collider and position
-	player.playerBox.x = player.position.x;
-	player.playerBox.y = player.position.y;
+	player.playerBox.x = position.x;
+	player.playerBox.y = position.y;
 
 	//Draw player
 	App->map->DrawAnimation(player.animation,"Adventurer",position, Ainfo, player.flip);
 
 	//Update Player Collider after updating its position
-	player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
+	player.collider->SetPos(position.x + player.boxOffset_x, position.y);
 
 	player.cealing = false;
 	player.wall = false;
@@ -261,11 +259,10 @@ bool j1Player::StartPlayer() {
 
 	if(App->fade->playerReset == true)
 
-	player.position = App->map->data.start_position;
+	position = App->map->data.start_position;
 
-	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
+	player.playerBox = { position.x,position.y,player.boxW,player.boxH };
 
-	//Problems
 	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities);
 
 	player.able_to_jump = false; //Only lets the player jump if it's true
@@ -433,7 +430,7 @@ void j1Player::Jump()
 
 	player.speed.y -= player.acceleration.y * App->dt;
 	player.speed.y += (player.gravity * App->dt) * 0.75; // Speed.y is +gravity when not grounded
-	player.position.y += player.speed.y; //Update position y
+	position.y += player.speed.y; //Update position y
 }
 
 void j1Player::Fall()
@@ -443,7 +440,7 @@ void j1Player::Fall()
 	player.able_to_jump = false;
 
 	player.speed.y += player.gravity*  App->dt; // Speed.y is +gravity when not grounded
-	player.position.y += player.speed.y; //Update position y
+	position.y += player.speed.y; //Update position y
 }
 
 bool j1Player::Save(pugi::xml_node& node) const {
@@ -451,8 +448,8 @@ bool j1Player::Save(pugi::xml_node& node) const {
 	LOG("Saving Player...");
 	pugi::xml_node points = node.append_child("points");
 
-	points.append_child("position").append_attribute("x") = player.position.x;
-	points.child("position").append_attribute("y") = player.position.y;
+	points.append_child("position").append_attribute("x") = position.x;
+	points.child("position").append_attribute("y") = position.y;
 
 	points.append_child("prevposition").append_attribute("x") = player.prevposition.x;
 	points.child("prevposition").append_attribute("y") = player.prevposition.y;
@@ -483,8 +480,8 @@ bool j1Player::Load(pugi::xml_node& node) {
 
 	pugi::xml_node points = node.child("points");
 
-	player.position.x = points.child("position").attribute("x").as_float();
-	player.position.y = points.child("position").attribute("y").as_float();
+	position.x = points.child("position").attribute("x").as_float();
+	position.y = points.child("position").attribute("y").as_float();
 
 	player.prevposition.x = points.child("prevposition").attribute("x").as_float();
 	player.prevposition.y = points.child("prevposition").attribute("y").as_float();
@@ -528,10 +525,10 @@ void j1Player::MoveLeft(float dt) // Move Left the player at speed
 
 void j1Player::MoveDown(float dt) // Move Right the player at set speed
 {
-	player.position.y += player.maxSpeed.y*dt;
+	position.y += player.maxSpeed.y*dt;
 }
 
 void j1Player::MoveUp(float dt) // Move Right the player at set speed
 {
-	player.position.y -= player.maxSpeed.y*dt;
+	position.y -= player.maxSpeed.y*dt;
 }

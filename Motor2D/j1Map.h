@@ -187,7 +187,7 @@ struct MapData
 	int						tile_height;
 	
 	const char*				name;
-	fPoint					start_position;
+	iPoint					start_position;
 	
 	SDL_Color				background_color;
 	MapTypes				type;

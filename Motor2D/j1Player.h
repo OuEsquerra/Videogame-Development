@@ -25,13 +25,10 @@ enum PlayerState {
 
 struct Player {
 	
-
-
 	p2Point<float> acceleration;
 	p2Point<float> speed;
 	p2Point<float> maxSpeed;
-	p2Point<float> position;
-	p2Point<float> prevposition;
+	iPoint prevposition;
 	p2Point<float> lastGroundedPos;
 
 	p2SString animation;
@@ -65,10 +62,6 @@ struct Player {
 
 	inline void SetGroundState(bool state) 
 	{
-		if (playerGrounded == true) 
-		{
-			lastGroundedPos = position;
-		}
 		playerGrounded = state;
 	};
 };

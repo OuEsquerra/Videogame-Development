@@ -10,7 +10,6 @@
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityMachine.h"
-//#include "j1Entity.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -33,6 +32,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+
 	App->map->Load("Dark_Map.tmx");
 
 	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000,  FLYING_ENEMY);
