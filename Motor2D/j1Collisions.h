@@ -65,6 +65,8 @@ public:
 
 	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Properties* userdata = nullptr);
 	void LoadFromMap();
+	void ReportEnemies();
+
 private:
 	
 	void DebugDraw();

@@ -51,7 +51,9 @@ enum class ObjectType {
 	SOLID,
 	DAMAGE,
 	PLAYER,
+	ENEMY,
 	WARP,
+
 
 	MAX_OBJECTS = 6
 };

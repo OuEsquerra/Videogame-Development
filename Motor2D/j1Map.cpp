@@ -544,6 +544,14 @@ bool j1Map::LoadObjectgroup(pugi::xml_node& node, MapObjectgroup* objectgroup)
 			temp->data.v_string = iterator_node.child("properties").child("property").attribute("value").as_string();
 			objectgroup->objects[i].properties.list.add(temp);
 		}
+		else if (type == "enemy")
+		{
+			Properties::Property* temp = new Properties::Property;
+			temp->name = iterator_node.child("properties").child("property").attribute("name").as_string();
+			temp->data.v_string = iterator_node.child("properties").child("property").attribute("value").as_string();
+			objectgroup->objects[i].properties.list.add(temp);
+			objectgroup->objects[i].type = ObjectType::ENEMY;
+		}
 		else
 		{
 			objectgroup->objects[i].type = ObjectType::UNKNOWN;
