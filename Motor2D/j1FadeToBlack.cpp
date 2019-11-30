@@ -72,7 +72,7 @@ bool j1FadeToBlack::Update(float dt)
 
 			if(now >= total_time)
 				current_step = fade_step::none;
-				App->player->player.freeze = false;
+				//App->player->player.freeze = false;
 		} break;
 	}
 
@@ -97,7 +97,7 @@ bool j1FadeToBlack::FadeToBlack(const char* mapname, bool reset_player, float ti
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		ret = true;
 
-		App->player->player.freeze = true;
+		//App->player->player.freeze = true;
 	}
 
 	return ret;
@@ -114,7 +114,7 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 
 	ret = App->map->Load(mapname);		//Load specified map
 	App->collisions->LoadFromMap();		//Load Collisions
-	ret = App->player->StartPlayer();	//Reset Player
+	//ret = App->player->StartPlayer();	//Reset Player
 	
 	return ret;
 }

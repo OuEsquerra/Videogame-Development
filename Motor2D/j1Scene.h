@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 
+
 struct SDL_Texture;
 
 class j1Scene : public j1Module
@@ -33,6 +34,9 @@ public:
 	bool CleanUp();
 
 private:
+
+public:
+	
 };
 
 #endif // __j1SCENE_H__

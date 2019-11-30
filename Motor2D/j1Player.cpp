@@ -10,7 +10,7 @@
 #include "p2Log.h"
 #include "j1Audio.h"
 
-j1Player::j1Player() 
+j1Player::j1Player(float x, float y, SDL_Rect* rect, EntityType Type) : Entity(x,y,rect,Type)
 {
 	//name.create("player");
 };
@@ -265,7 +265,8 @@ bool j1Player::StartPlayer() {
 
 	player.playerBox = { (int)player.position.x,(int)player.position.y,player.boxW,player.boxH };
 
-	//player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, this);
+	//Problems
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities);
 
 	player.able_to_jump = false; //Only lets the player jump if it's true
 	player.able_to_dash = false;

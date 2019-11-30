@@ -1,13 +1,14 @@
 #ifndef __j1PLAYER_H__
 #define __j1PLAYER_H__
 
-#include "j1Module.h"
+
 #include "p2Point.h"
 #include "j1Render.h"
 #include "j1Input.h"
 
 #include "j1PerfTimer.h"
 
+#include "j1EntityMachine.h"
 
 
 struct Collider;
@@ -72,10 +73,10 @@ struct Player {
 	};
 };
 
-class j1Player : public j1Module{
+class j1Player : public Entity{
 public:// methods
 
-	j1Player();
+	j1Player(float x, float y, SDL_Rect* rect, EntityType Type);
 
 	// Destructor
 	virtual ~j1Player();

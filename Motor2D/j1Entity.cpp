@@ -3,8 +3,8 @@
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
 
-//#include "j1EntityMachine.h"
-#include "j1Entity.h"
+#include "j1EntityMachine.h"
+//#include "j1Entity.h"
 //#include "j1Flying_Enemy.h"
 
 

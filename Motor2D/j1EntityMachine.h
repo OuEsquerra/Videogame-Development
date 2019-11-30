@@ -8,8 +8,9 @@
 #include "SDL/include/SDL.h"
 
 #include "j1Entity.h"
-//#include "j1Flying_Enemy.h"
-
+#include "j1Flying_Enemy.h"
+#include "j1Player.h"
+#include "j1Ground_Enemy.h"
 
 //class Entity;
 
@@ -55,6 +56,12 @@ public:
 	//Flying_Enemy* flying_enemy = nullptr;
 
 	p2List<Entity*> entity_list;
+
+	j1Player* player = nullptr;
+
+	Flying_Enemy* skull = nullptr;
+
+	Ground_Enemy* skeleton = nullptr;
 
 private:
 };

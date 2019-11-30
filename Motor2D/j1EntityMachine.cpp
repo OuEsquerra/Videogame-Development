@@ -2,19 +2,12 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
-#include "j1Player.h"
 #include "j1Map.h"
 
 //#include "j1Flying_Enemy.h"
 #include "j1EntityMachine.h"
 //#include "j1Entity.h"
 
-bool j1EntityMachine::Save(pugi::xml_node& conf) const {
-	return true;
-};
-bool j1EntityMachine::Load(pugi::xml_node& conf) {
-	return true;
-};
 
 j1EntityMachine::j1EntityMachine() {
 	name.create("entities");
@@ -22,6 +15,15 @@ j1EntityMachine::j1EntityMachine() {
 
 bool j1EntityMachine::Start()
 {
+	p2List_item<Entity*>* entityIter = entity_list.start;
+
+	while (entityIter != NULL)
+	{
+		entityIter->data->Start();
+
+		entityIter = entityIter->next;
+	}
+
 	return true;
 };
 
@@ -102,7 +104,6 @@ bool j1EntityMachine::CleanUp() {
 	return true;
 };
 
-
 // Create an Entity and add to the list ----------------------------------------------------
 Entity* j1EntityMachine::CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type) {
 
@@ -113,7 +114,12 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, SDL_Rect* Rect, EntityTy
 	switch (Type) {
 	case PLAYER:
 
-		//ret = new Player(x, y, Rect, Type); //Struct Player es igual
+		ret = new j1Player(x, y, Rect, Type); //Struct Player es igual
+
+		if (ret != nullptr)
+		{
+			entity_list.add(ret);
+		}
 
 		break;
 
@@ -123,14 +129,12 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, SDL_Rect* Rect, EntityTy
 
 	case FLYING_ENEMY:
 
-		/*ret = new Flying_Enemy(x, y, Rect, Type);
+		ret = new Flying_Enemy(x, y, Rect, Type);
 
 		if (ret != nullptr)
 		{
 			entity_list.add(ret);
-		}*/
-
-		//flying_enemy = (Flying_Enemy*)ret;
+		}
 
 		break;
 
@@ -151,3 +155,15 @@ void j1EntityMachine::DeleteEntity(Entity* entity) {
 
 	entity_list.del(entity_list.At(entity_list.find(entity)));
 }
+
+bool j1EntityMachine::Save(pugi::xml_node& conf) const 
+{
+
+	return true;
+};
+
+bool j1EntityMachine::Load(pugi::xml_node& conf) 
+{
+
+	return true;
+};
