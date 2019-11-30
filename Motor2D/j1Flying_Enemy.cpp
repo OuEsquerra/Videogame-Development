@@ -13,7 +13,7 @@
 //Flying Enemy
 Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-
+	
 }
 
 bool Flying_Enemy::Awake(pugi::xml_node &)
@@ -25,8 +25,6 @@ bool Flying_Enemy::Awake(pugi::xml_node &)
 bool Flying_Enemy::Start()
 {
 	
-
-
 	return true;
 }
 
@@ -36,7 +34,7 @@ bool Flying_Enemy::Update(float dt)
 	goal = App->entities->player->position;
 
 //	if (App->pathfinding->IsWalkable(App->map->WorldToMap(goal.x, goal.y))) {
-	
+
 
 
 	//Find the closest tile to current position

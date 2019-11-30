@@ -4,6 +4,8 @@
 #include "j1Map.h"
 #include "j1FadeToBlack.h"
 
+#include "BroFiler/Brofiler.h"
+
 #include "j1EntityMachine.h"
 
 
@@ -60,6 +62,8 @@ bool j1EntityMachine::PreUpdate()
 
 bool j1EntityMachine::Update(float dt)
 {
+	BROFILER_CATEGORY("j1EntityMachine::Update", Profiler::Color::Red);
+
 	p2List_item<Entity*>* entityIter = entity_list.start;
 
 	while (entityIter != NULL)

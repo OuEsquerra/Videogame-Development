@@ -3,6 +3,8 @@
 #include "j1Map.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1EntityMachine.h"
+#include "BroFiler/Brofiler.h"
 
 j1Collisions::j1Collisions() : j1Module(), debug_colliders(false)
 {
@@ -154,11 +156,41 @@ void j1Collisions::LoadFromMap() {
 	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
 	while (list_i != nullptr) {
 		for (int i = 0; i < list_i->data->objects_size; i++) {
+			if (list_i->data->objects[i].type == ObjectType::ENEMY) {
+				if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "FLYING_ENEMY") == 0) 
+				{
+					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, FLYING_ENEMY);
+				}
+				else if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "GROUND_ENEMY") == 0)
+				{
+					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, GROUND_ENEMY);
+				}
+				else if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "PLAYER") == 0)
+				{
+					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, PLAYER);
+				}
 
+			}
 			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, &list_i->data->objects[i].properties);
 		}
 		list_i = list_i->next;
 	}
+
+}
+
+//Send the level info about enemies to the entity machine--------
+void j1Collisions::ReportEnemies() {
+	p2List_item<Collider*>* Coll_iterator = colliders.start;
+	while (Coll_iterator != nullptr) {
+
+		if (Coll_iterator->data->to_delete == true)
+		{
+			colliders.del(Coll_iterator);
+		}
+
+		
+	}
+
 
 }
 
