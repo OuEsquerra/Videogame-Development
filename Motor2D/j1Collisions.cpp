@@ -3,6 +3,7 @@
 #include "j1Map.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "BroFiler/Brofiler.h"
 
 j1Collisions::j1Collisions() : j1Module(), debug_colliders(false)
 {
