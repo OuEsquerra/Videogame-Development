@@ -8,7 +8,7 @@
 #include "j1EntityMachine.h"
 
 //Flying Enemy
-Flying_Enemy::Flying_Enemy(float x, float y, SDL_Rect* rect, EntityType Type) : Entity(x, y, rect, Type)
+Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
 
 }
@@ -30,12 +30,10 @@ bool Flying_Enemy::Start()
 bool Flying_Enemy::Update(float dt)
 {
 	//SDL_Rect tmprec = { 100,1000,64,64 };
-		
-	rect->x = position.x;
-	rect->y = position.y;
+	
 
 	//Draw enemy
-	App->map->DrawAnimation("skull_still", "Skull1", rect, false);
+	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, false);
 
 	return true;
 }

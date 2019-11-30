@@ -76,7 +76,7 @@ struct Player {
 class j1Player : public Entity{
 public:// methods
 
-	j1Player(float x, float y, SDL_Rect* rect, EntityType Type);
+	j1Player(float x, float y, EntityType Type);
 
 	// Destructor
 	virtual ~j1Player();
@@ -133,12 +133,8 @@ private:
 	int jumpSound = 1;
 
 
-
 	j1PerfTimer* dashtimercheck;
 	j1PerfTimer* jump_key_down_timer;
-
-	//Flying enemy stuff
-	SDL_Rect enemy_box = { 20,1200,62,60 };
 
 };
 

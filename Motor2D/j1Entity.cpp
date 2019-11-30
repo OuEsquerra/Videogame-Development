@@ -10,7 +10,7 @@
 
 //Entity Methods
 
-Entity::Entity(float x, float y, SDL_Rect* rect, EntityType Type) : position(x, y), rect(rect), type(Type)
+Entity::Entity(float x, float y, EntityType Type) : position(x, y), type(Type)
 {
 
 }

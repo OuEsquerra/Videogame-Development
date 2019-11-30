@@ -15,7 +15,7 @@ class Flying_Enemy : public Entity {
 
 	//Methods
 public:
-	Flying_Enemy(float x, float y, SDL_Rect* rect, EntityType Type);
+	Flying_Enemy(float x, float y, EntityType Type);
 
 	bool Awake(pugi::xml_node &);
 

@@ -18,15 +18,17 @@
     <fullscreen_window value="false"/>
   </window>
 
-  <player>
-    <acceleration x="50" y="200"/>
-    <gravity value="150" />
-    <speed x="0" y="0" />
-    <maxSpeed x="300" y="600"/>
-    <box w="46" h="61"/>
-    <offset x="20"/>
-  </player>
-  
+  <entities>
+    <player>
+      <acceleration x="50" y="200"/>
+      <gravity value="150" />
+      <speed x="0" y="0" />
+      <maxSpeed x="300" y="600"/>
+      <box w="46" h="61"/>
+      <offset x="20"/>
+    </player>
+  </entities>
+
   <file_system>
     <path>data.zip</path>
     <loadTo>save_game.xml</loadTo>

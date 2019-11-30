@@ -100,18 +100,14 @@ void j1Map::Draw()
 	
 }
 
-void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bool flip)
+void j1Map::DrawAnimation(p2SString name, const char* tileset, iPoint& position, AnimationInfo& ainfo, bool flip)
 {
-	
-
 	TileSet* animTileset = nullptr;
 
 	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
 
 	while (TilesetIter != NULL)
 	{
-		
-
 		if ( TilesetIter->data->name == tileset)
 		{
 			animTileset = TilesetIter->data;
@@ -135,33 +131,30 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, SDL_Rect* rect,bo
 		animIter = animIter->next;
 	}
 
-	if (currentanim->prev_Anim_Name != currentanim->name) // So that when animations change they start from frame 0
+	if (ainfo.prev_anim_name != currentanim->name.GetString() ) // So that when animations change they start from frame 0
 	{
-		currentanim->i = 0;
-		currentanim->frameCount = 0.0f;
+		ainfo.iter = 0;
+		ainfo.frameCount = 0.0f;
 	}
 	
-	currentanim->prev_Anim_Name = currentanim->name;
+	ainfo.prev_anim_name = currentanim->name;
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
-	rect->x , rect->y,	//drawn at rect position
-	animTileset->PlayerTileRect(currentanim->frames[currentanim->i]),flip );			//draw frames tile id
+	position.x , position.y,											//drawn at position
+	animTileset->PlayerTileRect(currentanim->frames[ainfo.iter]),flip );//draw frames tile id
 
-	if (currentanim->frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
+	if (ainfo.frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
 	{
-		currentanim->i++;
-		currentanim->frameCount = 0.0f;
+		ainfo.iter++;
+		ainfo.frameCount = 0.0f;
 	}
 
-	if (currentanim->i >= currentanim->nFrames)  //Iterate from 0 to nFrames (number of frames in animation)
+	if (ainfo.iter >= currentanim->nFrames)  //Iterate from 0 to nFrames (number of frames in animation)
 	{				
-		currentanim->i = 0;
+		ainfo.iter = 0;
 	}
 
-	currentanim->frameCount += App->dt;
-
-	
-	
+	ainfo.frameCount += App->dt;
 }
 
 // Called before quitting

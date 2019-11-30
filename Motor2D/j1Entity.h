@@ -18,23 +18,32 @@ enum EntityType
 	UNKNOWN
 };
 
+struct AnimationInfo
+{
+	int iter;
+	p2SString prev_anim_name = "idle";
+	float frameCount = 0.0f;
+};
+
+
+
 //Entity base
 class Entity 
 {
 //VARS
 public:
 	//Constructor
-	SDL_Rect* rect;
-	fPoint position;
+	iPoint position;
 	EntityType type;
 
 	//Vars
 	p2SString animation;
-	fPoint speed;
+	iPoint speed;
+	AnimationInfo Ainfo;
 
 //Methods
 public:
-	Entity(float x, float y , SDL_Rect* rect, EntityType Type);
+	Entity(float x, float y , EntityType Type);
 
 	virtual bool Awake(pugi::xml_node&);
 	virtual bool Start();

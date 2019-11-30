@@ -6,7 +6,7 @@
 #include "j1EntityMachine.h"
 
 //Flying Enemy
-Ground_Enemy::Ground_Enemy(float x, float y, SDL_Rect* rect, EntityType Type) : Entity(x, y, rect, Type)
+Ground_Enemy::Ground_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
 
 }
@@ -26,11 +26,11 @@ bool Ground_Enemy::Start()
 bool Ground_Enemy::Update(float dt)
 {
 
-	rect->x = position.x;
-	rect->y = position.y;
+
+	position.x = 500.0f;
 
 	//Draw enemy
-	App->map->DrawAnimation("skull_still", "Skull1", rect, false);
+	App->map->DrawAnimation("idle", "Skeleton", position , Ainfo, false);
 
 	return true;
 }

@@ -35,11 +35,13 @@ bool j1Scene::Start()
 {
 	App->map->Load("Dark_Map.tmx");
 
-	SDL_Rect fly_enemy = { 100,1100,62,60 };
+	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000,  FLYING_ENEMY);
 
-	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000, &fly_enemy , FLYING_ENEMY);
+	App->entities->player = (j1Player*)App->entities->CreateEntity(100, 1100, PLAYER);
 
-	App->entities->player = (j1Player*)App->entities->CreateEntity(100, 1000, &fly_enemy, PLAYER);
+	App->entities->skeleton = (Ground_Enemy*)App->entities->CreateEntity(100, 1200,  GROUND_ENEMY);
+
+	App->entities->skeleton2 = (Ground_Enemy*)App->entities->CreateEntity(100, 1300, GROUND_ENEMY);
 
 	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 

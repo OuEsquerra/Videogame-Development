@@ -7,14 +7,12 @@
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
 
+
 #include "j1Entity.h"
 #include "j1Flying_Enemy.h"
 #include "j1Player.h"
 #include "j1Ground_Enemy.h"
 
-//class Entity;
-
-//enum EntityType;
 
 //Machine class
 class j1EntityMachine : public j1Module {
@@ -33,7 +31,7 @@ public:
 
 	bool Awake(pugi::xml_node&);
 
-	Entity* CreateEntity(float x, float y, SDL_Rect* Rect, EntityType Type);
+	Entity* CreateEntity(float x, float y, EntityType Type);
 	
 	void DeleteEntity(Entity* entity);
 
@@ -47,13 +45,13 @@ public:
 
 	bool CleanUp();
 
+	void OnCollision(Collider* A, Collider* B);
+
 
 private:
 
 //VARIABLES
 public:
-
-	//Flying_Enemy* flying_enemy = nullptr;
 
 	p2List<Entity*> entity_list;
 
@@ -62,6 +60,8 @@ public:
 	Flying_Enemy* skull = nullptr;
 
 	Ground_Enemy* skeleton = nullptr;
+
+	Ground_Enemy* skeleton2 = nullptr;
 
 private:
 };

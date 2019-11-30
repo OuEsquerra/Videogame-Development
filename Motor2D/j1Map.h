@@ -8,6 +8,7 @@
 #include "j1Collisions.h"
 
 #include "p2Log.h"
+#include "j1EntityMachine.h"
 
 // ----------------------------------------------------
 union value {
@@ -61,10 +62,9 @@ struct Animations
 	uint id; //Tile which is animated
 	uint nFrames; //Number of frames of the animation
 	uint* frames;
-	p2SString prev_Anim_Name = "idle";
+	//p2SString prev_Anim_Name = "idle";
 	float speed;
-	int i = 0;
-	float frameCount = 0.0f;
+	//float frameCount = 0.0f;
 };
 
 struct Object 
@@ -214,7 +214,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(p2SString name,const char* tileset,SDL_Rect* rect,bool flip=false);
+	void DrawAnimation(p2SString name,const char* tileset,iPoint& position, AnimationInfo& ainfo, bool flip=false);
 
 	// Called before quitting
 	bool CleanUp();

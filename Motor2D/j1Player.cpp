@@ -10,7 +10,7 @@
 #include "p2Log.h"
 #include "j1Audio.h"
 
-j1Player::j1Player(float x, float y, SDL_Rect* rect, EntityType Type) : Entity(x,y,rect,Type)
+j1Player::j1Player(float x, float y, EntityType Type) : Entity(x,y,Type)
 {
 	//name.create("player");
 };
@@ -226,7 +226,7 @@ bool j1Player::Update(float dt)
 	player.playerBox.y = player.position.y;
 
 	//Draw player
-	App->map->DrawAnimation(player.animation,"Adventurer",&player.playerBox,player.flip);
+	App->map->DrawAnimation(player.animation,"Adventurer",position, Ainfo, player.flip);
 
 	//Update Player Collider after updating its position
 	player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
@@ -287,88 +287,7 @@ bool j1Player::StartPlayer() {
 
 void j1Player::OnCollision(Collider* A, Collider* B) {
 
-	if (player.godMode) return; //While in God Mode Collisions are disregarded
 	
-	if (B->type == ObjectType::PLAYER) {
-		Collider temp = *A;
-		A = B;
-		B = &temp;
-	}
-	if (A->type != ObjectType::PLAYER) {
-		return;
-	}
-
-	// ------------ Player Colliding against solids ------------------
-	if (A->type == ObjectType::PLAYER && B->type == ObjectType::SOLID) {
-
-		//from above
-		if (player.position.y + A->rect.h > B->rect.y
-			&& player.position.y < B->rect.y
-			&& A->rect.x < B->rect.x + B->rect.w
-			&& A->rect.x + A->rect.w > B->rect.x
-			&& player.prevposition.y + player.boxH <= B->rect.y + 1 //MagicNumber
-			&& player.justLoaded == false)
-		{
-			if (player.speed.y > 0)
-			{
-				player.speed.y = 0;
-			}
-			player.position.y = B->rect.y - player.collider->rect.h + 1;
-			player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
-			player.SetGroundState(true);
-		}
-
-		//from below
-		if (player.prevposition.y > (B->rect.y + B->rect.h - 1)) 
-		{
-			player.position.y = B->rect.y + B->rect.h ;
-			player.cealing = true;
-			player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
-		}
-
-		//from a side
-		if (player.position.y + (A->rect.h* 0.1f) < B->rect.y + B->rect.h  
-			&& player.position.y + (A->rect.h* 0.9f) > B->rect.y ) 
-		{
-			player.wall = true;
-			LOG("Touching WALL");
-
-			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)) 
-			{ //Player to the left 
-				player.position.x = B->rect.x -A->rect.w - player.boxOffset_x  +1;
-
-			}
-			else if (A->rect.x  > (B->rect.x + B->rect.w*3/4)) 
-			{ //Player to the right
-				player.position.x = B->rect.x + B->rect.w - player.boxOffset_x - 1; 
-			}
-			player.collider->SetPos(player.position.x + player.boxOffset_x, player.position.y);
-		}
-	}
-	// ------------ Player Colliding against a platform -----------------
-	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLATFORM) {
-		
-		if (player.drop_plat == false ) {
-
-			if ((player.prevposition.y + player.collider->rect.h) < B->rect.y + (B->rect.h / 2.0f) && (player.prevposition.y + player.collider->rect.h) > B->rect.y && player.speed.y >= 0) {//this won't ever happen
-				player.position.y = B->rect.y - player.collider->rect.h + 1;
-				player.SetGroundState(true);
-				player.able_to_jump = false;
-				player.onPlatform = true;
-			}
-			else if ((player.position.y >= player.prevposition.y) && (player.prevposition.y + player.collider->rect.h) < B->rect.y && player.speed.y >= 0) {
-				player.position.y = B->rect.y - player.collider->rect.h + 1;
-				player.SetGroundState(true);
-				player.able_to_jump = false;
-				player.onPlatform = true;
-			}
-		}
-
-	}
-	// ------------ Player Colliding against a warp zone -----------------
-	if (A->type == ObjectType::PLAYER && B->type == ObjectType::WARP) {
-		App->fade->FadeToBlack(B->userdata->Get("MapToLoad").v_string);
-	}
 }
 
 void j1Player::check_x_move(float dt)
