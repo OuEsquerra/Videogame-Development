@@ -38,6 +38,7 @@ bool j1Scene::Start()
 	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000,  FLYING_ENEMY);
 
 	App->entities->player = (j1Player*)App->entities->CreateEntity(100, 1100, PLAYER);
+	App->entities->player->Awake();
 
 	App->entities->skeleton = (Ground_Enemy*)App->entities->CreateEntity(100, 1200,  GROUND_ENEMY);
 

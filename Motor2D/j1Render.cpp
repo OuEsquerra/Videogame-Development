@@ -72,7 +72,7 @@ bool j1Render::PreUpdate()
 
 bool j1Render::Update(float dt)
 {
-	// Update Camera Position
+	//Update Camera Position
 	
 	//Get size of window
 	uint winWidth, winHeight;
@@ -100,8 +100,6 @@ bool j1Render::Update(float dt)
 	{
 		camera.y = 0;
 	}
-
-	
 
 	return true;
 }

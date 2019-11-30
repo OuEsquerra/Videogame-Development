@@ -56,10 +56,12 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
-private:
-
 	// Load config file
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+
+private:
+
+	
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
@@ -98,6 +100,7 @@ public:
 
 	float				dt;
 	bool				do_logic = false;
+	pugi::xml_node		config;
 
 private:
 
@@ -127,6 +130,8 @@ private:
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 	int					frame_rate;
+
+	
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

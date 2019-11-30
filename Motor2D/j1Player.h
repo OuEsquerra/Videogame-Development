@@ -1,7 +1,7 @@
 #ifndef __j1PLAYER_H__
 #define __j1PLAYER_H__
 
-
+#include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "j1Render.h"
 #include "j1Input.h"
@@ -79,7 +79,7 @@ public:// methods
 
 	bool Init();
 
-	bool Awake(pugi::xml_node&);
+	bool Awake();
 
 	bool Start();
 
