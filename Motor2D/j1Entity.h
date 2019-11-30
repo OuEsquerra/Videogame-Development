@@ -25,7 +25,7 @@ class Entity
 public:
 	//Constructor
 	SDL_Rect* rect;
-	fPoint position;
+	iPoint position;
 	EntityType type;
 
 	//Vars

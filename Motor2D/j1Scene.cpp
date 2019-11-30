@@ -37,7 +37,7 @@ bool j1Scene::Start()
 
 	SDL_Rect fly_enemy = { 100,1100,62,60 };
 
-	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000, &fly_enemy , FLYING_ENEMY);
+	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(300, 900, &fly_enemy , FLYING_ENEMY);
 
 	App->entities->player = (j1Player*)App->entities->CreateEntity(100, 1000, &fly_enemy, PLAYER);
 
