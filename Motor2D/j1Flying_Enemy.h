@@ -12,6 +12,10 @@
 
 //Flying_Enemy Entity
 class Flying_Enemy : public Entity {
+	//variables
+public:
+	iPoint goal;
+	
 
 	//Methods
 public:
@@ -22,5 +26,6 @@ public:
 	bool Start();
 
 	bool Update(float dt);
+
 
 };

@@ -226,8 +226,10 @@ public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
+	iPoint MapToWorldCentered(int x, int y) const;
+	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
 	
-
 private:
 
 	bool LoadMap();
