@@ -23,6 +23,7 @@ struct Properties //Properties
 	{
 		p2SString name;
 		value data;
+		//Entity* entity;
 	};
 
 	~Properties()

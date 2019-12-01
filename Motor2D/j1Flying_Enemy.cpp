@@ -1,7 +1,4 @@
-
 #include "j1App.h"
-
-
 
 #include "j1Map.h"
 #include "j1Pathfinding.h"
@@ -9,11 +6,13 @@
 
 #include "j1EntityMachine.h"
 
-
 //Flying Enemy
 Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	
+	colliderRect = { position.x, position.y, 64, 64 }; //Magic
+	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities, (Entity*)this);
+
+	speed = { 100,100 };
 }
 
 bool Flying_Enemy::Awake(pugi::xml_node &)
@@ -30,8 +29,8 @@ bool Flying_Enemy::Start()
 
 bool Flying_Enemy::Update(float dt)
 {
-	if (App->do_logic)
-	{
+	/*if (App->do_logic)
+	{*/
 		//Pathfinding -------------------------------------------
 		goal = App->entities->player->position;
 
@@ -56,22 +55,50 @@ bool Flying_Enemy::Update(float dt)
 				iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
 
 				if (closest_center.x > position.x) {
-					position.x += 1;
+					position.x += speed.x * dt;
 					flip = false;
 				}
 				else if (closest_center.x < position.x) {
-					position.x -= 1;
+					position.x -= speed.x * dt;
 					flip = true;
 				}
 				if (closest_center.y > position.y) {
-					position.y += 1;
+					position.y += speed.y * dt;
 				}
 				else if (closest_center.y < position.y) {
-					position.y -= 1;
+					position.y -= speed.y * dt;
 				}
 			}
 		}
+	//}
+
+	
+	
+	
+	/*
+	if(Path->Pop(last_tile)) {
+		iPoint closest_center = App->map->MapToWorldCentered(last_tile.x, last_tile.y);
+
+
+		if (closest_center.DistanceTo(position) < 2) {
+			iPoint penultima_tile;
+			if (Path->Pop(penultima_tile)) {
+				closest_center = App->map->MapToWorldCentered(penultima_tile.x, penultima_tile.y);
+			}
+		}
+		
+		position.x += 2 * ((position.x < closest_center.x) ? 1 : -1);
+		position.y += 2 * ((position.y < closest_center.y) ? 1 : -1);
+		
+	}*/
+
+//	}
+	if (collider != nullptr)
+	{
+		collider->SetPos(position.x, position.y);
 	}
+
+
 
 	//Draw enemy
 	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, flip);

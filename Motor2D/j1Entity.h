@@ -1,7 +1,7 @@
 
 //#include "j1Flying_Enemy.h"
 
-#include "j1Collisions.h"
+//#include "j1Collisions.h"
 #include "p2SString.h"
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
@@ -38,14 +38,18 @@ public:
 	//Vars
 	p2SString animation;
 	iPoint speed;
+	iPoint prevposition;
 	AnimationInfo Ainfo;
-	Collider collider;
+	Collider* collider;
+	SDL_Rect colliderRect;
 	bool flip;
+	bool grounded;
+
 //Methods
 public:
 	Entity(float x, float y , EntityType Type);
 
-	virtual bool Awake(pugi::xml_node&);
+	virtual bool Awake();
 	virtual bool Start();
 	virtual bool PreUpdate();
 	virtual bool Update(float dt);

@@ -7,12 +7,10 @@
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
 
-
 #include "j1Entity.h"
 #include "j1Flying_Enemy.h"
 #include "j1Player.h"
 #include "j1Ground_Enemy.h"
-
 
 //Machine class
 class j1EntityMachine : public j1Module {
@@ -44,8 +42,17 @@ public:
 
 	void OnCollision(Collider* A, Collider* B);
 
+
 	bool Save(pugi::xml_node& node) const;
 	bool Load(pugi::xml_node& node);
+
+	//Extra Functions
+	void PlayerCollisions(Collider* A, Collider* B);
+
+	void AttackCollisions(Collider* A, Collider* B);
+
+	void GroundenemyCollisions(Collider* A, Collider* B);
+
 private:
 
 //VARIABLES
