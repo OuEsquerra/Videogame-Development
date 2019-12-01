@@ -24,9 +24,6 @@ public:
 	// Destructor
 	//virtual ~j1EntityMachine();
 
-	bool Save(pugi::xml_node&) const;
-	bool Load(pugi::xml_node&);
-
 	bool Init();
 
 	bool Awake(pugi::xml_node& config);
@@ -47,6 +44,8 @@ public:
 
 	void OnCollision(Collider* A, Collider* B);
 
+	bool Save(pugi::xml_node& node) const;
+	bool Load(pugi::xml_node& node);
 private:
 
 //VARIABLES

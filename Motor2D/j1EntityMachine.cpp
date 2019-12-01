@@ -13,6 +13,7 @@ j1EntityMachine::j1EntityMachine() {
 	name.create("entities");
 };
 
+
 bool j1EntityMachine::Start()
 {
 	p2List_item<Entity*>* entityIter = entity_list.start;
@@ -159,13 +160,14 @@ void j1EntityMachine::DeleteEntity(Entity* entity)
 	entity_list.del(entity_list.At(entity_list.find(entity)));
 }
 
-bool j1EntityMachine::Save(pugi::xml_node& conf) const 
+bool j1EntityMachine::Save(pugi::xml_node& node) const 
 {
-	p2List_item<Entity*>* entityIter = entity_list.start;
 
+	p2List_item<Entity*>* entityIter = entity_list.start;
 	while (entityIter != NULL)
 	{
-		entityIter->data->Save(conf);
+		pugi::xml_node entity_node = node.append_child("entity");
+		entityIter->data->Save(entity_node);
 
 		entityIter = entityIter->next;
 	}

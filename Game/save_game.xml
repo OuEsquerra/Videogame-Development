@@ -8,16 +8,14 @@
 		<map_name filename="Dark_Map.tmx" />
 	</map>
 	<pathfinding />
-	<entities />
 	<scene />
-	<player playerstate="3">
-		<points>
-			<position x="250" y="1403.1499" />
-			<prevposition x="250" y="1377.6499" />
-			<lastGroundedPos x="0" y="0" />
-		</points>
-		<flags able_to_jump="false" able_to_dash="false" dashing="false" jumping="true" drop_plat="false" playerGrounded="false" flip="false" godMode="false" />
-	</player>
+	<entities>
+		<entity />
+		<entity />
+		<entity />
+		<entity />
+		<entity />
+	</entities>
 	<collisions />
 	<fade />
 	<renderer>

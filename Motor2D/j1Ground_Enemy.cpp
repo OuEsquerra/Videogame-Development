@@ -37,7 +37,7 @@ bool Ground_Enemy::Update(float dt)
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
 
 			const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
-			LOG("PATH COUNT: %d", Path->Count());
+			//LOG("PATH COUNT: %d", Path->Count());
 
 			const iPoint* tile;
 			if (Path->Count() != 0) {
