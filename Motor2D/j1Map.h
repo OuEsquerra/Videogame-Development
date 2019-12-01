@@ -104,10 +104,6 @@ struct MapLayer
 	{
 		return x + y * width;
 	}
-	inline uint GetPath(int x, int y) const
-	{
-		return data[(y*width) + x];
-	}
 };
 
 
