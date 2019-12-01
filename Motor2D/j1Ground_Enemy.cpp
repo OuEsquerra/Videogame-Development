@@ -96,18 +96,16 @@ void Ground_Enemy::pathfind()
 
 			iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
 
-			if (closest_center.x > position.x) {
+			if (closest_center.x > position.x - collider->rect.w / 2) {
 				position.x += speed.x * App->dt;
 				flip = true;
 				animation = "walk";
 			}
-			else if (closest_center.x < position.x) {
+			else if (closest_center.x < position.x - collider->rect.w / 2) {
 				position.x -= speed.x * App->dt;
 				flip = false;
 				animation = "walk";
 			}
-
-
 		}
 	}
 }
