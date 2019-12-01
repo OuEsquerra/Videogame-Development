@@ -119,6 +119,8 @@ void j1Collisions::DebugDraw() {
 		case ObjectType::WARP: // pink
 			App->render->DrawQuad(Coll_iterator->data->rect, 255, 20, 147, alpha);
 			break;
+		case ObjectType::ATTACK:
+			App->render->DrawQuad(Coll_iterator->data->rect, 255, 0, 0, alpha);
 		}
 		Coll_iterator = Coll_iterator->next;
 	}

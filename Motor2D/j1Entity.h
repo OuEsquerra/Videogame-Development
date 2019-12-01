@@ -1,6 +1,7 @@
 
 //#include "j1Flying_Enemy.h"
 
+#include "j1Collisions.h"
 #include "p2SString.h"
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
@@ -25,8 +26,6 @@ struct AnimationInfo
 	float frameCount = 0.0f;
 };
 
-
-
 //Entity base
 class Entity 
 {
@@ -40,6 +39,7 @@ public:
 	p2SString animation;
 	iPoint speed;
 	AnimationInfo Ainfo;
+	Collider collider;
 
 //Methods
 public:
@@ -53,6 +53,4 @@ public:
 	virtual bool CleanUp();
 	virtual bool Save(pugi::xml_node &);
 	virtual bool Load(pugi::xml_node &);
-	
-
 };

@@ -53,6 +53,7 @@ enum class ObjectType {
 	PLAYER,
 	ENEMY,
 	WARP,
+	ATTACK,
 
 
 	MAX_OBJECTS = 6

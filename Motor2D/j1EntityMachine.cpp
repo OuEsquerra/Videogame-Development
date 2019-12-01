@@ -154,20 +154,35 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 
 
 // Destroy an Entity and remove it from the list -----------------------------------------------------
-void j1EntityMachine::DeleteEntity(Entity* entity) {
-
-
+void j1EntityMachine::DeleteEntity(Entity* entity) 
+{
 	entity_list.del(entity_list.At(entity_list.find(entity)));
 }
 
 bool j1EntityMachine::Save(pugi::xml_node& conf) const 
 {
+	p2List_item<Entity*>* entityIter = entity_list.start;
+
+	while (entityIter != NULL)
+	{
+		entityIter->data->Save(conf);
+
+		entityIter = entityIter->next;
+	}
 
 	return true;
 };
 
 bool j1EntityMachine::Load(pugi::xml_node& conf) 
 {
+	p2List_item<Entity*>* entityIter = entity_list.start;
+
+	while (entityIter != NULL)
+	{
+		entityIter->data->Load(conf);
+
+		entityIter = entityIter->next;
+	}
 
 	return true;
 };

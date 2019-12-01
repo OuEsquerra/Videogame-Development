@@ -15,7 +15,6 @@ Entity::Entity(float x, float y, EntityType Type) : position(x, y), type(Type)
 
 }
 
-
 bool Entity::Awake(pugi::xml_node&)
 {
 	return true;

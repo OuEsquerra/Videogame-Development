@@ -20,7 +20,8 @@ enum PlayerState {
 	falling,
 	crouch,
 	dashLeft,
-	dashRight
+	dashRight,
+	attack
 };
 
 struct Player {
@@ -49,6 +50,7 @@ struct Player {
 	bool movingRight;
 	bool movingLeft;
 	bool justLoaded;
+	bool attacking;
 
 	bool freeze = false;
 
@@ -59,6 +61,10 @@ struct Player {
 	SDL_Rect playerBox;
 	PlayerState playerState;
 	Collider*	collider;
+	Collider*	attackCollider;
+	SDL_Rect attackBox;
+
+	bool attackCollider_active = false;
 
 	inline void SetGroundState(bool state) 
 	{
@@ -102,6 +108,7 @@ public:// methods
 	void JumpInput();
 	void Jump();
 	void Fall();
+	void Attack();
 
 	void GodMode();
 	bool StartPlayer();

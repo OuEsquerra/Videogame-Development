@@ -45,7 +45,7 @@ bool j1Player::Awake()
 	player.boxW =			tmp.child("player").child("box").attribute("w").as_int();
 	player.boxH =			tmp.child("player").child("box").attribute("h").as_int();
 	player.boxOffset_x =	tmp.child("player").child("offset").attribute("x").as_int();
-
+	
 	App->audio->LoadFx("audio/fx/jump1.wav");
 	App->audio->LoadFx("audio/fx/jump2.wav");
 	App->audio->LoadFx("audio/fx/jump3.wav");
@@ -57,6 +57,8 @@ bool j1Player::Awake()
 bool j1Player::Start()
 {
 	StartPlayer();
+
+	player.attackBox = { 0,0,32,64 };
 
 	dashtimercheck = new j1PerfTimer;
 	jump_key_down_timer = new j1PerfTimer;
@@ -109,21 +111,12 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
-	
-
 	player.prevposition = position;
-
-	if (App->do_logic)
-	{
-		dashTime += 1;
-	}
 
 	if (player.freeze == true) //If the player is frozen, Logic won't be updated
 	{
 		return true;
 	}
-	
-	player.prevposition = position;
 
 	if (player.cealing || player.onPlatform && !player.jumping)
 	{
@@ -175,6 +168,11 @@ bool j1Player::Update(float dt)
 			case dashRight:
 
 				Dash();
+
+				break;
+			case attack:
+
+				Attack();
 
 				break;
 			}
@@ -287,6 +285,7 @@ bool j1Player::StartPlayer() {
 	player.movingRight = false;
 	player.movingLeft = false;
 	player.justLoaded = false;
+	player.attacking = false;
 	
 	return true;
 }
@@ -414,6 +413,34 @@ bool j1Player::Dash()
 	}
 	player.dashing = true;
 	//Dash Check
+
+	
+
+	if (dashtimercheck->ReadMs() >= 25.0f && !player.attackCollider_active)
+	{
+		player.attackCollider = App->collisions->AddCollider(player.attackBox,ObjectType::ATTACK,App->entities);
+		player.attackCollider_active = true;
+	}
+
+	if (player.attackCollider_active)
+	{
+		if (!player.flip)
+		{
+			player.attackCollider->SetPos(position.x +20 , position.y );
+		}
+		else
+		{
+			player.attackCollider->SetPos(position.x, position.y);
+		}
+	}
+
+
+	if (dashtimercheck->ReadMs() >= 175.0f)
+	{
+		player.attackCollider->to_delete = true;
+		player.attackCollider_active = false;
+	}
+
 	if (dashtimercheck->ReadMs() >= 200.0f)
 	{
 		player.playerState = falling;
@@ -450,6 +477,11 @@ void j1Player::Fall()
 
 	player.speed.y += player.gravity*  App->dt; // Speed.y is +gravity when not grounded
 	position.y += player.speed.y; //Update position y
+}
+
+void j1Player::Attack()
+{
+
 }
 
 bool j1Player::Save(pugi::xml_node& node) const {
@@ -517,7 +549,7 @@ void j1Player::MoveRight(float dt) // Move Right the player at set speed
 
 	if (player.speed.x > player.maxSpeed.x*dt)
 	{
-		player.speed.x = player.maxSpeed.x * dt;
+		player.speed.x = player.maxSpeed.x*dt;
 	}
 
 }
