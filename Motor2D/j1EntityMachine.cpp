@@ -203,6 +203,8 @@ void j1EntityMachine::OnCollision(Collider* A, Collider* B)
 	PlayerCollisions(A, B);
 
 	AttackCollisions(A, B);
+
+	GroundenemyCollisions(A, B);
 }
 
 void j1EntityMachine::AttackCollisions(Collider* A, Collider* B)
@@ -214,6 +216,69 @@ void j1EntityMachine::AttackCollisions(Collider* A, Collider* B)
 
 	}
 }
+
+
+void j1EntityMachine::GroundenemyCollisions(Collider* A, Collider* B)
+{
+	if (A->type != ObjectType::ENEMY)
+	{
+		return;
+	}
+
+
+	if (A->type == ObjectType::ENEMY && B->type == ObjectType::SOLID) 
+	{
+		//from above
+		if (A->entity->position.y + A->rect.h > B->rect.y
+			&& A->entity->position.y < B->rect.y
+			&& A->rect.x < B->rect.x + B->rect.w
+			&& A->rect.x + A->rect.w > B->rect.x
+			&& A->entity->prevposition.y + A->rect.h <= B->rect.y + 1) //MagicNumber
+			
+		{
+			if (A->entity->speed.y > 0)
+			{
+				A->entity->speed.y = 0;
+			}
+			A->entity->position.y = B->rect.y - A->rect.h + 1;
+			A->entity->collider->SetPos(A->entity->position.x , A->entity->position.y);
+			A->entity->grounded=true;
+		}
+
+		//from below
+		if (A->entity->prevposition.y > (B->rect.y + B->rect.h - 1))
+		{
+			A->entity->position.y = B->rect.y + B->rect.h;
+			A->entity->collider->SetPos(A->entity->position.x , A->entity->position.y);
+		}
+
+		//from a side
+		if (A->entity->position.y + (A->rect.h* 0.1f) < B->rect.y + B->rect.h
+			&& A->entity->position.y + (A->rect.h* 0.9f) > B->rect.y)
+		{
+			//player->player.wall = true;
+			LOG("Touching WALL");
+
+			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4))
+			{ //Player to the left 
+				A->entity->position.x = B->rect.x - A->rect.w + 1;
+
+			}
+			else if (A->rect.x > (B->rect.x + B->rect.w * 3 / 4))
+			{ //Player to the right
+				A->entity->position.x = B->rect.x + B->rect.w - 1;
+			}
+			A->entity->collider->SetPos(A->entity->position.x , A->entity->position.y);
+		}
+
+
+
+	}
+
+
+}
+
+
 
 void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 {

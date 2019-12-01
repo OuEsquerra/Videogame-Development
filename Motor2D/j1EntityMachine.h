@@ -50,6 +50,8 @@ public:
 
 	void AttackCollisions(Collider* A, Collider* B);
 
+	void GroundenemyCollisions(Collider* A, Collider* B);
+
 private:
 
 //VARIABLES

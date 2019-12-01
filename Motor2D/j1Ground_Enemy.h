@@ -8,6 +8,11 @@ class Ground_Enemy : public Entity {
 public:
 	iPoint goal;
 
+	iPoint gravity;
+
+
+
+	//bool grounded = false;
 	//Methods
 public:
 	Ground_Enemy(float x, float y, EntityType Type);
@@ -17,6 +22,8 @@ public:
 	bool Start();
 
 	bool Update(float dt);
+
+	void pathfind();
 
 
 };

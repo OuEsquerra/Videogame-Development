@@ -38,10 +38,12 @@ public:
 	//Vars
 	p2SString animation;
 	iPoint speed;
+	iPoint prevposition;
 	AnimationInfo Ainfo;
 	Collider* collider;
 	SDL_Rect colliderRect;
 	bool flip;
+	bool grounded;
 
 //Methods
 public:
