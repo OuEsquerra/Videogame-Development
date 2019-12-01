@@ -76,7 +76,7 @@ void Ground_Enemy::pathfind()
 	//Pathfinding -------------------------------------------
 	goal = App->entities->player->position;
 
-	if (goal.DistanceTo(position) < 1500) { //Detection radius
+	if (goal.DistanceTo(position) < 1000) { //Detection radius
 
 		//Find the closest tile to current position
 		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
