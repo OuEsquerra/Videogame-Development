@@ -34,6 +34,7 @@ public:
 	bool CleanUp();
 
 private:
+	SDL_Texture* debug_tex;
 
 public:
 	

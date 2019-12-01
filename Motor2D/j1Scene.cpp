@@ -35,9 +35,10 @@ bool j1Scene::Start()
 {
 
 	if (App->map->Load("Dark_Map.tmx") == true)
-	
-	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 
+	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
+	debug_tex = App->tex->Load("maps/path.png");
+	
 	return true;
 }
 
@@ -68,7 +69,7 @@ bool j1Scene::Update(float dt)
 		else if (strcmp(App->map->data.name, "Dark_Map.tmx") == 0) App->fade->FadeToBlack("Dark_Map2.tmx");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_UP) App->map->debug = !App->map->debug;
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP) App->map->debug = !App->map->debug;
 	
 
 
@@ -76,6 +77,14 @@ bool j1Scene::Update(float dt)
 	
 	App->map->Draw();
 
+	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
+	if (App->map->debug) {
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			App->render->Blit(debug_tex, pos.x, pos.y);
+		}
+	}
 	//LOG("After Draw");
 
 

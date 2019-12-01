@@ -42,7 +42,7 @@ bool Ground_Enemy::Start()
 bool Ground_Enemy::Update(float dt)
 {
 	prevposition = position;
-
+	animation = "idle";
 	/*if (App->do_logic)
 	{*/
 		pathfind();
@@ -50,42 +50,6 @@ bool Ground_Enemy::Update(float dt)
 
 	if (!grounded)
 	{
-
-		//Pathfinding -------------------------------------------
-		goal = App->entities->player->position;
-
-		if (goal.DistanceTo(position) < 1000) { //Detection radius
-
-			//Find the closest tile to current position
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
-
-			const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
-			//LOG("PATH COUNT: %d", Path->Count());
-
-			const iPoint* tile;
-			if (Path->Count() != 0) {
-				if (Path->Count() > 1) {
-					tile = Path->At(1);
-				}
-				else
-				{
-					tile = Path->At(0);
-				}
-
-				iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
-
-				if (closest_center.x > position.x) {
-					position.x += 1;
-					flip = false;
-				}
-				else if (closest_center.x < position.x) {
-					position.x -= 1;
-					flip = true;
-				}
-				
-				
-			}
-		}
 
 		position.y += 150 * dt;
 
@@ -100,7 +64,7 @@ bool Ground_Enemy::Update(float dt)
 		collider->SetPos(position.x, position.y);
 	}
 	//Draw enemy
-	App->map->DrawAnimation("idle", "Skeleton", position , Ainfo, flip);
+	App->map->DrawAnimation(animation, "Skeleton", position , Ainfo, flip);
 
 	grounded = false;
 
@@ -112,7 +76,7 @@ void Ground_Enemy::pathfind()
 	//Pathfinding -------------------------------------------
 	goal = App->entities->player->position;
 
-	if (goal.DistanceTo(position) < 1000) { //Detection radius
+	if (goal.DistanceTo(position) < 1500) { //Detection radius
 
 		//Find the closest tile to current position
 		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
@@ -135,10 +99,12 @@ void Ground_Enemy::pathfind()
 			if (closest_center.x > position.x) {
 				position.x += speed.x * App->dt;
 				flip = true;
+				animation = "walk";
 			}
 			else if (closest_center.x < position.x) {
 				position.x -= speed.x * App->dt;
 				flip = false;
+				animation = "walk";
 			}
 
 
