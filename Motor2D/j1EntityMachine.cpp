@@ -237,6 +237,7 @@ void j1EntityMachine::OnCollision(Collider* A, Collider* B)
 
 	AttackCollisions(A, B);
 
+
 	GroundenemyCollisions(A, B);
 }
 
@@ -253,11 +254,18 @@ void j1EntityMachine::AttackCollisions(Collider* A, Collider* B)
 
 void j1EntityMachine::GroundenemyCollisions(Collider* A, Collider* B)
 {
-	if (A->type != ObjectType::ENEMY)
+	if (A->type != ObjectType::ENEMY && B->type != ObjectType::ENEMY)
 	{
 		return;
 	}
-
+	if (B->type == ObjectType::ENEMY) {
+		Collider temp = *A;
+		A = B;
+		B = &temp;
+	}
+	if (B->type == ObjectType::ENEMY || B->type == ObjectType::PLAYER) {
+		return;
+	}
 
 	if (A->type == ObjectType::ENEMY && B->type == ObjectType::SOLID) 
 	{
@@ -323,9 +331,14 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 		B = &temp;
 	}
 
-	if (A->type != ObjectType::PLAYER) {
+	if (A->type != ObjectType::PLAYER ) {
 		return;
 	}
+
+	/*if (A->type == ObjectType::ENEMY || B->type == ObjectType::ENEMY) {
+
+		return;
+	}*/
 
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::ENEMY)
 	{

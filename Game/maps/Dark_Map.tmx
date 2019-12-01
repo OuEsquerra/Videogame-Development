@@ -30152,11 +30152,11 @@
   </properties>
   <data>
    <tile/>
+   <tile gid="673"/>
    <tile/>
+   <tile gid="673"/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="673"/>
    <tile/>
    <tile/>
    <tile/>
