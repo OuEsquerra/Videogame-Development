@@ -544,7 +544,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->speed = node.child("properties").child("property").attribute("value").as_float();
 	
 	if (strcmp(node.attribute("name").as_string(), "Navigation") == 0) {
-		layer->navigation = node.child("properties").child("property").next_sibling().attribute("value").as_bool();
+		layer->speed = node.child("properties").child("property").next_sibling().attribute("value").as_float();
+		layer->navigation = node.child("properties").child("property").attribute("value").as_bool();
 	}
 	else layer->navigation = false;
 

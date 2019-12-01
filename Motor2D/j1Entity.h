@@ -41,6 +41,7 @@ public:
 	AnimationInfo Ainfo;
 	Collider* collider;
 	SDL_Rect colliderRect;
+	bool flip;
 
 //Methods
 public:

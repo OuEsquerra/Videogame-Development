@@ -32,39 +32,44 @@ bool Flying_Enemy::Update(float dt)
 		//Pathfinding -------------------------------------------
 		goal = App->entities->player->position;
 
-		//	if (App->pathfinding->IsWalkable(App->map->WorldToMap(goal.x, goal.y))) {
+		if (goal.DistanceTo(position) < 1000) { //Detection radius
 
 			//Find the closest tile to current position
-		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
+			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
 
-		const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
-		LOG("PATH COUNT: %d", Path->Count());
-		const iPoint* tile;
-		if (Path->Count() != 0) {
-			if (Path->Count() > 1) {
-				tile = Path->At(1);
-			}
-			else
-			{
-				tile = Path->At(0);
-			}
-		
-			iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
+			const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
+			LOG("PATH COUNT: %d", Path->Count());
 
-			if (closest_center.x > position.x) {
-				position.x += 1;
-			}
-			else if (closest_center.x < position.x) {
-				position.x -= 1;
-			}
-			if (closest_center.y > position.y) {
-				position.y += 1;
-			}
-			else if (closest_center.y < position.y) {
-				position.y -= 1;
+			const iPoint* tile;
+			if (Path->Count() != 0) {
+				if (Path->Count() > 1) {
+					tile = Path->At(1);
+				}
+				else
+				{
+					tile = Path->At(0);
+				}
+
+				iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
+
+				if (closest_center.x > position.x) {
+					position.x += 1;
+					flip = false;
+				}
+				else if (closest_center.x < position.x) {
+					position.x -= 1;
+					flip = true;
+				}
+				if (closest_center.y > position.y) {
+					position.y += 1;
+				}
+				else if (closest_center.y < position.y) {
+					position.y -= 1;
+				}
 			}
 		}
 	}
+
 	
 	
 	
@@ -90,8 +95,11 @@ bool Flying_Enemy::Update(float dt)
 	{
 		collider->SetPos(position.x, position.y);
 	}
+
+
+
 	//Draw enemy
-	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, false);
+	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, flip);
 
 	return true;
 }
