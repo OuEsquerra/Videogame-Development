@@ -168,6 +168,7 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 // Destroy an Entity and remove it from the list -----------------------------------------------------
 void j1EntityMachine::DeleteEntity(Entity* entity) 
 {
+	entity->collider->to_delete = true;
 	entity_list.del(entity_list.At(entity_list.find(entity)));
 }
 
@@ -178,6 +179,18 @@ bool j1EntityMachine::Save(pugi::xml_node& node) const
 	while (entityIter != NULL)
 	{
 		pugi::xml_node entity_node = node.append_child("entity");
+		
+		entity_node.append_child("position").append_attribute("x") = entityIter->data->position.x;
+		entity_node.child("position").append_attribute("y") = entityIter->data->position.y;
+
+		entity_node.append_child("prevposition").append_attribute("x") = entityIter->data->prevposition.x;
+		entity_node.child("prevposition").append_attribute("y") = entityIter->data->prevposition.y;
+
+		entity_node.append_child("speed").append_attribute("x") = entityIter->data->speed.x;
+		entity_node.child("speed").append_attribute("y") = entityIter->data->speed.y;
+
+		//entity_node.append_child("animation").set_value(entityIter->data->animation.GetString());
+
 		entityIter->data->Save(entity_node);
 
 		entityIter = entityIter->next;
@@ -186,15 +199,33 @@ bool j1EntityMachine::Save(pugi::xml_node& node) const
 	return true;
 };
 
-bool j1EntityMachine::Load(pugi::xml_node& conf) 
+bool j1EntityMachine::Load(pugi::xml_node& node)
 {
-	p2List_item<Entity*>* entityIter = entity_list.start;
+	entity_list.clear();
+	
+	pugi::xml_node node_i = node;
+	Entity* loaded_entity;
+	
+	for (; node_i; node_i = node_i.next_sibling("entity")) {
+		
+		iPoint pos;
+		pos.x = node.child("position").attribute("x").as_int();
+		pos.y = node.child("position").attribute("y").as_int();
+		
+		if (strcmp(node.attribute("EntityType").as_string(), "FLYING_ENEMY")) {
+			loaded_entity = (Entity*)new Flying_Enemy(pos.x, pos.y, FLYING_ENEMY);
+		}
+		else if (strcmp(node.attribute("EntityType").as_string(), "GROUND_ENEMY")) {
+			loaded_entity = (Entity*)new Ground_Enemy(pos.x, pos.y, GROUND_ENEMY);
+		}
+		else if (strcmp(node.attribute("EntityType").as_string(), "PLAYER")) {
+			loaded_entity = (Entity*)new j1Player((float)pos.x, (float)pos.y, PLAYER);
+		}
+		else break;
+		loaded_entity->prevposition.x = node.child("position").attribute("x").as_int();
+		loaded_entity->prevposition.x = node.child("position").attribute("y").as_int();
 
-	while (entityIter != NULL)
-	{
-		entityIter->data->Load(conf);
-
-		entityIter = entityIter->next;
+		entity_list.add(loaded_entity);
 	}
 
 	return true;

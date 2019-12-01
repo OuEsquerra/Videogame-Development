@@ -396,11 +396,11 @@ bool j1Player::Dash()
 	{
 		if (!player.flip)
 		{
-			player.attackCollider->SetPos(position.x +20 , position.y );
+			player.attackCollider->SetPos(position.x + 70, position.y );
 		}
 		else
 		{
-			player.attackCollider->SetPos(position.x, position.y);
+			player.attackCollider->SetPos(position.x - 20, position.y);
 		}
 	}
 
@@ -491,6 +491,8 @@ void j1Player::Attack()
 bool j1Player::Save(pugi::xml_node& node) const {
 
 	LOG("Saving Player...");
+	node.append_attribute("EntityType") = "PLAYER";
+
 	pugi::xml_node points = node.append_child("points");
 
 	points.append_child("position").append_attribute("x") = position.x;

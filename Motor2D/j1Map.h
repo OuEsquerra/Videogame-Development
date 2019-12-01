@@ -251,7 +251,7 @@ public:
 
 	MapData data;
 
-
+	bool debug;
 private:
 
 	/*int i[2] = { 0,0 };

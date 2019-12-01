@@ -7,6 +7,57 @@
  <tileset firstgid="1" name="DarkTileset" tilewidth="32" tileheight="32" tilecount="702" columns="18">
   <image source="DarkTileset.png" width="576" height="1248"/>
  </tileset>
+  <tileset firstgid="724" name="Skull1" tilewidth="62" tileheight="60" tilecount="16" columns="4">
+    <image source="Skull1.png" width="248" height="240"/>
+    <tile id="0">
+      <properties>
+        <property name="skull_still" value=""/>
+      </properties>
+      <animation>
+        <frame tileid="0" duration="90"/>
+        <frame tileid="1" duration="90"/>
+        <frame tileid="4" duration="90"/>
+        <frame tileid="5" duration="90"/>
+        <frame tileid="2" duration="90"/>
+        <frame tileid="8" duration="90"/>
+        <frame tileid="9" duration="90"/>
+        <frame tileid="6" duration="90"/>
+        <frame tileid="10" duration="90"/>
+        <frame tileid="3" duration="90"/>
+        <frame tileid="12" duration="90"/>
+        <frame tileid="13" duration="90"/>
+        <frame tileid="7" duration="90"/>
+        <frame tileid="14" duration="90"/>
+        <frame tileid="11" duration="90"/>
+        <frame tileid="15" duration="90"/>
+      </animation>
+    </tile>
+  </tileset>
+  <tileset firstgid="740" name="Skeleton" tilewidth="58" tileheight="66" tilecount="5" columns="5">
+    <image source="Skeleton.png" width="290" height="66"/>
+    <tile id="0">
+      <properties>
+        <property name="idle" value=""/>
+      </properties>
+      <animation>
+        <frame tileid="0" duration="150"/>
+        <frame tileid="1" duration="150"/>
+        <frame tileid="2" duration="150"/>
+        <frame tileid="1" duration="150"/>
+      </animation>
+    </tile>
+    <tile id="3">
+      <properties>
+        <property name="walk" value=""/>
+      </properties>
+      <animation>
+        <frame tileid="0" duration="150"/>
+        <frame tileid="3" duration="150"/>
+        <frame tileid="4" duration="150"/>
+        <frame tileid="3" duration="200"/>
+      </animation>
+    </tile>
+  </tileset>
  <tileset firstgid="703" name="Adventurer" tilewidth="92" tileheight="60" tilecount="21" columns="7">
   <image source="Adventurer2.png" width="644" height="180"/>
   <tile id="0">
@@ -70,57 +121,6 @@
     <frame tileid="18" duration="100"/>
     <frame tileid="19" duration="100"/>
     <frame tileid="20" duration="100"/>
-   </animation>
-  </tile>
- </tileset>
- <tileset firstgid="724" name="Skull1" tilewidth="62" tileheight="60" tilecount="16" columns="4">
-  <image source="Skull1.png" width="248" height="240"/>
-  <tile id="0">
-   <properties>
-    <property name="skull_still" value=""/>
-   </properties>
-   <animation>
-    <frame tileid="0" duration="90"/>
-    <frame tileid="1" duration="90"/>
-    <frame tileid="4" duration="90"/>
-    <frame tileid="5" duration="90"/>
-    <frame tileid="2" duration="90"/>
-    <frame tileid="8" duration="90"/>
-    <frame tileid="9" duration="90"/>
-    <frame tileid="6" duration="90"/>
-    <frame tileid="10" duration="90"/>
-    <frame tileid="3" duration="90"/>
-    <frame tileid="12" duration="90"/>
-    <frame tileid="13" duration="90"/>
-    <frame tileid="7" duration="90"/>
-    <frame tileid="14" duration="90"/>
-    <frame tileid="11" duration="90"/>
-    <frame tileid="15" duration="90"/>
-   </animation>
-  </tile>
- </tileset>
- <tileset firstgid="740" name="Skeleton" tilewidth="58" tileheight="66" tilecount="5" columns="5">
-  <image source="Skeleton.png" width="290" height="66"/>
-  <tile id="0">
-   <properties>
-    <property name="idle" value=""/>
-   </properties>
-   <animation>
-    <frame tileid="0" duration="150"/>
-    <frame tileid="1" duration="150"/>
-    <frame tileid="2" duration="150"/>
-    <frame tileid="1" duration="150"/>
-   </animation>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="walk" value=""/>
-   </properties>
-   <animation>
-    <frame tileid="0" duration="150"/>
-    <frame tileid="3" duration="150"/>
-    <frame tileid="4" duration="150"/>
-    <frame tileid="3" duration="200"/>
    </animation>
   </tile>
  </tileset>
@@ -40222,17 +40222,17 @@
     <property name="MapToLoad" value="Dark_Map.tmx"/>
    </properties>
   </object>
-  <object id="112" name="Flying_Enemy" type="enemy" x="576" y="1216" width="32" height="32">
+  <object id="112" name="Purple" type="enemy" x="128" y="1024" width="32" height="32">
    <properties>
     <property name="EntityType" value="FLYING_ENEMY"/>
    </properties>
   </object>
-  <object id="113" name="Flying_Enemy" type="enemy" x="416" y="1152" width="32" height="32">
+  <object id="113" name="Skeleton" type="enemy" x="1344" y="1344" width="32" height="32">
    <properties>
     <property name="EntityType" value="GROUND_ENEMY"/>
    </properties>
   </object>
-  <object id="114" name="Flying_Enemy" type="enemy" x="288" y="1152" width="32" height="32">
+  <object id="114" name="Player" type="enemy" x="256" y="1344" width="32" height="32">
    <properties>
     <property name="EntityType" value="PLAYER"/>
    </properties>

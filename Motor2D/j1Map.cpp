@@ -6,6 +6,7 @@
 #include "j1Player.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1Pathfinding.h"
 #include "j1FadeToBlack.h"
 #include "j1Window.h"
 #include <math.h>
@@ -48,6 +49,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	ms_to_frame = config.child("division").attribute("int").as_int();
 
+	debug = false;
+
 	return ret;
 }
 
@@ -73,7 +76,7 @@ void j1Map::Draw()
 
 		uint* gid_list = layerIter->data->data;
 
-		//if (layerIter->data->navigation == true) {break;} //go to next layer if its navigation
+		if (layerIter->data->navigation == true && debug == false) {break;} //go to next layer if its navigation
 
 		int camera_x_tile = (-App->render->camera.x * layerIter->data->speed) / 32; //Magic Number
 		int camera_y_tile = (-App->render->camera.y * layerIter->data->speed) / 32;
@@ -340,6 +343,7 @@ bool j1Map::Load(const char* file_name)
 	}
 
 
+
 	//LOG of xml data.
 	if(ret == true)
 	{
@@ -367,6 +371,14 @@ bool j1Map::Load(const char* file_name)
 			LOG("tile width: %d tile height: %d", l->width, l->height);
 			item_layer = item_layer->next;
 		}
+
+		//Walkability Map
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
 	}
 
 	map_loaded = ret;

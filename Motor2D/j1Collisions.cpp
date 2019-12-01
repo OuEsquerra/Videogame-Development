@@ -177,26 +177,12 @@ void j1Collisions::LoadFromMap() {
 				}
 
 			}
-			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr,nullptr, &list_i->data->objects[i].properties);
+			else {
+				AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, nullptr, &list_i->data->objects[i].properties);
+			}
 		}
 		list_i = list_i->next;
 	}
-
-}
-
-//Send the level info about enemies to the entity machine--------
-void j1Collisions::ReportEnemies() {
-	p2List_item<Collider*>* Coll_iterator = colliders.start;
-	while (Coll_iterator != nullptr) {
-
-		if (Coll_iterator->data->to_delete == true)
-		{
-			colliders.del(Coll_iterator);
-		}
-
-		
-	}
-
 
 }
 

@@ -108,6 +108,7 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 	bool ret = true;
 	LOG("Switching Maps...");
 
+	App->entities->entity_list.clear();
 	App->collisions->colliders.clear(); //Clear colliders
 	
 	//Empty all map data.

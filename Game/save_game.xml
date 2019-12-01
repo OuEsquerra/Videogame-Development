@@ -10,11 +10,27 @@
 	<pathfinding />
 	<scene />
 	<entities>
-		<entity />
-		<entity />
-		<entity />
-		<entity />
-		<entity />
+		<entity EntityType="FLYING_ENEMY">
+			<position x="240" y="1251" />
+			<prevposition x="0" y="0" />
+			<speed x="100" y="100" />
+		</entity>
+		<entity EntityType="GROUND_ENEMY">
+			<position x="1760" y="1741" />
+			<prevposition x="1760" y="1736" />
+			<speed x="150" y="150" />
+		</entity>
+		<entity EntityType="PLAYER" playerstate="0">
+			<position x="250" y="1412" />
+			<prevposition x="0" y="0" />
+			<speed x="0" y="0" />
+			<points>
+				<position x="250" y="1412" />
+				<prevposition x="250" y="1412" />
+				<lastGroundedPos x="0" y="0" />
+			</points>
+			<flags able_to_jump="true" able_to_dash="true" dashing="false" jumping="false" drop_plat="false" playerGrounded="true" flip="false" godMode="false" />
+		</entity>
 	</entities>
 	<collisions />
 	<fade />

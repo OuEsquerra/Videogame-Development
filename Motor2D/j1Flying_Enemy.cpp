@@ -15,6 +15,18 @@ Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Typ
 	speed = { 100,100 };
 }
 
+bool Flying_Enemy::Save(pugi::xml_node & node) const {
+	node.append_attribute("EntityType") = "FLYING_ENEMY";
+	
+
+	return true;
+};
+
+bool Flying_Enemy::Load(pugi::xml_node & node) {
+
+	return true;
+};
+
 bool Flying_Enemy::Awake(pugi::xml_node &)
 {
 

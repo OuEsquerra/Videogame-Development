@@ -19,5 +19,6 @@ public:
 
 	bool Update(float dt);
 
-
+	bool Save(pugi::xml_node & node) const;
+	bool Load(pugi::xml_node & node);
 };

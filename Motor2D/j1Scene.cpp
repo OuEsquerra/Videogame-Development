@@ -35,24 +35,7 @@ bool j1Scene::Start()
 {
 
 	if (App->map->Load("Dark_Map.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
-	}
-
-	/*App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000,  FLYING_ENEMY);
-
-	App->entities->player = (j1Player*)App->entities->CreateEntity(100, 1100, PLAYER);
 	
-
-	App->entities->skeleton = (Ground_Enemy*)App->entities->CreateEntity(100, 1200,  GROUND_ENEMY);
-
-	App->entities->skeleton2 = (Ground_Enemy*)App->entities->CreateEntity(100, 1300, GROUND_ENEMY);*/
-
 	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 
 	return true;
@@ -81,9 +64,13 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
 	{
-		if(App->map->data.name == "Dark_Map.tmx") App->fade->FadeToBlack("Dark_Map.tmx");
-		else if (App->map->data.name == "Dark_Map2.tmx") App->fade->FadeToBlack("Dark_Map2.tmx");
+		if(strcmp(App->map->data.name, "Dark_Map2.tmx") == 0) App->fade->FadeToBlack("Dark_Map.tmx");
+		else if (strcmp(App->map->data.name, "Dark_Map.tmx") == 0) App->fade->FadeToBlack("Dark_Map2.tmx");
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_UP) App->map->debug = !App->map->debug;
+	
+
 
 	//LOG("Befor Draw");
 	

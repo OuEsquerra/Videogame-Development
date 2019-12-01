@@ -80,9 +80,6 @@ public:// methods
 	// Destructor
 	virtual ~j1Player();
 
-	bool Save(pugi::xml_node&) const;
-	bool Load(pugi::xml_node&);
-
 	bool Init();
 
 	bool Awake();
@@ -117,6 +114,9 @@ public:// methods
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
+
+	virtual bool Save(pugi::xml_node & node) const;
+	virtual bool Load(pugi::xml_node & node);
 
 private:
 

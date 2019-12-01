@@ -15,6 +15,18 @@ Ground_Enemy::Ground_Enemy(float x, float y, EntityType Type) : Entity(x, y, Typ
 	speed = { 150,150 };
 }
 
+bool Ground_Enemy::Save(pugi::xml_node & node) const {
+	node.append_attribute("EntityType") = "GROUND_ENEMY";
+
+
+	return true;
+};
+
+bool Ground_Enemy::Load(pugi::xml_node & node) {
+
+	return true;
+};
+
 bool Ground_Enemy::Awake(pugi::xml_node &)
 {
 
@@ -106,7 +118,7 @@ void Ground_Enemy::pathfind()
 		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
 
 		const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
-		LOG("PATH COUNT: %d", Path->Count());
+		//LOG("PATH COUNT: %d", Path->Count());
 
 		const iPoint* tile;
 		if (Path->Count() != 0) {

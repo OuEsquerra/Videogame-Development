@@ -23,6 +23,7 @@ struct Collider
 	Entity* entity;
 
 	Collider(SDL_Rect rectangle, ObjectType type, j1Module* callback = nullptr) :
+		
 		rect(rectangle),
 		type(type),
 		callback(callback)
@@ -69,7 +70,6 @@ public:
 
 	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Entity* entity = nullptr, Properties* userdata = nullptr);
 	void LoadFromMap();
-	void ReportEnemies();
 
 private:
 	

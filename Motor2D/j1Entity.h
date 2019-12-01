@@ -55,6 +55,6 @@ public:
 	virtual bool Update(float dt);
 	virtual bool PostUpdate();
 	virtual bool CleanUp();
-	virtual bool Save(pugi::xml_node &);
-	virtual bool Load(pugi::xml_node &);
+	virtual bool Save(pugi::xml_node & node) const;
+	virtual bool Load(pugi::xml_node & node);
 };
