@@ -172,7 +172,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	int ret = -1;
 
 	// TODO 1: if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false) 	return ret;
+	//if (IsWalkable(origin) == false || IsWalkable(destination) == false) 	return ret;
 
 	// TODO 2: Create two lists: open, close
 	// Add the origin tile to open
