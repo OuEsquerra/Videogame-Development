@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1FadeToBlack.h"
 #include "j1EntityMachine.h"
+#include "j1Pathfinding.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -33,7 +34,15 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 
-	App->map->Load("Dark_Map.tmx");
+	if (App->map->Load("Dark_Map.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
 
 	App->entities->skull = (Flying_Enemy*)App->entities->CreateEntity(100, 1000,  FLYING_ENEMY);
 
