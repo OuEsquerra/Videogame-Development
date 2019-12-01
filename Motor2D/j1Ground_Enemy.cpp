@@ -9,7 +9,7 @@
 //Flying Enemy
 Ground_Enemy::Ground_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	colliderRect = { position.x, position.y, 32, 64 }; //Magic
+	colliderRect = { position.x, position.y, 50, 64 }; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities,(Entity*)this);
 
 	speed = { 150,150 };

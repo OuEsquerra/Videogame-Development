@@ -9,7 +9,7 @@
 //Flying Enemy
 Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	colliderRect = { position.x, position.y, 64, 64 }; //Magic
+	colliderRect = { position.x, position.y, 50, 50 }; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities, (Entity*)this);
 
 	speed = { 100,100 };
@@ -107,7 +107,7 @@ bool Flying_Enemy::Update(float dt)
 //	}
 	if (collider != nullptr)
 	{
-		collider->SetPos(position.x, position.y);
+		collider->SetPos(position.x+7, position.y+7);
 	}
 
 

@@ -185,14 +185,25 @@ bool j1Player::Update(float dt)
 	{
 		player.animation = "idle";
 
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
 			MoveUp(dt);
 		}
-		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		{
 			MoveDown(dt);
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+			player.speed.x = -player.maxSpeed.x;
+		}
+		else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		{
+			player.speed.x = player.maxSpeed.x;
+		}
+
+
 		position.x += player.speed.x * 2 * dt;
 	}
 
@@ -405,13 +416,13 @@ bool j1Player::Dash()
 	}
 
 
-	if (dashtimercheck->ReadMs() >= 175.0f)
+	if (dashtimercheck->ReadMs() >= 200.0f)
 	{
 		player.attackCollider->to_delete = true;
 		player.attackCollider_active = false;
 	}
 
-	if (dashtimercheck->ReadMs() >= 200.0f)
+	if (dashtimercheck->ReadMs() >= 225.0f)
 	{
 		player.playerState = falling;
 		player.dashing = false;
@@ -435,7 +446,7 @@ void j1Player::Jump()
 	}
 
 	player.speed.y -= player.acceleration.y * App->dt;
-	player.speed.y += (player.gravity * App->dt) * 0.75; // Speed.y is +gravity when not grounded
+	player.speed.y += (player.gravity * 0.8f) * App->dt; // Speed.y is +gravity when not grounded
 	position.y += player.speed.y; //Update position y
 }
 
@@ -445,7 +456,7 @@ void j1Player::Fall()
 	player.jumping = true;
 	player.able_to_jump = false;
 
-	player.speed.y += player.gravity*  App->dt; // Speed.y is +gravity when not grounded
+	player.speed.y += player.gravity * App->dt; // Speed.y is +gravity when not grounded
 	position.y += player.speed.y; //Update position y
 }
 

@@ -322,8 +322,14 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 		A = B;
 		B = &temp;
 	}
+
 	if (A->type != ObjectType::PLAYER) {
 		return;
+	}
+
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::ENEMY)
+	{
+		App->fade->FadeToBlack("Dark_Map.tmx");
 	}
 
 	// ------------ Player Colliding against solids ------------------
