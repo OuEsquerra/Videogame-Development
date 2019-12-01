@@ -73,6 +73,8 @@ void j1Map::Draw()
 
 		uint* gid_list = layerIter->data->data;
 
+		//if (layerIter->data->navigation == true) {break;} //go to next layer if its navigation
+
 		int camera_x_tile = (-App->render->camera.x * layerIter->data->speed) / 32; //Magic Number
 		int camera_y_tile = (-App->render->camera.y * layerIter->data->speed) / 32;
 
@@ -151,6 +153,68 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, iPoint& position,
 	}
 
 	ainfo.frameCount += App->dt;
+}
+
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+{
+	bool ret = false;
+	p2List_item<MapLayer*>* item;
+	item = data.layers.start;
+
+	for (item = data.layers.start; item != NULL; item = item->next)
+	{
+		MapLayer* layer = item->data;
+
+		if (layer->navigation == false)
+			continue;
+
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
+}
+
+TileSet* j1Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<TileSet*>* item = data.tilesets.start;
+	TileSet* set = item->data;
+
+	while(item)
+	{
+		if(id < item->data->firstgid)
+		{
+			set = item->prev->data;
+			break;
+		}
+		set = item->data;
+		item = item->next;
+	}
+
+	return set;
 }
 
 // Called before quitting
@@ -478,6 +542,11 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->height	= node.attribute("height").as_uint();
 	layer->width	= node.attribute("width").as_uint();
 	layer->speed = node.child("properties").child("property").attribute("value").as_float();
+	
+	if (strcmp(node.attribute("name").as_string(), "Navigation") == 0) {
+		layer->navigation = node.child("properties").child("property").next_sibling().attribute("value").as_bool();
+	}
+	else layer->navigation = false;
 
 	layer->data = new uint[layer->height*layer->width];
 	

@@ -98,6 +98,7 @@ struct MapLayer
 	uint				height;
 	uint*				data; //Tile Ids
 	float				speed;
+	bool				navigation;
 	inline uint Get(int x, int y) const
 	{
 		return x + y * width;
@@ -233,6 +234,9 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+	TileSet* GetTilesetFromTileId(int id) const;
+
 private:
 
 	bool LoadMap();

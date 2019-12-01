@@ -54,6 +54,22 @@ bool Flying_Enemy::Update(float dt)
 
 
 
+	//Find the closest tile to current position
+	App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
+		
+	const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
+	
+	//LOG("PATH COUNT: %d", Path->Count());
+	const iPoint* tile;
+	if (Path->Count() != 0) {
+		if (Path->Count() > 1) {
+			tile = Path->At(1);
+		}
+		else
+		{
+			tile = Path->At(0);
+		}
+
 			iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
 
 			if (closest_center.x > position.x) {
