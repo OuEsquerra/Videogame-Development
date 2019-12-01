@@ -40,7 +40,7 @@ public:
 	iPoint speed;
 	AnimationInfo Ainfo;
 	Collider collider;
-
+	bool flip;
 //Methods
 public:
 	Entity(float x, float y , EntityType Type);

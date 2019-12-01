@@ -37,9 +37,6 @@ bool Flying_Enemy::Update(float dt)
 
 		if (goal.DistanceTo(position) < 1000) { //Detection radius
 
-
-
-
 			//Find the closest tile to current position
 			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
 
@@ -60,9 +57,11 @@ bool Flying_Enemy::Update(float dt)
 
 				if (closest_center.x > position.x) {
 					position.x += 1;
+					flip = false;
 				}
 				else if (closest_center.x < position.x) {
 					position.x -= 1;
+					flip = true;
 				}
 				if (closest_center.y > position.y) {
 					position.y += 1;
@@ -75,7 +74,7 @@ bool Flying_Enemy::Update(float dt)
 	}
 
 	//Draw enemy
-	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, false);
+	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, flip);
 
 	return true;
 }

@@ -4,6 +4,9 @@
 
 //Flying_Enemy Entity
 class Ground_Enemy : public Entity {
+	//variables
+public:
+	iPoint goal;
 
 	//Methods
 public:
