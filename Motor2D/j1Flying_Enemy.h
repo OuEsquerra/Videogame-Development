@@ -19,6 +19,8 @@ public:
 
 	bool Update(float dt);
 
+	void pathfind();
+
 	bool Save(pugi::xml_node & node) const;
 	bool Load(pugi::xml_node & node);
 };

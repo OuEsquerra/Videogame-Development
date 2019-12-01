@@ -302,8 +302,8 @@ void j1Player::JumpInput()
 	{
 		if (player.able_to_jump)
 		{
-			//jumpSound = rand() % 3 + 1; //Fix
-			//App->audio->PlayFx(jumpSound, 0);//Sound for the start of the jump
+			jumpSound = rand() % 3 + 1; //Fix
+			App->audio->PlayFx(jumpSound, 0);//Sound for the start of the jump
 
 			player.playerState = jumping;
 			jump_key_down = true;

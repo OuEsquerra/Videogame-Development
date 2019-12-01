@@ -36,7 +36,7 @@ bool j1Scene::Start()
 
 	if (App->map->Load("Dark_Map.tmx") == true)
 
-	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
+	App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 	debug_tex = App->tex->Load("maps/path.png");
 	
 	return true;

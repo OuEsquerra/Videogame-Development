@@ -44,49 +44,8 @@ bool Flying_Enemy::Update(float dt)
 	/*if (App->do_logic)
 	{*/
 		//Pathfinding -------------------------------------------
-		goal = App->entities->player->position;
-
-		if (goal.DistanceTo(position) < 1000) { //Detection radius
-
-			//Find the closest tile to current position
-			App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
-
-			const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
-			//LOG("PATH COUNT: %d", Path->Count());
-
-			const iPoint* tile;
-			if (Path->Count() != 0) {
-				if (Path->Count() > 1) {
-					tile = Path->At(1);
-				}
-				else
-				{
-					tile = Path->At(0);
-				}
-
-				iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
-
-				if (closest_center.x > position.x) {
-					position.x += speed.x * dt;
-					flip = false;
-				}
-				else if (closest_center.x < position.x) {
-					position.x -= speed.x * dt;
-					flip = true;
-				}
-				if (closest_center.y > position.y) {
-					position.y += speed.y * dt;
-				}
-				else if (closest_center.y < position.y) {
-					position.y -= speed.y * dt;
-				}
-			}
-		}
+		
 	//}
-
-	
-	
-	
 	/*
 	if(Path->Pop(last_tile)) {
 		iPoint closest_center = App->map->MapToWorldCentered(last_tile.x, last_tile.y);
@@ -104,16 +63,58 @@ bool Flying_Enemy::Update(float dt)
 		
 	}*/
 
-//	}
+
+
 	if (collider != nullptr)
 	{
 		collider->SetPos(position.x+7, position.y+7);
 	}
 
-
-
 	//Draw enemy
 	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, flip);
 
 	return true;
+}
+
+void Flying_Enemy::pathfind()
+{
+	goal = App->entities->player->position;
+
+	if (goal.DistanceTo(position) < 1000) { //Detection radius
+
+		//Find the closest tile to current position
+		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
+
+		const p2DynArray<iPoint>* Path = App->pathfinding->GetLastPath();
+		//LOG("PATH COUNT: %d", Path->Count());
+
+		const iPoint* tile;
+		if (Path->Count() != 0) {
+			if (Path->Count() > 1) {
+				tile = Path->At(1);
+			}
+			else
+			{
+				tile = Path->At(0);
+			}
+
+			iPoint closest_center = App->map->MapToWorldCentered(tile->x, tile->y);
+
+			if (closest_center.x > position.x) {
+				position.x += speed.x * App->dt;
+				flip = false;
+			}
+			else if (closest_center.x < position.x) {
+				position.x -= speed.x * App->dt;
+				flip = true;
+			}
+			if (closest_center.y > position.y) {
+				position.y += speed.y * App->dt;
+			}
+			else if (closest_center.y < position.y) {
+				position.y -= speed.y * App->dt;
+			}
+		}
+	}
+	
 }
