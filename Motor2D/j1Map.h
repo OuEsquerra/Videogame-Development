@@ -104,6 +104,10 @@ struct MapLayer
 	{
 		return x + y * width;
 	}
+	inline uint GetPathfinding(int x, int y) const
+	{
+		return data[(y*width) + x];
+	}
 };
 
 
