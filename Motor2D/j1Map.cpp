@@ -180,12 +180,12 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 			{
 				int i = (y*layer->width) + x;
 
-				int tile_id = layer->GetPathfinding(x, y);
+				int tile_id = layer->GetPath(x, y);
 				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
 
 				if (tileset != NULL)
 				{
-					map[i] = ((tile_id - tileset->firstgid) > 0) ? 0 : 1;
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
 				}
 			}
 		}

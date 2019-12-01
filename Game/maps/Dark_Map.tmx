@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="117">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="115">
  <properties>
   <property name="startX" type="int" value="250"/>
   <property name="startY" type="int" value="1100"/>
@@ -40227,7 +40227,7 @@
     <property name="EntityType" value="FLYING_ENEMY"/>
    </properties>
   </object>
-  <object id="113" name="Skeleton" type="enemy" x="1344" y="1344" width="32" height="32">
+  <object id="113" name="Skeleton" type="enemy" x="1056" y="1376" width="32" height="32">
    <properties>
     <property name="EntityType" value="GROUND_ENEMY"/>
    </properties>
@@ -40235,16 +40235,6 @@
   <object id="114" name="Player" type="enemy" x="256" y="1344" width="32" height="32">
    <properties>
     <property name="EntityType" value="PLAYER"/>
-   </properties>
-  </object>
-  <object id="115" name="Purple" type="enemy" x="320" y="1056" width="32" height="32">
-   <properties>
-    <property name="EntityType" value="FLYING_ENEMY"/>
-   </properties>
-  </object>
-  <object id="116" name="Purple" type="enemy" x="448" y="1152" width="32" height="32">
-   <properties>
-    <property name="EntityType" value="FLYING_ENEMY"/>
    </properties>
   </object>
  </objectgroup>

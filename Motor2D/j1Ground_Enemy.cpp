@@ -101,13 +101,11 @@ void Ground_Enemy::pathfind()
 				flip = true;
 				animation = "walk";
 			}
-			else if (closest_center.x < position.x - collider->rect.w/2) {
+			else if (closest_center.x < position.x - collider->rect.w / 2) {
 				position.x -= speed.x * App->dt;
 				flip = false;
 				animation = "walk";
 			}
-
-
 		}
 	}
 }
