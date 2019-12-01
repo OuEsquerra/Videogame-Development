@@ -8,7 +8,6 @@
 
 #include "j1EntityMachine.h"
 
-
 j1EntityMachine::j1EntityMachine() {
 	name.create("entities");
 };
@@ -116,10 +115,15 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 
 		ret = new j1Player(x, y, Type); //Struct Player es igual
 
+		player = (j1Player*)ret;
+
 		if (ret != nullptr)
 		{
 			entity_list.add(ret);
 		}
+
+		ret->Awake();
+		ret->Start();
 
 		break;
 
@@ -136,6 +140,8 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 			entity_list.add(ret);
 		}
 
+		
+
 		break;
 
 	case GROUND_ENEMY:
@@ -147,8 +153,13 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 			entity_list.add(ret);
 		}
 
+		
+
 		break;
 	}
+
+	
+
 	return ret;
 };
 
@@ -187,8 +198,24 @@ bool j1EntityMachine::Load(pugi::xml_node& conf)
 	return true;
 };
 
-
 void j1EntityMachine::OnCollision(Collider* A, Collider* B)
+{
+	PlayerCollisions(A, B);
+
+	AttackCollisions(A, B);
+}
+
+void j1EntityMachine::AttackCollisions(Collider* A, Collider* B)
+{
+	if (A->type == ObjectType::ATTACK && B->type == ObjectType::ENEMY) {
+
+		DeleteEntity(B->entity);
+
+
+	}
+}
+
+void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 {
 	if (player->player.godMode) return; //While in God Mode Collisions are disregarded
 

@@ -1,10 +1,11 @@
 #ifndef __j1COLLISIONS_H__
 #define __j1COLLISIONS_H__
 
+//#include "j1Module.h"
+
+#include "j1EntityMachine.h"
 
 
-#include "j1Module.h"
-#include "SDL/include/SDL.h"
 
 enum class ObjectType;
 struct Object;
@@ -19,10 +20,13 @@ struct Collider
 	j1Module* callback = nullptr;
 	Properties* userdata;
 
+	Entity* entity;
+
 	Collider(SDL_Rect rectangle, ObjectType type, j1Module* callback = nullptr) :
 		rect(rectangle),
 		type(type),
 		callback(callback)
+
 	{}
 
 	Collider(Object object);
@@ -63,7 +67,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Properties* userdata = nullptr);
+	Collider* AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Entity* entity = nullptr, Properties* userdata = nullptr);
 	void LoadFromMap();
 	void ReportEnemies();
 

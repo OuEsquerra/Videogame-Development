@@ -3,7 +3,7 @@
 #include "j1Map.h"
 #include "j1Render.h"
 #include "j1Input.h"
-#include "j1EntityMachine.h"
+
 #include "BroFiler/Brofiler.h"
 
 j1Collisions::j1Collisions() : j1Module(), debug_colliders(false)
@@ -121,6 +121,9 @@ void j1Collisions::DebugDraw() {
 			break;
 		case ObjectType::ATTACK:
 			App->render->DrawQuad(Coll_iterator->data->rect, 255, 0, 0, alpha);
+
+		case ObjectType::ENEMY:
+			App->render->DrawQuad(Coll_iterator->data->rect, 255, 75, 0, alpha);
 		}
 		Coll_iterator = Coll_iterator->next;
 	}
@@ -138,7 +141,7 @@ bool j1Collisions::CleanUp() {
 };
 
 
-Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Properties* userdata)
+Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* callback, Entity* entity, Properties* userdata)
 {
 	Collider* ret = new Collider;
 
@@ -146,6 +149,7 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* ca
 	ret->rect = rect;
 	ret->type = type;
 	ret->userdata = userdata;
+	ret->entity = entity;
 
 	colliders.add(ret);
 	
@@ -173,7 +177,7 @@ void j1Collisions::LoadFromMap() {
 				}
 
 			}
-			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, &list_i->data->objects[i].properties);
+			AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr,nullptr, &list_i->data->objects[i].properties);
 		}
 		list_i = list_i->next;
 	}

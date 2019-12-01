@@ -1,14 +1,6 @@
 
 #include "j1EntityMachine.h"
 
-//#include "j1Entity.h"
-
-//struct SDL_Rect;
-
-//class Entity;
-
-//enum EntityType;
-
 
 //Flying_Enemy Entity
 class Flying_Enemy : public Entity {

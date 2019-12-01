@@ -7,7 +7,6 @@
 #include "j1Input.h"
 #include "j1FadeToBlack.h"
 #include "p2Animation.h"
-#include "j1Collisions.h"
 #include "p2Log.h"
 #include "j1Audio.h"
 
@@ -179,36 +178,7 @@ bool j1Player::Update(float dt)
 		}
 		
 		// Grounded logic to check some bools and states
-		if (player.playerGrounded || player.onPlatform)
-		{
-			player.able_to_jump = true;
-			player.jumping = false;
-
-			if (!player.dashing)
-			{
-				player.able_to_dash = true;
-				player.playerState = idle;
-			}
-		}
-		else //When not touching ground and dashing, fall
-		{
-			if (!player.dashing)
-			{
-				player.playerState = falling;
-			}
-		}
-
-		if (player.speed.y >= player.maxSpeed.y*dt) // Speed.y is capped at maxSpeed
-		{
-			player.speed.y = player.maxSpeed.y*dt;
-		}
-		
-		position.x += player.speed.x;
-		
-		if (player.wall)
-		{
-			player.speed.x = 0;
-		}
+		GroundedLogic();
 		
 	}
 	else //When GodMode is active
@@ -270,7 +240,7 @@ bool j1Player::StartPlayer() {
 
 	player.playerBox = { position.x,position.y,player.boxW,player.boxH };
 
-	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities);
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities , (Entity*)this);
 
 	player.able_to_jump = false; //Only lets the player jump if it's true
 	player.able_to_dash = false;
@@ -418,7 +388,7 @@ bool j1Player::Dash()
 
 	if (dashtimercheck->ReadMs() >= 25.0f && !player.attackCollider_active)
 	{
-		player.attackCollider = App->collisions->AddCollider(player.attackBox,ObjectType::ATTACK,App->entities);
+		player.attackCollider = App->collisions->AddCollider(player.attackBox,ObjectType::ATTACK,App->entities );
 		player.attackCollider_active = true;
 	}
 
@@ -477,6 +447,40 @@ void j1Player::Fall()
 
 	player.speed.y += player.gravity*  App->dt; // Speed.y is +gravity when not grounded
 	position.y += player.speed.y; //Update position y
+}
+
+void j1Player::GroundedLogic()
+{
+	if (player.playerGrounded || player.onPlatform)
+	{
+		player.able_to_jump = true;
+		player.jumping = false;
+
+		if (!player.dashing)
+		{
+			player.able_to_dash = true;
+			player.playerState = idle;
+		}
+	}
+	else //When not touching ground and dashing, fall
+	{
+		if (!player.dashing)
+		{
+			player.playerState = falling;
+		}
+	}
+
+	if (player.speed.y >= player.maxSpeed.y * App->dt) // Speed.y is capped at maxSpeed
+	{
+		player.speed.y = player.maxSpeed.y * App->dt;
+	}
+
+	position.x += player.speed.x;
+
+	if (player.wall)
+	{
+		player.speed.x = 0;
+	}
 }
 
 void j1Player::Attack()

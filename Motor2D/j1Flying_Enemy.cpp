@@ -1,7 +1,4 @@
-
 #include "j1App.h"
-
-
 
 #include "j1Map.h"
 #include "j1Pathfinding.h"
@@ -9,11 +6,11 @@
 
 #include "j1EntityMachine.h"
 
-
 //Flying Enemy
 Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	
+	colliderRect = { position.x, position.y, 64, 64 }; //Magic
+	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities, (Entity*)this);
 }
 
 bool Flying_Enemy::Awake(pugi::xml_node &)
@@ -89,7 +86,10 @@ bool Flying_Enemy::Update(float dt)
 	}*/
 
 //	}
-
+	if (collider != nullptr)
+	{
+		collider->SetPos(position.x, position.y);
+	}
 	//Draw enemy
 	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, false);
 

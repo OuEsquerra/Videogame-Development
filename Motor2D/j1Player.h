@@ -113,6 +113,7 @@ public:// methods
 	void GodMode();
 	bool StartPlayer();
 	bool Dash();
+	void GroundedLogic();
 
 	// Collision handling -----
 	void j1Player::OnCollision(Collider* A, Collider* B);
