@@ -34,14 +34,14 @@ bool j1EntityMachine::Init()
 
 bool  j1EntityMachine::Awake(pugi::xml_node& config)
 {
-	p2List_item<Entity*>* entityIter = entity_list.start;
+	/*p2List_item<Entity*>* entityIter = entity_list.start;
 
 	while (entityIter != NULL)
 	{
-		entityIter->data->Awake(conf);
+		entityIter->data->Awake(config);
 
 		entityIter = entityIter->next;
-	}
+	}*/
 
 	return true;
 };
@@ -120,8 +120,6 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 		{
 			entity_list.add(ret);
 		}
-
-
 
 		break;
 

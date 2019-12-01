@@ -2,7 +2,7 @@
 #define __j1ENTITYMACHINE_H__
 
 #include "j1Module.h"
-#include "PugiXml/src/pugixml.hpp"
+
 #include "p2List.h"
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
@@ -46,7 +46,6 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* A, Collider* B);
-
 
 private:
 

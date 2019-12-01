@@ -1,4 +1,5 @@
 #include "j1App.h"
+
 #include "j1Player.h"
 #include "j1Module.h"
 #include "p2Point.h"
@@ -24,18 +25,26 @@ bool j1Player::Init()
 	return true;
 };
 
-bool j1Player::Awake(pugi::xml_node& conf) 
+bool j1Player::Awake() 
 {
-	player.acceleration.x = conf.child("player").child("acceleration").attribute("x").as_float();
-	player.acceleration.y = conf.child("player").child("acceleration").attribute("y").as_float();
-	player.speed.x =		conf.child("player").child("speed").attribute("x").as_float();
-	player.speed.y =		conf.child("player").child("speed").attribute("y").as_float();
-	player.maxSpeed.x =		conf.child("player").child("maxSpeed").attribute("x").as_float();
-	player.maxSpeed.y =		conf.child("player").child("maxSpeed").attribute("y").as_float();
-	player.gravity =		conf.child("player").child("gravity").attribute("value").as_float();
-	player.boxW =			conf.child("player").child("box").attribute("w").as_int();
-	player.boxH =			conf.child("player").child("box").attribute("h").as_int();
-	player.boxOffset_x =	conf.child("player").child("offset").attribute("x").as_int();
+
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+
+	config = App->LoadConfig(config_file);
+
+	pugi::xml_node tmp = config.child("entities");
+
+	player.acceleration.x = tmp.child("player").child("acceleration").attribute("x").as_float();
+	player.acceleration.y = tmp.child("player").child("acceleration").attribute("y").as_float();
+	player.speed.x =		tmp.child("player").child("speed").attribute("x").as_float();
+	player.speed.y =		tmp.child("player").child("speed").attribute("y").as_float();
+	player.maxSpeed.x =		tmp.child("player").child("maxSpeed").attribute("x").as_float();
+	player.maxSpeed.y =		tmp.child("player").child("maxSpeed").attribute("y").as_float();
+	player.gravity =		tmp.child("player").child("gravity").attribute("value").as_float();
+	player.boxW =			tmp.child("player").child("box").attribute("w").as_int();
+	player.boxH =			tmp.child("player").child("box").attribute("h").as_int();
+	player.boxOffset_x =	tmp.child("player").child("offset").attribute("x").as_int();
 
 	App->audio->LoadFx("audio/fx/jump1.wav");
 	App->audio->LoadFx("audio/fx/jump2.wav");

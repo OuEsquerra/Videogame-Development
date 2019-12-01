@@ -35,8 +35,6 @@ bool Flying_Enemy::Update(float dt)
 
 //	if (App->pathfinding->IsWalkable(App->map->WorldToMap(goal.x, goal.y))) {
 
-
-
 	//Find the closest tile to current position
 	App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(goal.x, goal.y));
 		
