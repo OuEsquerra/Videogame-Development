@@ -12,7 +12,6 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1EntityMachine.h"
-//#include "j1Player.h"
 #include "j1Collisions.h"
 #include "j1FadeToBlack.h"
 #include "j1App.h"
