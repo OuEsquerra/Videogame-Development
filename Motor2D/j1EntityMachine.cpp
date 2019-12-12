@@ -373,19 +373,23 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 			player->player.collider->SetPos(player->position.x + player->player.boxOffset_x, player->position.y);
 		}
 
+
 		//from a side
 		if (player->position.y + (A->rect.h* 0.1f) < B->rect.y + B->rect.h
-			&& player->position.y + (A->rect.h* 0.9f) > B->rect.y)
+			&& player->position.y + (A->rect.h* 0.9f) > B->rect.y
+			)
 		{
 			player->player.wall = true;
 			LOG("Touching WALL");
 
-			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4))
+			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)
+				&& player->prevposition.x + A->rect.w + 1 <= (B->rect.x + B->rect.w) )
 			{ //Player to the left 
 				player->position.x = B->rect.x - A->rect.w - player->player.boxOffset_x + 1;
 
 			}
-			else if (A->rect.x > (B->rect.x + B->rect.w * 3 / 4))
+			else if (A->rect.x > (B->rect.x + B->rect.w ) //* 3 / 4
+				&& player->prevposition.x - 1  >= (B->rect.x + B->rect.w))
 			{ //Player to the right
 				player->position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1;
 			}

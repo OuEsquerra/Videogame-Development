@@ -11,6 +11,7 @@
 #include "j1FadeToBlack.h"
 #include "j1EntityMachine.h"
 #include "j1Pathfinding.h"
+#include "j1Gui.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -39,6 +40,8 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 	debug_tex = App->tex->Load("maps/path.png");
 	
+	wowLogo = App->gui->CreateImage(10, 10, false, { 0, 0, 512, 256 }, App->tex->Load("gui/Image/Glues-Logo.png"));
+
 	return true;
 }
 

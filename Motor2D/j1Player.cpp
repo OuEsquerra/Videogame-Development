@@ -203,7 +203,6 @@ bool j1Player::Update(float dt)
 			player.speed.x = player.maxSpeed.x;
 		}
 
-
 		position.x += player.speed.x * 2 * dt;
 	}
 
@@ -271,9 +270,9 @@ bool j1Player::StartPlayer() {
 	return true;
 }
 
-void j1Player::OnCollision(Collider* A, Collider* B) {
+void j1Player::OnCollision(Collider* A, Collider* B) 
+{
 
-	
 }
 
 void j1Player::check_x_move(float dt)
@@ -310,18 +309,15 @@ void j1Player::JumpInput()
 			jump_key_down_timer->Start();
 			player.speed.y =0 ;
 		}
-		//player.gravity = gravity_tmp / 2;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && jump_key_down && jump_key_down_timer->ReadMs() < 250.0f && !player.dashing)
 	{
-		//player.gravity = gravity_tmp * 0.75;
 		player.playerState = jumping;
 		jump_key_down = true;
 	}
 	else
 	{
 		jump_key_down = false;
-		//player.gravity = gravity_tmp;
 	}
 }
 
@@ -378,7 +374,6 @@ void j1Player::GodMode()
 
 bool j1Player::Dash()
 {
-	
 	player.animation = "dash";
 
 	if (!player.wall)
@@ -393,10 +388,8 @@ bool j1Player::Dash()
 		}
 	}
 	player.dashing = true;
-	//Dash Check
-
 	
-
+	//Dash Check
 	if (dashtimercheck->ReadMs() >= 25.0f && !player.attackCollider_active)
 	{
 		player.attackCollider = App->collisions->AddCollider(player.attackBox,ObjectType::ATTACK,App->entities );
@@ -414,7 +407,6 @@ bool j1Player::Dash()
 			player.attackCollider->SetPos(position.x - 20, position.y);
 		}
 	}
-
 
 	if (dashtimercheck->ReadMs() >= 200.0f)
 	{
@@ -568,7 +560,6 @@ void j1Player::MoveRight(float dt) // Move Right the player at set speed
 	{
 		player.speed.x = player.maxSpeed.x*dt;
 	}
-
 }
 
 void j1Player::MoveLeft(float dt) // Move Left the player at speed

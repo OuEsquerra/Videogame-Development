@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 
-
+class UI_Image;
 struct SDL_Texture;
 
 class j1Scene : public j1Module
@@ -36,6 +36,7 @@ public:
 private:
 	SDL_Texture* debug_tex;
 
+	UI_Image* wowLogo;
 public:
 	
 };

@@ -20,6 +20,7 @@ class j1Player;
 class j1Collisions;
 class j1FadeToBlack;
 class j1EntityMachine;
+class j1Gui;
 
 class j1App
 {
@@ -97,6 +98,7 @@ public:
 	j1Collisions*		collisions;
 	j1FadeToBlack*		fade;
 	j1EntityMachine*	entities;
+	j1Gui*				gui;
 
 	float				dt;
 	bool				do_logic = false;

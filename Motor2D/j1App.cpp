@@ -17,6 +17,7 @@
 #include "j1App.h"
 #include "j1Timer.h"
 #include "j1PerfTimer.h"
+#include "j1Gui.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -33,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	pathfinding = new j1PathFinding();
 	entities = new j1EntityMachine();
+	gui = new j1Gui();
 	collisions = new j1Collisions();
 	fade = new j1FadeToBlack();
 
@@ -47,6 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(scene);
 	AddModule(entities);
+	AddModule(gui);
 	AddModule(collisions);
 	AddModule(fade);
 
