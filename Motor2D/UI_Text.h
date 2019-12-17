@@ -1,4 +1,5 @@
 
+
 struct SDL_Texture;
 struct SDL_Color;
 struct _TTF_Font;

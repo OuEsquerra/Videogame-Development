@@ -1,5 +1,3 @@
-
-
 class UI_Image : public UI
 {
 	//Vars

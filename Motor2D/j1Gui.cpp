@@ -95,11 +95,16 @@ const SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
+
 UI_Text* j1Gui::CreateText(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
 {
 	UI_Text* ret = new UI_Text(x,y,draggable,text,color,path,size);
 
 	UI_list.add(ret);
+
+UI_Text* j1Gui::CreateText(int x, int y, p2SString text)
+{
+	UI_Text* ret = nullptr;
 
 	return ret;
 }

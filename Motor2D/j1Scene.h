@@ -42,6 +42,7 @@ private:
 	UI_Text* Bootleg;
 	SDL_Color bootleg_color = { (255),(255),(1),(1) };
 
+
 public:
 	
 };

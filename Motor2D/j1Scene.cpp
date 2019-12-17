@@ -44,7 +44,6 @@ bool j1Scene::Start()
 
 	Bootleg = App->gui->CreateText(0, 0, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 100);
 
-
 	return true;
 }
 

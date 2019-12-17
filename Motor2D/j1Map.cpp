@@ -69,8 +69,8 @@ void j1Map::Draw()
 
 	p2List_item<MapLayer*>* layerIter = data.layers.start;
 
-	int camera_h_tile = winHeight / 32 + 1;
-	int camera_w_tile = winWidth / 32 + 1;
+	camera_h_tile = winHeight / 32 + 1;
+	camera_w_tile = winWidth / 32 + 1;
 
 	while(layerIter != nullptr) { //loop for layers
 
@@ -78,11 +78,11 @@ void j1Map::Draw()
 
 		if (layerIter->data->navigation == true && debug == false) {break;} //go to next layer if its navigation
 
-		int camera_x_tile = (-App->render->camera.x * layerIter->data->speed) / 32; //Magic Number
-		int camera_y_tile = (-App->render->camera.y * layerIter->data->speed) / 32;
+		camera_x_tile = (-App->render->camera.x * layerIter->data->speed) / 32; //Magic Number
+		camera_y_tile = (-App->render->camera.y * layerIter->data->speed) / 32;
 
-		int i = 0;
-		int j = camera_y_tile;
+		i = 0;
+		j = camera_y_tile;
 
 		for (int y = camera_y_tile; y < (camera_y_tile + camera_h_tile) ; y++) {
 			for (int x = camera_x_tile; x < (camera_x_tile + camera_w_tile) ; x++) {
@@ -91,12 +91,11 @@ void j1Map::Draw()
 
 				App->render->Blit(data.tilesets[0]->texture,
 					data.tilesets[0]->GetPos(x, y).x, data.tilesets[0]->GetPos(x, y).y,
-					data.tilesets[0]->TileRect(gid_list[i]) , false, layerIter->data->speed); //Get the tile we are currently drawing
-
+					&data.tilesets[0]->TileRect(gid_list[i]) , false, layerIter->data->speed); //Get the tile we are currently drawing
 			}
 			j++;
 		}
-		layerIter = layerIter->next;//go to next layer
+		layerIter = layerIter->next;
 	}
 	
 }
@@ -147,7 +146,7 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, iPoint& position, Anima
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
 	position.x , position.y,											//drawn at position
-	animTileset->PlayerTileRect(currentanim->frames[ainfo.iter]),flip );//draw frames tile id
+	&animTileset->PlayerTileRect(currentanim->frames[ainfo.iter]),flip );//draw frames tile id
 
 	if (ainfo.frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
 	{

@@ -16,4 +16,5 @@ void UI_Text::Update()
 void UI_Text::Draw()
 {
 	App->render->Blit(texture, position.x, position.y);
+
 }

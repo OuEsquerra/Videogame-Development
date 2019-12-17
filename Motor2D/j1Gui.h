@@ -51,6 +51,7 @@ public:
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 
+
 	UI_Text* CreateText(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path,int size);
 
 	UI_Image* CreateImage(int x, int y,bool draggable, SDL_Rect rect, SDL_Texture* image);
