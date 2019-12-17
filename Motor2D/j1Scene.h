@@ -3,8 +3,9 @@
 
 #include "j1Module.h"
 
-
+class UI_Image;
 struct SDL_Texture;
+class UI_Text;
 
 class j1Scene : public j1Module
 {
@@ -35,6 +36,11 @@ public:
 
 private:
 	SDL_Texture* debug_tex;
+
+	UI_Image* wowLogo;
+
+	UI_Text* Bootleg;
+	SDL_Color bootleg_color = { (255),(255),(1),(1) };
 
 public:
 	

@@ -12,12 +12,13 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1EntityMachine.h"
-//#include "j1Player.h"
 #include "j1Collisions.h"
 #include "j1FadeToBlack.h"
 #include "j1App.h"
 #include "j1Timer.h"
 #include "j1PerfTimer.h"
+#include "j1Gui.h"
+#include "j1Fonts.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -36,6 +37,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entities = new j1EntityMachine();
 	collisions = new j1Collisions();
 	fade = new j1FadeToBlack();
+	font = new j1Fonts();
+	gui = new j1Gui();
 
 
 	// Ordered for awake / Start / Update
@@ -50,6 +53,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities);
 	AddModule(collisions);
 	AddModule(fade);
+	AddModule(font);
+	AddModule(gui);
 
 	// render last to swap buffer
 	AddModule(render);

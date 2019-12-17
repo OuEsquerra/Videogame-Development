@@ -223,7 +223,7 @@ public:
 	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(p2SString name,const char* tileset,iPoint& position, AnimationInfo& ainfo, bool flip=false);
+	void DrawAnimation(p2SString name,char* tileset,iPoint& position, AnimationInfo& ainfo, bool flip=false);
 
 	// Called before quitting
 	bool CleanUp();

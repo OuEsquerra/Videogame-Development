@@ -101,15 +101,18 @@ void j1Map::Draw()
 	
 }
 
-void j1Map::DrawAnimation(p2SString name, const char* tileset, iPoint& position, AnimationInfo& ainfo, bool flip)
+void j1Map::DrawAnimation(p2SString name, char* tileset, iPoint& position, AnimationInfo& ainfo, bool flip)
 {
+	return;
+
 	TileSet* animTileset = nullptr;
 
 	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
 
+
 	while (TilesetIter != NULL)
 	{
-		if ( TilesetIter->data->name == tileset)
+		if (TilesetIter->data->name == tileset)
 		{
 			animTileset = TilesetIter->data;
 		}
@@ -139,6 +142,8 @@ void j1Map::DrawAnimation(p2SString name, const char* tileset, iPoint& position,
 	}
 	
 	ainfo.prev_anim_name = currentanim->name;
+
+	
 
 	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
 	position.x , position.y,											//drawn at position
