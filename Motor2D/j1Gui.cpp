@@ -102,10 +102,6 @@ UI_Text* j1Gui::CreateText(int x, int y, bool draggable, p2SString text, SDL_Col
 
 	UI_list.add(ret);
 
-UI_Text* j1Gui::CreateText(int x, int y, p2SString text)
-{
-	UI_Text* ret = nullptr;
-
 	return ret;
 }
 
