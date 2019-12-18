@@ -100,66 +100,80 @@ void j1Map::Draw()
 	
 }
 
-void j1Map::DrawAnimation(p2SString name, char* tileset, iPoint& position, AnimationInfo& ainfo, bool flip)
+void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, AnimationInfo* ainfo, bool flip)
 {
-	return;
+	//TileSet* animTileset = nullptr;
 
-	TileSet* animTileset = nullptr;
+	p2List_item<TileSet*>* animTileset = data.tilesets.start;
 
-	p2List_item<TileSet*>* TilesetIter = data.tilesets.start;
-
-
-	while (TilesetIter != NULL)
+	while (animTileset != NULL)
 	{
-		if (TilesetIter->data->name == tileset)
+		//LOG("%d", strcmp(TilesetIter->data->name.GetString(), tileset));
+
+		cmp = strcmp(animTileset->data->name.GetString(), tileset);
+
+		if (cmp == 0 )
 		{
-			animTileset = TilesetIter->data;
+			//animTileset = TilesetIter->data;
+			break;
 		}
-		TilesetIter = TilesetIter->next;
+
+		animTileset = animTileset->next;
 	}
 
 	if (animTileset == NULL)
 		return;
+
+
 	// I have the adventurer Tileset inside I have animation
-	Animations* currentanim = nullptr;
+	//Animations currentanim;
 
-	p2List_item<Animations*>* animIter = animTileset->animations.start;
+	p2List_item<Animations*>* currentanim = animTileset->data->animations.start;
 
-	while (animIter)
+	while (currentanim)
 	{
-		if ( animIter->data->name == name)
+		cmp = strcmp(currentanim->data->name.GetString(), name.GetString());
+
+		if (cmp == 0)
 		{
-			currentanim = animIter->data; //gets the animation with the name we sent
+			//currentanim.frames = animIter->data->frames; //gets the animation with the name we sent
+			//currentanim.id = animIter->data->id;
+			//currentanim.name = animIter->data->name;
+			//currentanim.nFrames = animIter->data->nFrames;
+			//currentanim.speed = animIter->data->speed;
+			break;
+
 		}
-		animIter = animIter->next;
+
+		currentanim = currentanim->next;
 	}
 
-	if (ainfo.prev_anim_name != currentanim->name.GetString() ) // So that when animations change they start from frame 0
+	if (ainfo->prev_anim_name != currentanim->data->name.GetString()) // So that when animations change they start from frame 0
 	{
-		ainfo.iter = 0;
-		ainfo.frameCount = 0.0f;
+		ainfo->iter = 0;
+		ainfo->frameCount = 0.0f;
 	}
 	
-	ainfo.prev_anim_name = currentanim->name;
+	ainfo->prev_anim_name = currentanim->data->name;
 
-	
+	SDL_Rect tmp_rec = animTileset->data->PlayerTileRect(currentanim->data->frames[ainfo->iter]);
 
-	App->render->Blit(animTileset->texture,								//Texture of the animation(tileset) 
+	App->render->Blit(animTileset->data->texture,								//Texture of the animation(tileset) 
 	position.x , position.y,											//drawn at position
-	&animTileset->PlayerTileRect(currentanim->frames[ainfo.iter]),flip );//draw frames tile id
+	&tmp_rec,flip );//draw frames tile id
 
-	if (ainfo.frameCount > currentanim->speed/1000 )	//counts time for each frame of animation
+	if (ainfo->frameCount > currentanim->data->speed/1000 )	//counts time for each frame of animation
 	{
-		ainfo.iter++;
-		ainfo.frameCount = 0.0f;
+		ainfo->iter++;
+		ainfo->frameCount = 0.0f;
 	}
 
-	if (ainfo.iter >= currentanim->nFrames)  //Iterate from 0 to nFrames (number of frames in animation)
+	if (ainfo->iter >= currentanim->data->nFrames)  //Iterate from 0 to nFrames (number of frames in animation)
 	{				
-		ainfo.iter = 0;
+		ainfo->iter = 0;
 	}
 
-	ainfo.frameCount += App->dt;
+	ainfo->frameCount += App->dt;
 }
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const

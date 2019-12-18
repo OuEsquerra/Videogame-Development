@@ -9,7 +9,7 @@
 //Flying Enemy
 Ground_Enemy::Ground_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	colliderRect = { position.x, position.y, 50, 64 }; //Magic
+	colliderRect = { (int)position.x, (int)position.y, 50, 64 }; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities,(Entity*)this);
 
 	speed = { 150,150 };
@@ -64,7 +64,7 @@ bool Ground_Enemy::Update(float dt)
 		collider->SetPos(position.x, position.y);
 	}
 	//Draw enemy
-	App->map->DrawAnimation(animation, "Skeleton", position , Ainfo, flip);
+	App->map->DrawAnimation(animation, "Skeleton", position , &Ainfo, flip);
 
 	grounded = false;
 

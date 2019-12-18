@@ -55,8 +55,6 @@ enum class ObjectType {
 	ENEMY,
 	WARP,
 	ATTACK,
-
-
 	MAX_OBJECTS = 6
 };
 
@@ -81,7 +79,6 @@ struct Object
 	Properties			properties;
 };
 
-
 struct MapObjectgroup 
 {
 	uint				id;
@@ -89,7 +86,6 @@ struct MapObjectgroup
 	Object*				objects;
 	uint				objects_size;
 };
-
 
 // ----------------------------------------------------
 struct MapLayer 
@@ -110,16 +106,15 @@ struct MapLayer
 	}
 };
 
-
 // ----------------------------------------------------
 struct TileSet
 {
 	
 	SDL_Rect Tilerect ;
 
-	SDL_Rect TileRect(uint tile_id) {
+	SDL_Rect TileRect(uint tile_id) 
+	{
 
-	//	LOG("Start Tilerect");
 		SDL_Rect ret = Tilerect; 
 
 		int x = ((tile_id - firstgid) % num_tiles_width);
@@ -130,14 +125,13 @@ struct TileSet
 		ret.w = tile_width;
 		ret.h = tile_height;
 
-		//LOG("End Tilerect");
-
 		return ret;
 	}
 	
 	SDL_Rect PlayerTilerect ;
 
-	SDL_Rect PlayerTileRect(uint tile_id) {
+	SDL_Rect PlayerTileRect(uint tile_id) 
+	{
 
 		SDL_Rect ret = PlayerTilerect;
 
@@ -196,15 +190,13 @@ struct MapData
 	int						tile_height;
 	
 	const char*				name;
-	iPoint					start_position;
+	fPoint					start_position;
 	
 	SDL_Color				background_color;
 	MapTypes				type;
 	p2List<TileSet*>		tilesets;
 	p2List<MapLayer*>		layers;
 	p2List<MapObjectgroup*> objectgroups;
-
-
 };
 
 // ----------------------------------------------------
@@ -214,24 +206,18 @@ public:
 
 	j1Map();
 
-	// Destructor
 	virtual ~j1Map();
 
-	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
-	// Called each loop iteration
 	void Draw();
 
-	void DrawAnimation(p2SString name,char* tileset,iPoint& position, AnimationInfo& ainfo, bool flip=false);
+	void DrawAnimation(p2SString name,char* tileset,fPoint& position, AnimationInfo* ainfo, bool flip = false);
 
-	// Called before quitting
 	bool CleanUp();
 
-	// Load new map
 	bool Load(const char* path);
 
-	
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
 
@@ -256,7 +242,11 @@ public:
 	MapData data;
 
 	bool debug;
+
 private:
+
+	int cmp;
+
 
 	int i;
 	int j;
@@ -270,9 +260,6 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-
-	
-	
 };
 
 #endif // __j1MAP_H__

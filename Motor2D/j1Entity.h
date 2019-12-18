@@ -32,13 +32,13 @@ class Entity
 //VARS
 public:
 	//Constructor
-	iPoint position;
+	fPoint position;
 	EntityType type;
 
 	//Vars
 	p2SString animation;
-	iPoint speed;
-	iPoint prevposition;
+	fPoint speed;
+	fPoint prevposition;
 	AnimationInfo Ainfo;
 	Collider* collider;
 	SDL_Rect colliderRect;

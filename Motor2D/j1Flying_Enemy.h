@@ -6,7 +6,7 @@
 class Flying_Enemy : public Entity {
 	//variables
 public:
-	iPoint goal;
+	fPoint goal;
 	
 
 	//Methods

@@ -38,11 +38,16 @@ bool j1Scene::Start()
 	if (App->map->Load("Dark_Map.tmx") == true)
 
 	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
+
 	debug_tex = App->tex->Load("maps/path.png");
+
+
+
+
 	
 	wowLogo = App->gui->CreateImage(0, 0, false, { 0, 0, 512, 256 }, App->tex->Load("gui/Image/Glues-Logo.png"));
 
-	Bootleg = App->gui->CreateText(0, 0, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 100);
+	Bootleg = App->gui->CreateText(100, 100, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 100);
 
 	return true;
 }

@@ -9,7 +9,7 @@
 //Flying Enemy
 Flying_Enemy::Flying_Enemy(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	colliderRect = { position.x, position.y, 50, 50 }; //Magic
+	colliderRect = { (int)position.x, (int)position.y, 50, 50 }; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities, (Entity*)this);
 
 	speed = { 100,100 };
@@ -71,7 +71,7 @@ bool Flying_Enemy::Update(float dt)
 	}
 
 	//Draw enemy
-	App->map->DrawAnimation("skull_still", "Skull1", position , Ainfo, flip);
+	App->map->DrawAnimation("skull_still", "Skull1", position , &Ainfo, flip);
 
 	return true;
 }

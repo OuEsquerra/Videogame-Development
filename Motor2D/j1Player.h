@@ -29,7 +29,7 @@ struct Player {
 	p2Point<float> acceleration;
 	p2Point<float> speed;
 	p2Point<float> maxSpeed;
-	iPoint prevposition;
+	fPoint prevposition;
 	p2Point<float> lastGroundedPos;
 
 	p2SString animation;

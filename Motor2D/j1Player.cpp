@@ -211,7 +211,7 @@ bool j1Player::Update(float dt)
 	player.playerBox.y = position.y;
 
 	//Draw player
-	App->map->DrawAnimation(player.animation,"Adventurer",position, Ainfo, player.flip);
+	App->map->DrawAnimation(player.animation,"Adventurer",position, &Ainfo, player.flip);
 
 	//Update Player Collider after updating its position
 	player.collider->SetPos(position.x + player.boxOffset_x, position.y);
@@ -248,7 +248,7 @@ bool j1Player::StartPlayer() {
 
 	position = App->map->data.start_position;
 
-	player.playerBox = { position.x,position.y,player.boxW,player.boxH };
+	player.playerBox = { (int)position.x,(int)position.y,player.boxW,player.boxH };
 
 	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities , (Entity*)this);
 

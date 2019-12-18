@@ -13,6 +13,5 @@ void UI_Image::Update()
 
 void UI_Image::Draw()
 {
-	App->render->Blit(image, position.x, position.y, &rect, 0.0f);
-
+	App->render->Blit(image, position.x, position.y, &rect,false, 0.f);
 }

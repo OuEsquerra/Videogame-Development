@@ -6,7 +6,7 @@
 class Ground_Enemy : public Entity {
 	//variables
 public:
-	iPoint goal;
+	fPoint goal;
 
 	iPoint gravity;
 

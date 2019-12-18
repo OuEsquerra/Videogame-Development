@@ -35,16 +35,18 @@ public:
 	bool CleanUp();
 
 private:
+
 	SDL_Texture* debug_tex;
 
 	UI_Image* wowLogo;
 
 	UI_Text* Bootleg;
-	SDL_Color bootleg_color = { (255),(255),(1),(1) };
+	SDL_Color bootleg_color = { (255),(0),(255),(255) };
 
+	SDL_Texture* button_idle;
+	SDL_Texture* button_over;
+	SDL_Texture* button_press;
 
-public:
-	
 };
 
 #endif // __j1SCENE_H__

@@ -15,9 +15,7 @@ public:
 	UI_Text* ui_text;
 
 	UI_Image* ui_image;
-	SDL_Texture* button_idle;
-	SDL_Texture* button_over;
-	SDL_Texture* button_press;
+
 
 
 	//Methods
