@@ -174,8 +174,14 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	BROFILER_CATEGORY("j1PathFinding::CreatePath", Profiler::Color::Chartreuse);
 	int ret = -1;
 
+
 	// TODO 1: if origin or destination are not walkable, return -1
 	//if (IsWalkable(origin) == false || IsWalkable(destination) == false) 	return ret;
+	if (!IsWalkable(origin) || !IsWalkable(destination))
+	{
+		ret = -1;
+		return ret;
+	}
 
 	// TODO 2: Create two lists: open, close
 	// Add the origin tile to open
@@ -195,6 +201,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		//Move the lowest score cell from open list to the closed list
 		p2List_item<PathNode>* node = close.list.add(open.GetNodeLowestScore()->data);
 		open.list.del(open.GetNodeLowestScore());
+
 
 		//If we just added the destination, we are done!
 		if (node->data.pos == destination) {

@@ -141,7 +141,6 @@ struct TileSet
 		int x = tile_id % num_t_width;
 		int y = tile_id / num_t_width;
 
-
 		ret.x = x * tile_width;
 		ret.y = y * tile_height;
 		ret.w = tile_width;

@@ -93,7 +93,7 @@ int main(int argc, char* args[])
 			LOG("CLEANUP PHASE ===============================");
 			if(App->CleanUp() == true)
 			{
-				RELEASE(App);
+				//RELEASE(App); //Peta
 				result = EXIT_SUCCESS;
 				state = EXIT;
 			}

@@ -162,6 +162,7 @@ void j1Collisions::LoadFromMap() {
 	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
 	while (list_i != nullptr) {
 		for (int i = 0; i < list_i->data->objects_size; i++) {
+			
 			if (list_i->data->objects[i].type == ObjectType::ENEMY) {
 				if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "FLYING_ENEMY") == 0) 
 				{

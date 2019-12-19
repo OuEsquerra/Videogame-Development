@@ -124,7 +124,6 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 	if (animTileset == NULL)
 		return;
 
-
 	// I have the adventurer Tileset inside I have animation
 	//Animations currentanim;
 
@@ -156,7 +155,7 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 	
 	ainfo->prev_anim_name = currentanim->data->name;
 
-	SDL_Rect tmp_rec = animTileset->data->PlayerTileRect(currentanim->data->frames[ainfo->iter]);
+	SDL_Rect tmp_rec = animTileset->data->PlayerTileRect(currentanim->data->frames[ainfo->iter]); //ainfo->iter
 
 	App->render->Blit(animTileset->data->texture,								//Texture of the animation(tileset) 
 	position.x , position.y,											//drawn at position

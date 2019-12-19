@@ -191,7 +191,6 @@ void j1App::PrepareUpdate()
 	
 	dt = frame_time.ReadSec();
 
-	//LOG("dt=%f", ceil(dt*1000));
 	frame_time.Start(); //Restart the single frame time
 }
 
@@ -219,7 +218,7 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu Dt: ",
 		avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
 	App->win->SetTitle(title);
 

@@ -81,7 +81,17 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP) App->map->debug = !App->map->debug;
 	
-
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (App->frame_rate == 0)
+		{
+			App->frame_rate = 30;
+		}
+		else
+		{
+			App->frame_rate = 0;
+		}
+	}
 
 	//LOG("Befor Draw");
 	

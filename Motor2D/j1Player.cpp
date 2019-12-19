@@ -437,9 +437,10 @@ void j1Player::Jump()
 		player.playerState = falling;
 	}
 
-	player.speed.y -= player.acceleration.y * App->dt;
-	player.speed.y += (player.gravity * 0.8f) * App->dt; // Speed.y is +gravity when not grounded
-	position.y += player.speed.y; //Update position y
+	//player.speed.y -= player.acceleration.y * App->dt;
+	player.speed.y = player.speed.y + (-player.acceleration.y + player.gravity * 0.8f) * App->dt;
+	//player.speed.y += (player.gravity * 0.8f) * App->dt; // Speed.y is +gravity when not grounded
+	position.y += player.speed.y * App->dt ; //Update position y
 }
 
 void j1Player::Fall()
@@ -448,8 +449,8 @@ void j1Player::Fall()
 	player.jumping = true;
 	player.able_to_jump = false;
 
-	player.speed.y += player.gravity * App->dt; // Speed.y is +gravity when not grounded
-	position.y += player.speed.y; //Update position y
+	player.speed.y = player.speed.y + player.gravity *App->dt; // Speed.y is +gravity when not grounded
+	position.y += player.speed.y *App->dt; //Update position y
 }
 
 void j1Player::GroundedLogic()
@@ -574,10 +575,16 @@ void j1Player::MoveLeft(float dt) // Move Left the player at speed
 
 void j1Player::MoveDown(float dt) // Move Right the player at set speed
 {
-	position.y += player.maxSpeed.y*dt;
+	if (player.speed.y >  player.maxSpeed.y*dt)
+	{
+		position.y += player.maxSpeed.y*dt;
+	}
 }
 
 void j1Player::MoveUp(float dt) // Move Right the player at set speed
 {
-	position.y -= player.maxSpeed.y*dt;
+	if (player.speed.y < -player.maxSpeed.y*dt)
+	{
+		position.y -= player.maxSpeed.y*dt;
+	}
 }
