@@ -12,17 +12,21 @@ class UI_Button : public UI
 public:
 	SDL_Rect rect;
 
-	UI_Text* ui_text;
+	//Text
+	p2SString text;
+	SDL_Texture * text_texture;
+	SDL_Color* color;
+	_TTF_Font* font;
 
-	UI_Image* ui_image;
-
-
+	//Image
+	SDL_Texture* image_texture;
+	SDL_Rect* image_rect;
 
 	//Methods
 public:
 
 
-	UI_Button(int x, int y,bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect rect, SDL_Texture* image = nullptr);
+	UI_Button(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect image_rect, SDL_Texture* image);
 
 	void Update();
 

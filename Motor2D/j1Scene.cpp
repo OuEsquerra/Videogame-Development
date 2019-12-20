@@ -43,9 +43,9 @@ bool j1Scene::Start()
 
 
 
-
+	button = App->gui->CreateButton(200, 200, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 50, { 80, 0, 350, 150 }, App->tex->Load("gui/Image/Glues-Logo.png"));
 	
-	wowLogo = App->gui->CreateImage(0, 0, false, { 0, 0, 512, 256 }, App->tex->Load("gui/Image/Glues-Logo.png"));
+	wowLogo = App->gui->CreateImage(0, 0, false, { 80, 0, 350, 150 }, App->tex->Load("gui/Image/Glues-Logo.png"));
 
 	Bootleg = App->gui->CreateText(100, 100, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 100);
 

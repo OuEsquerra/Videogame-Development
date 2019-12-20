@@ -114,9 +114,11 @@ UI_Image* j1Gui::CreateImage(int x, int y,bool draggable, SDL_Rect rect,SDL_Text
 	return ret;
 }
 
-UI_Button* j1Gui::CreateButton(int x, int y, SDL_Rect rect, p2SString text)
+UI_Button* j1Gui::CreateButton(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect image_rect, SDL_Texture* image)
 {
-	UI_Button* ret = nullptr;
+	UI_Button* ret = new UI_Button(x,y,draggable,text,color,path,size,image_rect,image);
+
+	UI_list.add(ret);
 
 	return ret;
 }

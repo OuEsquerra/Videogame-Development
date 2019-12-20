@@ -6,6 +6,7 @@
 class UI_Image;
 struct SDL_Texture;
 class UI_Text;
+class UI_Button;
 
 class j1Scene : public j1Module
 {
@@ -37,6 +38,8 @@ public:
 private:
 
 	SDL_Texture* debug_tex;
+
+	UI_Button* button;
 
 	UI_Image* wowLogo;
 
