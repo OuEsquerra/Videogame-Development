@@ -78,9 +78,12 @@ bool j1Render::Update(float dt)
 	uint winWidth, winHeight;
 	App->win->GetWindowSize(winWidth, winHeight);
 
-	camera.x = -App->entities->player->position.x + winWidth/2 - App->entities->player->player.boxW;
+	if (App->entities->active)
+	{
+		camera.x = -App->entities->player->position.x + winWidth / 2 - App->entities->player->player.boxW;
 
-	camera.y = -App->entities->player->position.y + (winHeight/2) - App->entities->player->player.boxH / 2;
+		camera.y = -App->entities->player->position.y + (winHeight / 2) - App->entities->player->player.boxH / 2;
+	}
 
 	//Keep camera from leaving the map bounds
 	if (camera.x >= 0)

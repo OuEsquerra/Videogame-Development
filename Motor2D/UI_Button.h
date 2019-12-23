@@ -5,12 +5,22 @@
 class UI_Text;
 class UI_Image;
 
+enum class Button_State
+{
+	DEFAULT,
+	HOVER,
+	PRESSED
+};
 
 class UI_Button : public UI
 {
 	//Vars
 public:
-	SDL_Rect rect;
+	SDL_Rect* rect;
+
+	Button_State state;
+
+	bool pressed;
 
 	//Text
 	p2SString text;
@@ -20,16 +30,20 @@ public:
 
 	//Image
 	SDL_Texture* image_texture;
-	SDL_Rect* image_rect;
+	SDL_Rect* default_rect;
+	SDL_Rect* hover_rect;
+	SDL_Rect* press_rect;
+	iPoint textPos;
 
 	//Methods
 public:
 
-
-	UI_Button(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect image_rect, SDL_Texture* image);
+	UI_Button(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image ,SDL_Rect* rect,int x_offset,int y_offset);
 
 	void Update();
 
 	void Draw();
+
+	bool buttonPressed();
 
 };

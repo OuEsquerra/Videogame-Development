@@ -41,13 +41,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-
-
-	button = App->gui->CreateButton(200, 200, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 50, { 80, 0, 350, 150 }, App->tex->Load("gui/Image/Glues-Logo.png"));
-	
-	wowLogo = App->gui->CreateImage(0, 0, false, { 80, 0, 350, 150 }, App->tex->Load("gui/Image/Glues-Logo.png"));
-
-	Bootleg = App->gui->CreateText(100, 100, false, "pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 100);
+	button = App->gui->CreateButton(200, 200, false, "Pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect,&hover_rect ,&press_rect , App->tex->Load("gui/UI_Button.png"),&button_rect,70,10);
 
 	return true;
 }
@@ -81,7 +75,9 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP) App->map->debug = !App->map->debug;
 	
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	LOG("%d", App->scene->button->buttonPressed());
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN || App->scene->button->buttonPressed() )
 	{
 		if (App->frame_rate == 0)
 		{

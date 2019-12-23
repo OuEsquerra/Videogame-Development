@@ -22,6 +22,8 @@ public:
 
 	bool draggable;
 
+	bool enabled;
+
 //Methods
 public:
 
@@ -30,6 +32,12 @@ public:
 	virtual void Update();
 
 	virtual void Draw();
+
+	bool IsEnabled();
+
+	void Enable();
+
+	void Disable();
 
 private:
 

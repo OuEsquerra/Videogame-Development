@@ -22,6 +22,7 @@ class j1FadeToBlack;
 class j1EntityMachine;
 class j1Fonts;
 class j1Gui;
+class j1Main_Menu;
 
 class j1App
 {
@@ -101,6 +102,7 @@ public:
 	j1EntityMachine*	entities;
 	j1Gui*				gui;
 	j1Fonts*			font;
+	j1Main_Menu*		mainmenu;
 
 	float				dt;
 	int					frame_rate;

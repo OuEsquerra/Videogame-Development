@@ -16,3 +16,18 @@ void UI::Draw()
 {
 
 }
+
+bool UI::IsEnabled()
+{
+	return enabled;
+}
+
+void UI::Enable()
+{
+	enabled = true;
+}
+
+void UI::Disable()
+{
+	enabled = false;
+}

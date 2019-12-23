@@ -73,6 +73,20 @@ public:
 
 	// Callbacks ---
 	virtual void OnCollision(Collider* A, Collider* B) {	}
+
+	void activate()
+	{
+		active = true;
+		Start();
+	}
+
+	void disactivate()
+	{
+		active = false;
+		CleanUp();
+	}
+
+
 public:
 
 	p2SString	name;

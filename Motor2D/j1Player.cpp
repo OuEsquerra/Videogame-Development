@@ -449,8 +449,8 @@ void j1Player::Fall()
 	player.jumping = true;
 	player.able_to_jump = false;
 
-	player.speed.y = player.speed.y + player.gravity *App->dt; // Speed.y is +gravity when not grounded
-	position.y += player.speed.y *App->dt; //Update position y
+	player.speed.y = player.speed.y + (player.gravity * App->dt); // Speed.y is +gravity when not grounded
+	position.y += player.speed.y * App->dt; //Update position y
 }
 
 void j1Player::GroundedLogic()
@@ -474,9 +474,9 @@ void j1Player::GroundedLogic()
 		}
 	}
 
-	if (player.speed.y >= player.maxSpeed.y * App->dt) // Speed.y is capped at maxSpeed
+	if (player.speed.y >= player.maxSpeed.y ) // Speed.y is capped at maxSpeed
 	{
-		player.speed.y = player.maxSpeed.y * App->dt;
+		player.speed.y = player.maxSpeed.y ;
 	}
 
 	position.x += player.speed.x;
@@ -575,16 +575,14 @@ void j1Player::MoveLeft(float dt) // Move Left the player at speed
 
 void j1Player::MoveDown(float dt) // Move Right the player at set speed
 {
-	if (player.speed.y >  player.maxSpeed.y*dt)
-	{
-		position.y += player.maxSpeed.y*dt;
-	}
+	
+	position.y += player.maxSpeed.y*dt;
+	
 }
 
 void j1Player::MoveUp(float dt) // Move Right the player at set speed
 {
-	if (player.speed.y < -player.maxSpeed.y*dt)
-	{
-		position.y -= player.maxSpeed.y*dt;
-	}
+	
+	position.y -= player.maxSpeed.y*dt;
+	
 }

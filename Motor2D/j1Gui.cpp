@@ -21,7 +21,6 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading GUI atlas");
 	bool ret = true;
-
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
 
 	return ret;
@@ -31,8 +30,6 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-
-	
 	background = App->tex->Load("gui/Image/login_background.png");
 	wow_logo = App->tex->Load("gui/Image/Glues_Logo.png");
 
@@ -46,13 +43,9 @@ bool j1Gui::PreUpdate()
 
 	while (it != nullptr)
 	{
-
 		it->data->Update();
-
 		it = it->next;
 	}
-
-
 	return true;
 }
 
@@ -65,19 +58,13 @@ bool j1Gui::Update()
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
-
 	p2List_item<UI*>* it = UI_list.start;
 
 	while (it != nullptr)
 	{
-
 		it->data->Draw();
-
 		it = it->next;
 	}
-
-
-
 	return true;
 }
 
@@ -114,15 +101,11 @@ UI_Image* j1Gui::CreateImage(int x, int y,bool draggable, SDL_Rect rect,SDL_Text
 	return ret;
 }
 
-UI_Button* j1Gui::CreateButton(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect image_rect, SDL_Texture* image)
+UI_Button* j1Gui::CreateButton(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect,int x_offset, int y_offset)
 {
-	UI_Button* ret = new UI_Button(x,y,draggable,text,color,path,size,image_rect,image);
+	UI_Button* ret = new UI_Button(x,y,draggable,text,color,path,size,default_rect,hover_rect,press_rect,image,rect,x_offset,y_offset);
 
 	UI_list.add(ret);
 
 	return ret;
 }
-
-
-// class Gui ---------------------------------------------------
-

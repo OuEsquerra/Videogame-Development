@@ -43,8 +43,14 @@ private:
 
 	UI_Image* wowLogo;
 
+	SDL_Rect button_rect = { 0, 0, 244, 56 };
+
+	SDL_Rect default_rect = { 0, 0, 244, 56 };
+	SDL_Rect hover_rect = { 0, 60, 244, 56 };
+	SDL_Rect press_rect = { 0, 120, 244, 56 };
+
 	UI_Text* Bootleg;
-	SDL_Color bootleg_color = { (255),(0),(255),(255) };
+	SDL_Color bootleg_color = { (0),(0),(0),(255) };
 
 	SDL_Texture* button_idle;
 	SDL_Texture* button_over;

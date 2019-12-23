@@ -19,6 +19,7 @@
 #include "j1PerfTimer.h"
 #include "j1Gui.h"
 #include "j1Fonts.h"
+#include "j1Main_Menu.h"
 
 
 // Constructor
@@ -41,6 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new j1FadeToBlack();
 	font = new j1Fonts();
 	gui = new j1Gui();
+	mainmenu = new j1Main_Menu();
 
 
 	// Ordered for awake / Start / Update
@@ -52,6 +54,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(scene);
+	AddModule(mainmenu);
 	AddModule(entities);
 	AddModule(gui);
 	AddModule(collisions);
@@ -61,6 +64,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
+
+
+	//Unactivate things
+	scene->disactivate();
+	collisions->disactivate();
+	entities->disactivate();
 }
 
 // Destructor
@@ -127,6 +136,8 @@ bool j1App::Awake()
 		}
 	}
 
+	
+
 	return ret;
 }
 
@@ -137,7 +148,7 @@ bool j1App::Start()
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 
-	while(item != NULL && ret == true)
+	while(item != NULL && ret == true && item->data->active)
 	{
 		ret = item->data->Start();
 		item = item->next;
