@@ -14,7 +14,7 @@ class UI_Text : public UI
 //Methods
 public:
 
-	UI_Text(int x, int y, bool draggable,  p2SString text,SDL_Color* color, const char* path, int size);
+	UI_Text(int x, int y,bool active, bool draggable,  p2SString text,SDL_Color* color, const char* path, int size);
 
 	void Update();
 

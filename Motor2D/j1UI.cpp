@@ -2,7 +2,7 @@
 #include "j1Gui.h"
 
 
-UI::UI(int x, float y,bool draggable) : position(x,y),draggable(draggable)
+UI::UI(int x, float y,bool active,bool draggable) : position(x,y),active(active),draggable(draggable)
 {
 
 }

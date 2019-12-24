@@ -12,6 +12,7 @@
 #include "j1EntityMachine.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -41,7 +42,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	button = App->gui->CreateButton(200, 200, false, "Pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect,&hover_rect ,&press_rect , App->tex->Load("gui/UI_Button.png"),&button_rect,70,10);
+	button = App->gui->CreateButton(200, 200,true, false, "Pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect,&hover_rect ,&press_rect , App->tex->Load("gui/UI_Button.png"),&button_rect,70,10);
 
 	return true;
 }
@@ -89,6 +90,17 @@ bool j1Scene::Update(float dt)
 		}
 	}
 
+	if (button->buttonPressed())
+	{
+		//App->fade->FadeToBlack("maps/Dark_Map.tmx");
+
+		App->entities->disactivate();
+		App->scene->disactivate();
+		App->collisions->disactivate();
+		App->mainmenu->activate();
+
+	}
+
 	//LOG("Befor Draw");
 	
 	App->map->Draw();
@@ -101,8 +113,6 @@ bool j1Scene::Update(float dt)
 			App->render->Blit(debug_tex, pos.x, pos.y);
 		}
 	}
-	//LOG("After Draw");
-
 
 	return true;
 }

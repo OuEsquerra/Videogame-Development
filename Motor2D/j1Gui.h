@@ -52,11 +52,11 @@ public:
 	// Gui creation functions
 
 
-	UI_Text* CreateText(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path,int size);
+	UI_Text* CreateText(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path,int size);
 
-	UI_Image* CreateImage(int x, int y,bool draggable, SDL_Rect rect, SDL_Texture* image);
+	UI_Image* CreateImage(int x, int y, bool active,bool draggable, SDL_Rect rect, SDL_Texture* image);
 
-	UI_Button* CreateButton(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect, int x_offset, int y_offset);
+	UI_Button* CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect, int x_offset, int y_offset);
 
 	const SDL_Texture* GetAtlas() const;
 

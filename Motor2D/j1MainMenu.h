@@ -6,13 +6,13 @@ class UI_Text;
 class UI_Button;
 
 
-class j1Main_Menu : public j1Module
+class j1MainMenu : public j1Module
 {
 public:
 
-	j1Main_Menu();
+	j1MainMenu();
 
-	~j1Main_Menu();
+	~j1MainMenu();
 
 	bool Awake();
 

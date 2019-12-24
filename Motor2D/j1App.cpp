@@ -19,7 +19,7 @@
 #include "j1PerfTimer.h"
 #include "j1Gui.h"
 #include "j1Fonts.h"
-#include "j1Main_Menu.h"
+#include "j1MainMenu.h"
 
 
 // Constructor
@@ -42,8 +42,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new j1FadeToBlack();
 	font = new j1Fonts();
 	gui = new j1Gui();
-	mainmenu = new j1Main_Menu();
-
+	mainmenu = new j1MainMenu();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -64,7 +63,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// render last to swap buffer
 	AddModule(render);
-
 
 	//Unactivate things
 	scene->disactivate();
@@ -148,10 +146,14 @@ bool j1App::Start()
 	p2List_item<j1Module*>* item;
 	item = modules.start;
 
-	while(item != NULL && ret == true && item->data->active)
+	while(item != NULL && ret == true )
 	{
-		ret = item->data->Start();
+		if (item->data->active)
+		{
+			ret = item->data->Start();
+		}
 		item = item->next;
+		
 	}
 
 	return ret;
@@ -285,7 +287,7 @@ bool j1App::DoUpdate()
 	}
 
 	accumulated_time += dt;
-	//LOG("Accumulated time: %d ", accumulated_time);
+
 	if ( accumulated_time >= 0.1f)//magic number
 	{
 		do_logic = true;

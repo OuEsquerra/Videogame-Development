@@ -22,7 +22,7 @@ class j1FadeToBlack;
 class j1EntityMachine;
 class j1Fonts;
 class j1Gui;
-class j1Main_Menu;
+class j1MainMenu;
 
 class j1App
 {
@@ -86,8 +86,7 @@ private:
 	bool SavegameNow() const;
 
 public:
-
-	// Modules
+// Modules
 	j1Window*			win;
 	j1Input*			input;
 	j1Render*			render;
@@ -102,7 +101,7 @@ public:
 	j1EntityMachine*	entities;
 	j1Gui*				gui;
 	j1Fonts*			font;
-	j1Main_Menu*		mainmenu;
+	j1MainMenu*		mainmenu;
 
 	float				dt;
 	int					frame_rate;
@@ -127,7 +126,6 @@ private:
 	p2SString			load_game; 
 	mutable p2SString	save_game;
 
-
 	j1PerfTimer			ptimer;
 	j1PerfTimer			delay_timer;
 	uint64				frame_count = 0;
@@ -137,8 +135,6 @@ private:
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 
-
-	
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

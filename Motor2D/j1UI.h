@@ -24,10 +24,12 @@ public:
 
 	bool enabled;
 
+	bool active;
+
 //Methods
 public:
 
-	UI(int x, float y,bool draggable);
+	UI(int x, float y,bool active, bool draggable);
 
 	virtual void Update();
 

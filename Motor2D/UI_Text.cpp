@@ -1,7 +1,7 @@
 #include "j1Gui.h"
 
 
-UI_Text::UI_Text(int x, int y, bool draggable , p2SString text ,SDL_Color* color, const char* path, int size) : UI(x, y,draggable), text(text),color(color)
+UI_Text::UI_Text(int x, int y, bool active, bool draggable , p2SString text ,SDL_Color* color, const char* path, int size) : UI(x, y,active,draggable), text(text),color(color)
 {
 	font = App->font->Load(path, size);
 

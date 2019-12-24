@@ -1,7 +1,7 @@
 #include "j1App.h"
 #include "j1Gui.h"
 
-UI_Image::UI_Image(int x, int y, bool draggable, SDL_Rect rect,SDL_Texture* image) : UI(x,y,draggable) , rect(rect), image(image)
+UI_Image::UI_Image(int x, int y, bool active, bool draggable, SDL_Rect rect,SDL_Texture* image) : UI(x,y,active,draggable) , rect(rect), image(image)
 {
 
 }

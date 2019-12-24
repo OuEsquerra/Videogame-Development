@@ -5,8 +5,8 @@
 #include "p2Log.h"
 
 
-UI_Button::UI_Button(int x, int y, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect, int x_offset, int y_offset) 
-: UI(x,y,draggable) , default_rect(default_rect) , hover_rect(hover_rect), press_rect(press_rect), image_texture(image),text(text),color(color),rect(rect),textPos(x_offset,y_offset)
+UI_Button::UI_Button(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect, int x_offset, int y_offset)
+: UI(x,y,active,draggable) , default_rect(default_rect) , hover_rect(hover_rect), press_rect(press_rect), image_texture(image),text(text),color(color),rect(rect),textPos(x_offset,y_offset)
 {
 	font = App->font->Load(path, size);
 
