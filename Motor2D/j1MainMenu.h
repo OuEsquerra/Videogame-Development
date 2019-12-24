@@ -29,7 +29,7 @@ public:
 public:
 	SDL_Texture* debug_tex;
 
-	UI_Button* button;
+	UI_Button* new_button;
 
 	UI_Image* wowLogo;
 

@@ -23,7 +23,11 @@ bool j1MainMenu::Awake()
 
 bool j1MainMenu::Start()
 {
-	button = App->gui->CreateButton(200, 200,active, false, "Pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 10);
+	App->gui->CreateImage(0, 0, false, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
+	
+	new_button = App->gui->CreateButton(700, 250, active, false, "new Game", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 10);
+	
+	
 	return true;
 }
 
@@ -34,14 +38,23 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
-	if (button->buttonPressed())
+	if (new_button->buttonPressed())
 	{
 		//App->fade->FadeToBlack("maps/Dark_Map.tmx");
-
-		App->entities->activate();
-		App->scene->activate();
-		App->collisions->activate();
-		App->mainmenu->disactivate();
+		if(App->entities->active == false){
+			App->scene->activate();
+			App->entities->activate();
+			
+			App->collisions->activate();
+			App->mainmenu->disactivate();
+		}
+		else if (App->entities->active == true) {
+			App->mainmenu->activate();
+			App->entities->disactivate();
+			App->scene->disactivate();
+			App->collisions->disactivate();
+		
+		}
 		
 	}
 	return true;

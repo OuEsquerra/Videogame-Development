@@ -137,6 +137,8 @@ bool j1Collisions::PostUpdate() {
 
 bool j1Collisions::CleanUp() {
 
+	colliders.clear();
+
 	return true;
 };
 
@@ -176,7 +178,6 @@ void j1Collisions::LoadFromMap() {
 				{
 					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, PLAYER);
 				}
-
 			}
 			else {
 				AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, nullptr, &list_i->data->objects[i].properties);

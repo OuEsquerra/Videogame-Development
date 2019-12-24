@@ -42,7 +42,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	button = App->gui->CreateButton(200, 200,true, false, "Pollastre", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect,&hover_rect ,&press_rect , App->tex->Load("gui/UI_Button.png"),&button_rect,70,10);
+	button = App->gui->CreateButton(200, 200,true, false, "Ciurons", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect,&hover_rect ,&press_rect , App->tex->Load("gui/UI_Button.png"),&button_rect,70,10);
 
 	return true;
 }
