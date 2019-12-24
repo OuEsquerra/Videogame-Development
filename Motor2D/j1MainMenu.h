@@ -31,6 +31,8 @@ public:
 
 	UI_Button* new_button;
 
+	UI_Button* button2;
+
 	UI_Image* wowLogo;
 
 	SDL_Rect button_rect = { 0, 0, 244, 56 };

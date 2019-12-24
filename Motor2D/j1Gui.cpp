@@ -101,7 +101,7 @@ UI_Image* j1Gui::CreateImage(int x, int y, bool active,bool draggable, SDL_Rect 
 	return ret;
 }
 
-UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect,int x_offset, int y_offset)
+UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect,int x_offset, int y_offset)
 {
 	UI_Button* ret = new UI_Button(x,y,active,draggable,text,color,path,size,default_rect,hover_rect,press_rect,image,rect,x_offset,y_offset);
 

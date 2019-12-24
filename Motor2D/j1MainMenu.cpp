@@ -25,9 +25,10 @@ bool j1MainMenu::Start()
 {
 	App->gui->CreateImage(0, 0, false, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
 	
-	new_button = App->gui->CreateButton(700, 250, active, false, "new Game", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 10);
+	new_button = App->gui->CreateButton(700, 250, active, false, "new Game", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), button_rect, 70, 10);
 	
-	
+	button2 = App->gui->CreateButton(700, 350, active, false, "pollastre", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), button_rect, 70, 10);
+
 	return true;
 }
 
