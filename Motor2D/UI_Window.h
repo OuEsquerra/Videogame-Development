@@ -24,6 +24,8 @@ public:
 
 	void Update();
 
+	void addUI(UI* ui);
+
 	void enable();
 
 	void disable();

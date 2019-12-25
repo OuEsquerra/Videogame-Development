@@ -5,6 +5,7 @@ class UI_Image;
 struct SDL_Texture;
 class UI_Text;
 class UI_Button;
+class UI_Window;
 
 
 class j1MainMenu : public j1Module
@@ -54,5 +55,7 @@ public:
 	SDL_Texture* button_idle;
 	SDL_Texture* button_over;
 	SDL_Texture* button_press;
+
+	UI_Window settings_window;
 
 };

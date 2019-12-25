@@ -18,6 +18,11 @@ void UI_Window::Update()
 
 }
 
+void UI_Window::addUI(UI* ui)
+{
+	elements.add(ui);
+}
+
 void UI_Window::enable()
 {
 	p2List_item<UI*>* elementsIt = elements.start;

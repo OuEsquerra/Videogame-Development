@@ -1,9 +1,9 @@
 #include "j1App.h"
-#include "j1MainMenu.h"
 #include "j1Gui.h"
 #include "j1FadeToBlack.h"
 #include "j1Scene.h"
 #include "j1Collisions.h"
+#include "j1MainMenu.h"
 
 
 j1MainMenu::j1MainMenu() : j1Module()
