@@ -283,9 +283,23 @@ bool j1Map::CleanUp()
 }
 
 // Load new map
-bool j1Map::Load(const char* file_name)
+bool j1Map::Load(int level)
 {
 	bool ret = true;
+	
+	const char* file_name;
+	if (level == 1) {
+		file_name = "Dark_Map.tmx";
+	}
+	else if (level == 2) {
+		file_name = "Dark_Map2.tmx";
+	}
+	else {
+		LOG("ERROR Unrecognised level value");
+		file_name = "";
+	}
+	
+	
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
 	
@@ -364,7 +378,9 @@ bool j1Map::Load(const char* file_name)
 	//LOG of xml data.
 	if(ret == true)
 	{
-		//LOG("Successfully parsed map XML file: %s", fileName->GetString());
+
+		LOG("Successfully parsed map XML file: %s", file_name);
+
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 

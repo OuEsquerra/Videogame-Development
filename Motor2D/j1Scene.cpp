@@ -36,7 +36,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 
-	if (App->map->Load("Dark_Map.tmx") == true)
+	if (App->map->Load(1) == true)
 
 	//App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
 
