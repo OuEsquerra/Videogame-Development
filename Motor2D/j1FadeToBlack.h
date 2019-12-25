@@ -17,7 +17,7 @@ public:
 	bool FadeToBlack_scene(const char* mapname, bool reset_player = true, float time = 0.5f);
 
 private:
-	bool SwitchMap(const char* mapname);
+	bool SwitchMap(int level);
 	enum fade_step
 	{
 		none,
@@ -27,7 +27,7 @@ private:
 
 public:
 
-
+	bool playerReset = true;
 
 private:
 	
@@ -41,7 +41,7 @@ private:
 	//Wheter the fade to black involves switching levels(TRUE) or switching scenes(FALSE)
 	bool isLevelSwitch;
 
-	bool playerReset = true;
+
 };
 
 #endif //__MODULEFADETOBLACK_H__

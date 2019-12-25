@@ -215,7 +215,7 @@ public:
 
 	bool CleanUp();
 
-	bool Load(const char* path);
+	bool Load(int level);
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;

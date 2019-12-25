@@ -59,7 +59,7 @@ bool j1FadeToBlack::Update(float dt)
 			if(now >= total_time)
 			{
 
-				SwitchMap(map_name);
+				SwitchMap(level);
 				
 				total_time += total_time;
 				start_time = SDL_GetTicks();
@@ -124,7 +124,7 @@ bool j1FadeToBlack::FadeToBlack_scene(const char* mapname, bool reset_player, fl
 	return ret;
 }
 
-bool j1FadeToBlack::SwitchMap(const char* mapname) {
+bool j1FadeToBlack::SwitchMap(int level) {
 	bool ret = true;
 	LOG("Switching Maps...");
 
@@ -135,7 +135,7 @@ bool j1FadeToBlack::SwitchMap(const char* mapname) {
 	//Empty all map data.
 	App->map->CleanUp();
 
-	ret = App->map->Load(mapname);		//Load specified map
+	ret = App->map->Load(level);		//Load specified map
 	App->collisions->LoadFromMap();		//Load Collisions
 	//ret = App->player->StartPlayer();	//Reset Player
 	
