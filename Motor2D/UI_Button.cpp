@@ -5,15 +5,15 @@
 #include "p2Log.h"
 
 
-UI_Button::UI_Button(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect* rect, int x_offset, int y_offset)
+UI_Button::UI_Button(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect, int x_offset, int y_offset)
 : UI(x,y,active,draggable) , default_rect(default_rect) , hover_rect(hover_rect), press_rect(press_rect), image_texture(image),text(text),color(color),rect(rect),textPos(x_offset,y_offset)
 {
 	font = App->font->Load(path, size);
 
 	text_texture = App->font->Print(text.GetString(),*color,font);
 
-	rect->x = x;
-	rect->y = y;
+	rect.x = position.x;
+	rect.y = position.y;
 
 	textPos.x = x + x_offset;
 	textPos.y = y + y_offset;
@@ -21,6 +21,9 @@ UI_Button::UI_Button(int x, int y, bool active, bool draggable, p2SString text, 
 
 void UI_Button::Update()
 {
+
+	rect.x = position.x;
+	rect.y = position.y;
 	pressed = false;
 
 	state = Button_State::DEFAULT;
@@ -29,8 +32,8 @@ void UI_Button::Update()
 
 	App->input->GetMousePosition(x, y);
 
-	if (x > rect->x && x < rect->x + rect->w
-		&& y > rect->y && y < rect->y + rect->h)
+	if (x > rect.x && x < rect.x + rect.w
+		&& y > rect.y && y < rect.y + rect.h)
 	{
 		state = Button_State::HOVER;
 		
