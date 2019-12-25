@@ -76,7 +76,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP) App->map->debug = !App->map->debug;
 	
-	LOG("%d", App->scene->button->buttonPressed());
+	//LOG("%d", App->scene->button->buttonPressed());
 
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN || App->scene->button->buttonPressed() )
 	{
@@ -104,6 +104,7 @@ bool j1Scene::Update(float dt)
 	
 	App->map->Draw();
 
+	// Draw path of the closest entity
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 	if (App->map->debug) {
 		for (uint i = 0; i < path->Count(); ++i)

@@ -24,7 +24,7 @@ public:
 
 	bool enabled;
 
-	bool active;
+
 
 	bool debug;
 

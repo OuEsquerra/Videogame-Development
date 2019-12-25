@@ -288,7 +288,7 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
-	p2SString* fileName = new p2SString(file_name);
+	
 
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());

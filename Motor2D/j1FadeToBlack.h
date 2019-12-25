@@ -14,10 +14,10 @@ public:
 	bool Awake(pugi::xml_node& conf);
 	bool Update(float dt);
 	bool FadeToBlack(const char* mapname,  bool reset_player = true, float time = 0.5f);
-	bool SwitchMap(const char* mapname);
+	bool FadeToBlack_scene(const char* mapname, bool reset_player = true, float time = 0.5f);
 
 private:
-
+	bool SwitchMap(const char* mapname);
 	enum fade_step
 	{
 		none,
@@ -27,7 +27,7 @@ private:
 
 public:
 
-	bool playerReset = true;
+
 
 private:
 	
@@ -36,7 +36,12 @@ private:
 	SDL_Rect screen;
 	
 	const char* map_name;
+	int level;
 
+	//Wheter the fade to black involves switching levels(TRUE) or switching scenes(FALSE)
+	bool isLevelSwitch;
+
+	bool playerReset = true;
 };
 
 #endif //__MODULEFADETOBLACK_H__

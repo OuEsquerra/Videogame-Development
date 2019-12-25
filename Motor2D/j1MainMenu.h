@@ -1,5 +1,6 @@
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
+class UI;
 class UI_Image;
 struct SDL_Texture;
 class UI_Text;
@@ -27,14 +28,20 @@ public:
 	bool CleanUp();
 
 public:
+	
 	SDL_Texture* debug_tex;
 
-	UI_Button* new_button;
 
-	UI_Button* button2;
+	UI_Button* play_button;
+	UI_Button* continue_button;
+	UI_Button* settings_button;
+	UI_Button* credits_button;
+	UI_Button* exit_button;
 
-	UI_Image* wowLogo;
+	UI_Image*  background;
 
+	p2List<UI*> UI_mainmenulist;
+	
 	SDL_Rect button_rect = { 0, 0, 244, 56 };
 
 	SDL_Rect default_rect = { 0, 0, 244, 56 };

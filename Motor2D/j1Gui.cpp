@@ -29,6 +29,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
+
 	background = App->tex->Load("gui/Image/login_background.png");
 
 	return true;
@@ -41,10 +42,8 @@ bool j1Gui::PreUpdate()
 
 	while (it != nullptr)
 	{
-		if (it->data->enabled)
-		{
-			it->data->Update();
-		}
+		if(it->data->IsEnabled() == true) it->data->Update();
+
 		it = it->next;
 	}
 
@@ -74,10 +73,9 @@ bool j1Gui::PostUpdate()
 
 	while (it != nullptr)
 	{
-		if (it->data->enabled)
-		{
-			it->data->Draw();
-		}
+
+		if (it->data->IsEnabled() == true)  it->data->Draw();
+
 		it = it->next;
 	}
 	return true;
@@ -91,18 +89,18 @@ bool j1Gui::CleanUp()
 	return true;
 }
 
-UI_Text* j1Gui::CreateText(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
+UI_Text* j1Gui::CreateText(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
 {
-	UI_Text* ret = new UI_Text(x,y,active,draggable,text,color,path,size);
+	UI_Text* ret = new UI_Text(x,y, enabled, draggable,text,color,path,size);
 
 	UI_list.add(ret);
 
 	return ret;
 }
 
-UI_Image* j1Gui::CreateImage(int x, int y, bool active,bool draggable, SDL_Rect rect,SDL_Texture* image)
+UI_Image* j1Gui::CreateImage(int x, int y, bool enabled ,bool draggable, SDL_Rect rect,SDL_Texture* image)
 {
-	UI_Image* ret = new UI_Image(x,y,active,draggable,rect,image);
+	UI_Image* ret = new UI_Image(x,y, enabled, draggable, rect, image);
 
 	UI_list.add(ret);
 

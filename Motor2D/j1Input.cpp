@@ -129,8 +129,20 @@ bool j1Input::PreUpdate()
 		}
 	}
 
+	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_DOWN) {
+
+		windowEvents[WE_QUIT] = true;
+
+	}
+
 	return true;
 }
+
+void j1Input::CloseGame() {
+	windowEvents[WE_QUIT] = true;
+}
+
+
 
 // Called before quitting
 bool j1Input::CleanUp()
