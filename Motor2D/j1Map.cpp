@@ -364,7 +364,7 @@ bool j1Map::Load(const char* file_name)
 	//LOG of xml data.
 	if(ret == true)
 	{
-		LOG("Successfully parsed map XML file: %s", fileName->GetString());
+		//LOG("Successfully parsed map XML file: %s", fileName->GetString());
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 

@@ -77,11 +77,13 @@ public:
 	void activate()
 	{
 		active = true;
+		Start();
 	}
 
 	void disactivate()
 	{
 		active = false;
+		CleanUp();
 	}
 
 

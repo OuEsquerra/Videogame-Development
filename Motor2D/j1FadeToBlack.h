@@ -27,7 +27,7 @@ private:
 
 public:
 
-
+	bool playerReset = true;
 
 private:
 	
@@ -41,7 +41,7 @@ private:
 	//Wheter the fade to black involves switching levels(TRUE) or switching scenes(FALSE)
 	bool isLevelSwitch;
 
-	bool playerReset = true;
+	
 };
 
 #endif //__MODULEFADETOBLACK_H__
