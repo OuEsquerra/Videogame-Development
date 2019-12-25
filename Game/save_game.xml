@@ -9,32 +9,36 @@
 	</map>
 	<pathfinding />
 	<scene />
+	<mainmenu />
 	<entities>
 		<entity EntityType="FLYING_ENEMY">
-			<position x="240" y="1251" />
+			<position x="128" y="1024" />
 			<prevposition x="0" y="0" />
 			<speed x="100" y="100" />
 		</entity>
 		<entity EntityType="GROUND_ENEMY">
-			<position x="1760" y="1741" />
-			<prevposition x="1760" y="1736" />
-			<speed x="150" y="150" />
+			<position x="1065" y="1409" />
+			<prevposition x="1065" y="1409" />
+			<speed x="150" y="0" />
 		</entity>
 		<entity EntityType="PLAYER" playerstate="0">
-			<position x="250" y="1412" />
+			<position x="848.329041" y="1412" />
 			<prevposition x="0" y="0" />
 			<speed x="0" y="0" />
 			<points>
-				<position x="250" y="1412" />
-				<prevposition x="250" y="1412" />
+				<position x="848.329041" y="1412" />
+				<prevposition x="848.329041" y="1412" />
 				<lastGroundedPos x="0" y="0" />
 			</points>
 			<flags able_to_jump="true" able_to_dash="true" dashing="false" jumping="false" drop_plat="false" playerGrounded="true" flip="false" godMode="false" />
 		</entity>
 	</entities>
+	<gui />
 	<collisions />
 	<fade />
+	<fonts />
+	<gui />
 	<renderer>
-		<camera x="0" y="-832" />
+		<camera x="-382" y="-832" />
 	</renderer>
 </game_state>

@@ -30,8 +30,6 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
-	background = App->tex->Load("gui/Image/login_background.png");
-	wow_logo = App->tex->Load("gui/Image/Glues_Logo.png");
 
 	return true;
 }
@@ -43,7 +41,8 @@ bool j1Gui::PreUpdate()
 
 	while (it != nullptr)
 	{
-		it->data->Update();
+		if(it->data->IsEnabled() == true) it->data->Update();
+		
 		it = it->next;
 	}
 	return true;
@@ -62,7 +61,7 @@ bool j1Gui::PostUpdate()
 
 	while (it != nullptr)
 	{
-		it->data->Draw();
+		if (it->data->IsEnabled() == true)  it->data->Draw();
 		it = it->next;
 	}
 	return true;
@@ -83,18 +82,18 @@ const SDL_Texture* j1Gui::GetAtlas() const
 }
 
 
-UI_Text* j1Gui::CreateText(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
+UI_Text* j1Gui::CreateText(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
 {
-	UI_Text* ret = new UI_Text(x,y,active,draggable,text,color,path,size);
+	UI_Text* ret = new UI_Text(x,y, enabled, draggable,text,color,path,size);
 
 	UI_list.add(ret);
 
 	return ret;
 }
 
-UI_Image* j1Gui::CreateImage(int x, int y, bool active,bool draggable, SDL_Rect rect,SDL_Texture* image)
+UI_Image* j1Gui::CreateImage(int x, int y, bool enabled ,bool draggable, SDL_Rect rect,SDL_Texture* image)
 {
-	UI_Image* ret = new UI_Image(x,y,active,draggable,rect,image);
+	UI_Image* ret = new UI_Image(x,y, enabled, draggable, rect, image);
 
 	UI_list.add(ret);
 

@@ -38,12 +38,13 @@ public:
 	//Methods
 public:
 
-	UI_Button(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image ,SDL_Rect rect,int x_offset,int y_offset);
+	UI_Button(int x, int y, bool enable, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image ,SDL_Rect rect,int x_offset,int y_offset);
 
 	void Update();
 
 	void Draw();
 
 	bool buttonPressed();
+
 
 };

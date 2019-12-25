@@ -298,7 +298,7 @@ void j1EntityMachine::GroundenemyCollisions(Collider* A, Collider* B)
 			&& A->entity->position.y + (A->rect.h* 0.9f) > B->rect.y)
 		{
 			//player->player.wall = true;
-			LOG("Touching WALL");
+			//LOG("Touching WALL");
 
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4))
 			{ //Player to the left 

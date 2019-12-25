@@ -1,5 +1,6 @@
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
+class UI;
 class UI_Image;
 struct SDL_Texture;
 class UI_Text;
@@ -36,6 +37,10 @@ public:
 	UI_Button* settings_button;
 	UI_Button* credits_button;
 	UI_Button* exit_button;
+
+	UI_Image*  background;
+
+	p2List<UI*> UI_mainmenulist;
 	
 	SDL_Rect button_rect = { 0, 0, 244, 56 };
 
