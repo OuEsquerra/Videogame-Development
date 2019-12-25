@@ -19,7 +19,6 @@
 
 #define CURSOR_WIDTH 2
 
-// TODO 1: Create your structure of classes
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
@@ -28,29 +27,19 @@ public:
 
 	j1Gui();
 
-	// Destructor
 	virtual ~j1Gui();
 
-	// Called when before render is available
 	bool Awake(pugi::xml_node&);
 
-	// Call before first frame
 	bool Start();
 
-	// Called before all Updates
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(float dt);
 
-	// Called after all Updates
 	bool PostUpdate();
 
-	// Called before quitting
 	bool CleanUp();
-
-	// TODO 2: Create the factory methods
-	// Gui creation functions
-
 
 	UI_Text* CreateText(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path,int size);
 
@@ -58,11 +47,7 @@ public:
 
 	UI_Button* CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect, int x_offset, int y_offset);
 
-	const SDL_Texture* GetAtlas() const;
-
 private:
-
-	SDL_Texture* atlas;
 	
 	SDL_Texture* background;
 	SDL_Texture* wow_logo;

@@ -4,7 +4,7 @@
 
 UI::UI(int x, float y, bool enabled, bool draggable) : position(x,y), enabled(enabled), draggable(draggable)
 {
-
+	debug = false;
 }
 
 void UI::Update()

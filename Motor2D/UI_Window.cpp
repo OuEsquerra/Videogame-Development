@@ -9,22 +9,31 @@ UI_Window::UI_Window(int x, int y, bool active) : position(x,y) , active(active)
 
 void UI_Window::Update()
 {
-	p2List_item<UI_Button*>* buttonIt = buttons.start;
+	p2List_item<UI*>* elementsIt = elements.start;
 
-	while (buttonIt != NULL)
+	while (elementsIt != NULL)
 	{
-		buttonIt->data->position += position;
+		//elementsIt->data->position = position;
 	}
 
-
 }
 
-void activate()
+void UI_Window::enable()
 {
+	p2List_item<UI*>* elementsIt = elements.start;
 
+	while (elementsIt != NULL)
+	{
+		elementsIt->data->Enable();
+	}
 }
 
-void disactivate()
+void UI_Window::disable()
 {
-	
+	p2List_item<UI*>* elementsIt = elements.start;
+
+	while (elementsIt != NULL)
+	{
+		elementsIt->data->Disable();
+	}
 }

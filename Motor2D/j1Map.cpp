@@ -378,7 +378,9 @@ bool j1Map::Load(int level)
 	//LOG of xml data.
 	if(ret == true)
 	{
+
 		LOG("Successfully parsed map XML file: %s", file_name);
+
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 

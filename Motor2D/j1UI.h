@@ -26,6 +26,8 @@ public:
 
 
 
+	bool debug;
+
 //Methods
 public:
 
@@ -40,9 +42,5 @@ public:
 	void Enable();
 
 	void Disable();
-
-private:
-
-
 
 };

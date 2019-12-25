@@ -92,7 +92,6 @@ bool j1Scene::Update(float dt)
 
 	if (button->buttonPressed())
 	{
-		//App->fade->FadeToBlack("maps/Dark_Map.tmx");
 
 		App->entities->disactivate();
 		App->scene->disactivate();

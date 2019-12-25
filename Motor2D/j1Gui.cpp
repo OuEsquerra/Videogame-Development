@@ -29,7 +29,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
-	atlas = App->tex->Load(atlas_file_name.GetString());
+
+	background = App->tex->Load("gui/Image/login_background.png");
 
 	return true;
 }
@@ -42,15 +43,26 @@ bool j1Gui::PreUpdate()
 	while (it != nullptr)
 	{
 		if(it->data->IsEnabled() == true) it->data->Update();
-		
+
 		it = it->next;
 	}
+
 	return true;
 }
 
 // Update all guis
-bool j1Gui::Update()
+bool j1Gui::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		p2List_item<UI*>* it = UI_list.start;
+
+		while (it != nullptr)
+		{
+			it->data->debug = !it->data->debug;
+			it = it->next;
+		}
+	}
 	return true;
 }
 
@@ -61,7 +73,9 @@ bool j1Gui::PostUpdate()
 
 	while (it != nullptr)
 	{
+
 		if (it->data->IsEnabled() == true)  it->data->Draw();
+
 		it = it->next;
 	}
 	return true;
@@ -74,13 +88,6 @@ bool j1Gui::CleanUp()
 
 	return true;
 }
-
-// const getter for atlas
-const SDL_Texture* j1Gui::GetAtlas() const
-{
-	return atlas;
-}
-
 
 UI_Text* j1Gui::CreateText(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
 {
