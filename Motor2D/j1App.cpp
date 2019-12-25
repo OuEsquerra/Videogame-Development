@@ -41,7 +41,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new j1Collisions();
 	fade = new j1FadeToBlack();
 	font = new j1Fonts();
-	gui = new j1Gui();
 	mainmenu = new j1MainMenu();
 
 	// Ordered for awake / Start / Update
@@ -59,7 +58,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(fade);
 	AddModule(font);
-	AddModule(gui);
+
 
 	// render last to swap buffer
 	AddModule(render);
@@ -148,10 +147,9 @@ bool j1App::Start()
 
 	while(item != NULL && ret == true )
 	{
-		if (item->data->active)
-		{
-			ret = item->data->Start();
-		}
+		
+		ret = item->data->Start();
+		
 		item = item->next;
 		
 	}

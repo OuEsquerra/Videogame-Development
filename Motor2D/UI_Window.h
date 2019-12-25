@@ -10,9 +10,7 @@ class UI_Window
 {
 public:
 
-	p2List<UI_Button*> buttons;
-	p2List<UI_Text*> text;
-	p2List<UI_Image*> images;
+	p2List<UI*> elements;
 
 	UI_Image* border;
 
@@ -26,7 +24,7 @@ public:
 
 	void Update();
 
-	void activate();
+	void enable();
 
-	void disactivate();
+	void disable();
 };

@@ -41,21 +41,12 @@ bool j1MainMenu::Update(float dt)
 {
 	if (new_button->buttonPressed())
 	{
-		//App->fade->FadeToBlack("maps/Dark_Map.tmx");
-		if(App->entities->active == false){
-			App->scene->activate();
-			App->entities->activate();
+
+		App->scene->activate();
+		App->entities->activate();
 			
-			App->collisions->activate();
-			App->mainmenu->disactivate();
-		}
-		else if (App->entities->active == true) {
-			App->mainmenu->activate();
-			App->entities->disactivate();
-			App->scene->disactivate();
-			App->collisions->disactivate();
-		
-		}
+		App->collisions->activate();
+		App->mainmenu->disactivate();
 		
 	}
 	return true;

@@ -12,8 +12,8 @@ UI_Button::UI_Button(int x, int y, bool active, bool draggable, p2SString text, 
 
 	text_texture = App->font->Print(text.GetString(),*color,font);
 
-	rect.x = position.x;
-	rect.y = position.y;
+	//rect.x = position.x;
+	//rect.y = position.y;
 
 	textPos.x = x + x_offset;
 	textPos.y = y + y_offset;
@@ -21,9 +21,9 @@ UI_Button::UI_Button(int x, int y, bool active, bool draggable, p2SString text, 
 
 void UI_Button::Update()
 {
-
 	rect.x = position.x;
 	rect.y = position.y;
+
 	pressed = false;
 
 	state = Button_State::DEFAULT;
@@ -47,6 +47,8 @@ void UI_Button::Update()
 			pressed = true;
 		}
 	}
+
+	
 }
 
 void UI_Button::Draw()
@@ -68,8 +70,14 @@ void UI_Button::Draw()
 		App->render->Blit(image_texture, position.x, position.y, press_rect, false, 0.f);
 		break;
 	}
-		
+	
+	if (!debug)
+	{
+		App->render->DrawQuad(rect,0,255,255,50);
+	}
+
 	App->render->Blit(text_texture, textPos.x , textPos.y , NULL, false, 0.f);
+
 }
 
 bool UI_Button::buttonPressed()
