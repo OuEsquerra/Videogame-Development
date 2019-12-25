@@ -23,10 +23,13 @@ bool j1MainMenu::Awake()
 
 bool j1MainMenu::Start()
 {
-	App->gui->CreateImage(0, 0, false, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
+	//App->gui->CreateImage(0, 0, false, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
 	
-	new_button = App->gui->CreateButton(700, 250, active, false, "new Game", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 10);
-	
+	play_button = App->gui->CreateButton(700, 250, active, false, "plAy", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 13);
+	continue_button = App->gui->CreateButton(700, 350, active, false, "continue", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 13);
+	credits_button = App->gui->CreateButton(700, 450, active, false, "credits", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 13);
+	settings_button = App->gui->CreateButton(700, 550, active, false, "settings", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 13);
+	exit_button = App->gui->CreateButton(700, 650, active, false, "exit", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), &button_rect, 70, 13);
 	
 	return true;
 }
@@ -38,25 +41,37 @@ bool j1MainMenu::PreUpdate()
 
 bool j1MainMenu::Update(float dt)
 {
-	if (new_button->buttonPressed())
+	//BUTTONS
+	if (play_button->buttonPressed())
 	{
-		//App->fade->FadeToBlack("maps/Dark_Map.tmx");
-		if(App->entities->active == false){
-			App->scene->activate();
-			App->entities->activate();
-			
-			App->collisions->activate();
-			App->mainmenu->disactivate();
-		}
-		else if (App->entities->active == true) {
-			App->mainmenu->activate();
-			App->entities->disactivate();
-			App->scene->disactivate();
-			App->collisions->disactivate();
-		
-		}
-		
+		App->scene->activate();
+		App->entities->activate();
+		App->collisions->activate();
+		App->mainmenu->disactivate();
 	}
+
+	if (continue_button->buttonPressed())
+	{
+		App->scene->activate();
+		App->entities->activate();
+		App->collisions->activate();
+		App->mainmenu->disactivate();
+	}
+	
+	if (credits_button->buttonPressed())
+	{
+		
+
+
+	}
+	
+	if (exit_button->buttonPressed())
+	{
+		
+
+	
+	}
+
 	return true;
 }
 
