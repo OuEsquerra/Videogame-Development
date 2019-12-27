@@ -72,7 +72,9 @@ public:
 	// Destructor
 	virtual ~p2SString()
 	{
-		if (str != NULL)
+		if (str != nullptr)
+			//str = nullptr;
+			
 			delete[] str;
 	}
 
@@ -305,7 +307,6 @@ public:
 			}
 			
 		}
-
 		return instances;
 	}
 

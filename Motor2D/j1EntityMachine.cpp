@@ -173,7 +173,7 @@ void j1EntityMachine::DeleteEntity(Entity* entity)
 {
 	entity->collider->to_delete = true;
 	entity_list.del(entity_list.At(entity_list.find(entity)));
-	delete entity;
+
 }
 
 bool j1EntityMachine::Save(pugi::xml_node& node) const 

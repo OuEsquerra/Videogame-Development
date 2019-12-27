@@ -11,7 +11,7 @@ Coin::Coin(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
 	colliderRect = { (int)position.x, (int)position.y, 32, 32 }; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::COIN, App->entities, (Entity*)this);
-
+	
 }
 
 bool Coin::Save(pugi::xml_node & node) const {
@@ -34,7 +34,7 @@ bool Coin::Awake(pugi::xml_node &)
 
 bool Coin::Start()
 {
-
+	animation.create("walk");
 	return true;
 }
 

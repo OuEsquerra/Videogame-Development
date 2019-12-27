@@ -36,13 +36,14 @@ bool Ground_Enemy::Awake(pugi::xml_node &)
 bool Ground_Enemy::Start()
 {
 	
+
 	return true;
 }
 
 bool Ground_Enemy::Update(float dt)
 {
 	prevposition = position;
-	animation = "idle";
+	animation.create("idle");
 
 	pathfind();
 
@@ -96,12 +97,12 @@ void Ground_Enemy::pathfind()
 			if (closest_center.x > position.x - collider->rect.w / 2) {
 				position.x += speed.x * App->dt;
 				flip = true;
-				animation = "walk";
+				animation.create("walk");
 			}
 			else if (closest_center.x < position.x - collider->rect.w / 2) {
 				position.x -= speed.x * App->dt;
 				flip = false;
-				animation = "walk";
+				animation.create("walk");
 			}
 		}
 	}
