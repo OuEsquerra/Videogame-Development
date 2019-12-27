@@ -187,7 +187,7 @@ void j1Collisions::LoadFromMap(bool LoadEntities) {
 				}
 			}
 			else if (list_i->data->objects[i].type == ObjectType::COIN) {
-				App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, COIN);
+				if (LoadEntities) App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, COIN);
 			}
 			else {
 				AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, nullptr, &list_i->data->objects[i].properties);

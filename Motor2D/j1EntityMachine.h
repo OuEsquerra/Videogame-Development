@@ -46,6 +46,8 @@ public:
 	bool Save(pugi::xml_node& node) const;
 	bool Load(pugi::xml_node& node);
 
+	bool Load_Now();
+
 	//Extra Functions
 	void PlayerCollisions(Collider* A, Collider* B);
 
@@ -64,13 +66,9 @@ public:
 
 	j1Player* player = nullptr;
 
-	Flying_Enemy* skull = nullptr;
-
-	Ground_Enemy* skeleton = nullptr;
-
-	Ground_Enemy* skeleton2 = nullptr;
-
 private:
+	pugi::xml_node load_node;
+	
 };
 
 

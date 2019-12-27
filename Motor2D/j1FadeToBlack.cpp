@@ -63,8 +63,6 @@ bool j1FadeToBlack::Update(float dt)
 			{
 				//freeze = true
 				SwitchMap(level);
-				
-
 
 				total_time += total_time;
 				start_time = SDL_GetTicks();
@@ -133,7 +131,7 @@ bool j1FadeToBlack::SwitchMap(int level) {
 	bool ret = true;
 	LOG("Switching Maps...");
 
-
+	
 	if (App->entities->active) App->entities->entity_list.clear();
 	if (App->collisions->active) App->collisions->colliders.clear(); //Clear colliders
 	
@@ -141,8 +139,10 @@ bool j1FadeToBlack::SwitchMap(int level) {
 	App->map->CleanUp();
 
 	ret = App->map->Load(level);		//Load specified map
-	App->collisions->LoadFromMap();		//Load Collisions
+	App->collisions->LoadFromMap(false);		//Load Collisions
 	//ret = App->player->StartPlayer();	//Reset Player
-	
+	LOG("Starting Load_Now");
+	App->entities->Load_Now();
+	LOG("Finished Load_Now");
 	return ret;
 }

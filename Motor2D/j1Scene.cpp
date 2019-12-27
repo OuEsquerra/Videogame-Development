@@ -42,6 +42,10 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
+	int channel;
+	channel = App->audio->LoadFx("audio/fx/Ambience.wav");
+	App->audio->PlayFx(channel, 8, -1);
+
 	coin_score = 0;
 
 	return true;
