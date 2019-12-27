@@ -59,6 +59,8 @@ public:
 	SDL_Texture* button_over;
 	SDL_Texture* button_press;
 
+	SDL_Texture* basic_button_texture;
+
 	UI_Window* settings_window;
 
 	UI_Image* border;

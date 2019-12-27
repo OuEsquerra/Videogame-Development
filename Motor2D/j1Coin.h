@@ -1,6 +1,5 @@
-#pragma once
 
-#include "j1EntityMachine.h"
+//#include "j1EntityMachine.h"
 
 
 //Coin Entity

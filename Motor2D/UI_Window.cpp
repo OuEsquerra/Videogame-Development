@@ -9,11 +9,16 @@ UI_Window::UI_Window(int x, int y, bool enabled) : position(x,y) , enabled(enabl
 
 void UI_Window::Update()
 {
+	border->position = position;
+
 	p2List_item<UI*>* elementsIt = elements.start;
 
 	while (elementsIt != NULL)
 	{
 		elementsIt->data->Update();
+
+		elementsIt->data->position = elementsIt->data->startingPosition;
+		elementsIt->data->position += position;
 
 		elementsIt = elementsIt->next;
 	}
