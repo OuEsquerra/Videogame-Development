@@ -39,8 +39,15 @@ bool j1MainMenu::Start()
 	settings_button = App->gui->CreateButton(700, 550, true, false, "settings", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), button_rect, 50, 13);
 	UI_mainmenulist.add(settings_button);
 
+	
+
 	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), button_rect, 80, 13);
 	UI_mainmenulist.add(exit_button);
+
+	settings_window = new UI_Window(100, 100, false);
+
+	border = App->gui->CreateImage(100, 100, false, false,border_rect,App->tex->Load("gui/Border.png"));
+	settings_window->border = border;
 
 	return true;
 }
@@ -76,14 +83,13 @@ bool j1MainMenu::Update(float dt)
 	if (credits_button->buttonPressed())
 	{
 
-		
 
 	}
 	
 	if (settings_button->buttonPressed())
 	{
 
-
+		settings_window->enable();
 		
 	}
 
