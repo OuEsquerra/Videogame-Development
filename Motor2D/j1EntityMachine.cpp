@@ -156,14 +156,9 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 		if (ret != nullptr)
 		{
 			entity_list.add(ret);
-		}
-
-		
+		}	
 		break;
 	}
-
-	
-
 	return ret;
 };
 
@@ -205,7 +200,9 @@ bool j1EntityMachine::Save(pugi::xml_node& node) const
 
 bool j1EntityMachine::Load(pugi::xml_node& node)
 {
-	entity_list.clear();
+	//load_node = node;
+	
+	/*entity_list.clear();
 	
 	pugi::xml_node node_i = node.child("entity");
 	Entity* loaded_entity;
@@ -224,6 +221,51 @@ bool j1EntityMachine::Load(pugi::xml_node& node)
 		}
 		else if (strcmp(node_i.attribute("EntityType").as_string(), "PLAYER") == 0) {
 			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, PLAYER);
+		}
+		else if (strcmp(node_i.attribute("EntityType").as_string(), "COIN") == 0) {
+			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, COIN);
+		}
+		else continue;
+		loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
+		loaded_entity->prevposition.x = node_i.child("position").attribute("y").as_float();
+
+		entity_list.add(loaded_entity);
+	}*/
+
+	return true;
+};
+
+bool j1EntityMachine::Load_Now()
+{
+	entity_list.clear();
+
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	pugi::xml_parse_result result = data.load_file("save_game.xml");
+
+	root = data.child("game_state");
+
+	pugi::xml_node node_i = root.child("entities").child("entity");
+	Entity* loaded_entity;
+
+	for (; node_i; node_i = node_i.next_sibling("entity")) {
+
+		iPoint pos;
+		pos.x = node_i.child("position").attribute("x").as_float();
+		pos.y = node_i.child("position").attribute("y").as_float();
+
+		if (strcmp(node_i.attribute("EntityType").as_string(), "FLYING_ENEMY") == 0) {
+			loaded_entity = CreateEntity(pos.x, pos.y, FLYING_ENEMY);
+		}
+		else if (strcmp(node_i.attribute("EntityType").as_string(), "GROUND_ENEMY") == 0) {
+			loaded_entity = CreateEntity(pos.x, pos.y, GROUND_ENEMY);
+		}
+		else if (strcmp(node_i.attribute("EntityType").as_string(), "PLAYER") == 0) {
+			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, PLAYER);
+		}
+		else if (strcmp(node_i.attribute("EntityType").as_string(), "COIN") == 0) {
+			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, COIN);
 		}
 		else continue;
 		loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
