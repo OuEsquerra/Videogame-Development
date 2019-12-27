@@ -42,7 +42,6 @@ public:
 
 	void OnCollision(Collider* A, Collider* B);
 
-
 	bool Save(pugi::xml_node& node) const;
 	bool Load(pugi::xml_node& node);
 

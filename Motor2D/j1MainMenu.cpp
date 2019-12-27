@@ -76,13 +76,6 @@ bool j1MainMenu::Update(float dt)
 	if (credits_button->buttonPressed())
 	{
 
-
-		App->scene->activate();
-		App->entities->activate();
-			
-		App->collisions->activate();
-		App->mainmenu->disactivate();
-
 		
 
 	}
@@ -97,7 +90,6 @@ bool j1MainMenu::Update(float dt)
 	if (exit_button->buttonPressed())
 	{
 		App->input->CloseGame();
-
 	}
 
 	return true;

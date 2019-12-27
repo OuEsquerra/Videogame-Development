@@ -56,6 +56,6 @@ public:
 	SDL_Texture* button_over;
 	SDL_Texture* button_press;
 
-	UI_Window settings_window;
+	UI_Window* settings_window;
 
 };

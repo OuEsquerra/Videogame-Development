@@ -42,7 +42,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	button = App->gui->CreateButton(200, 200,true, false, "Ciurons", &bootleg_color, "fonts/open_sans/OpenSans-Light.ttf", 25, &default_rect,&hover_rect ,&press_rect , App->tex->Load("gui/UI_Button.png"),button_rect,70,10);
+	
 
 	return true;
 }
@@ -63,22 +63,22 @@ bool j1Scene::Update(float dt)
 		App->SaveGame();
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		App->fade->FadeToBlack("Dark_Map.tmx");
+		App->fade->FadeToBlack(1);
 
 	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		App->fade->FadeToBlack("Dark_Map2.tmx");
+		App->fade->FadeToBlack(2);
 
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) 
 	{
-		if(strcmp(App->map->data.name, "Dark_Map2.tmx") == 0) App->fade->FadeToBlack("Dark_Map.tmx");
-		else if (strcmp(App->map->data.name, "Dark_Map.tmx") == 0) App->fade->FadeToBlack("Dark_Map2.tmx");
+		if(strcmp(App->map->data.name, "Dark_Map2.tmx") == 0) App->fade->FadeToBlack(1);
+		else if (strcmp(App->map->data.name, "Dark_Map.tmx") == 0) App->fade->FadeToBlack(2);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_UP) App->map->debug = !App->map->debug;
 	
 	//LOG("%d", App->scene->button->buttonPressed());
 
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN || App->scene->button->buttonPressed() )
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
 		if (App->frame_rate == 0)
 		{
@@ -90,15 +90,7 @@ bool j1Scene::Update(float dt)
 		}
 	}
 
-	if (button->buttonPressed())
-	{
 
-		App->entities->disactivate();
-		App->scene->disactivate();
-		App->collisions->disactivate();
-		App->mainmenu->activate();
-
-	}
 
 	//LOG("Befor Draw");
 	

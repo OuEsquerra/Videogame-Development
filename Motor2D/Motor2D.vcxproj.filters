@@ -97,11 +97,11 @@
     <ClCompile Include="UI_Text.cpp">
       <Filter>Desenvolupament  ========\Modules\UI\UI Elements</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Window.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Window.cpp">
+      <Filter>Desenvolupament  ========\Modules\UI\Ui_Elements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,11 +222,11 @@
     <ClInclude Include="UI_Text.h">
       <Filter>Desenvolupament  ========\Modules\UI\UI Elements</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Window.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="j1MainMenu.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Window.h">
+      <Filter>Desenvolupament  ========\Modules\UI\Ui_Elements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

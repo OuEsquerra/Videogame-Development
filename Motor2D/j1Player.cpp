@@ -12,7 +12,9 @@
 
 j1Player::j1Player(float x, float y, EntityType Type) : Entity(x,y,Type)
 {
-	
+
+	//player.playerBox = { (int)x, (int)y, player.boxW,player.boxH };
+	//player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
 };
 
 j1Player::~j1Player() 
@@ -248,9 +250,10 @@ bool j1Player::StartPlayer() {
 
 	position = App->map->data.start_position;
 
-	player.playerBox = { (int)position.x,(int)position.y,player.boxW,player.boxH };
+	player.playerBox = { (int)position.x, (int)position.y, player.boxW,player.boxH };
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
 
-	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities , (Entity*)this);
+	player.playerBox = { (int)position.x,(int)position.y,player.boxW,player.boxH };
 
 	player.able_to_jump = false; //Only lets the player jump if it's true
 	player.able_to_dash = false;

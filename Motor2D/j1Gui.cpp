@@ -30,8 +30,6 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 
-	background = App->tex->Load("gui/Image/login_background.png");
-
 	return true;
 }
 

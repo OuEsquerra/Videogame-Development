@@ -33,8 +33,14 @@ bool j1Map::Load(pugi::xml_node& node)
 {
 	LOG("Loading Map...");
 
-	App->fade->FadeToBlack(node.child("map_name").attribute("filename").as_string(), false);
 
+	if (strcmp(node.child("map_name").attribute("filename").as_string(), "Dark_Map.tmx") == 0) {
+		App->fade->FadeToBlack(1, false);
+	}
+	else if (strcmp(node.child("map_name").attribute("filename").as_string(), "Dark_Map2.tmx") == 0) {
+		App->fade->FadeToBlack(2, false);
+	}
+	else LOG("Something's wrong!");
 
 	return true;
 }
@@ -251,11 +257,12 @@ bool j1Map::CleanUp()
 	while (item != NULL)
 	{
 		item->data->animations.clear();
-		//delete item->data->Tilerect;
-		//delete item->data->PlayerTilerect;
+
 
 		SDL_DestroyTexture(item->data->texture);
-		RELEASE(item->data);
+		
+		//delete item;
+		//RELEASE(item->data);
 		item = item->next;
 	}
 	App->map->data.tilesets.clear();
@@ -268,10 +275,11 @@ bool j1Map::CleanUp()
 	while (item2 != NULL)
 	{
 		delete[] item2->data->objects;
+		delete item2->data;
 
-		RELEASE(item2->data);
 		item2 = item2->next;
 	}
+	
 	App->map->data.objectgroups.clear();
 	
 	// Remove all layers
