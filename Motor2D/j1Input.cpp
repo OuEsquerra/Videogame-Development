@@ -126,6 +126,26 @@ bool j1Input::PreUpdate()
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
+
+			//case SDL_TEXTINPUT:
+				/* Add new text onto the end of our text */
+			
+				//strcat(text, event.text.text);
+
+				//break;
+			//case SDL_TEXTEDITING:
+
+				/*
+				Update the composition text.
+				Update the cursor position.
+				Update the selection length (if any).
+				*/
+
+				//composition = event.edit.text;
+				//cursor = event.edit.start;
+				//selection_len = event.edit.length;
+
+				//break;
 		}
 	}
 

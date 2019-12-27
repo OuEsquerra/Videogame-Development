@@ -22,6 +22,8 @@ public:
 
 	bool enabled;
 
+	bool update_it;
+
 	bool debug;
 
 //Methods

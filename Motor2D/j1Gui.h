@@ -47,17 +47,22 @@ public:
 
 	bool CleanUp();
 
-	UI_Text* CreateText(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path,int size);
+	UI_Text* CreateText(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font);
 
 	UI_Image* CreateImage(int x, int y, bool active,bool draggable, SDL_Rect rect, SDL_Texture* image);
 
-	UI_Button* CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect, int x_offset, int y_offset);
+	UI_Button* CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect, int x_offset, int y_offset);
 
 	UI_Window* CreateUiWindow(int x, int y, int enabled = false);
+
+	UI_Input_Box* CreateInputBox(int x, int y, int enabled,bool draggable);
+
+	void disableUI();
+
+	void enableUI();
+
 private:
 	
-
-
 	p2SString atlas_file_name;
 	
 	p2List<UI*> UI_list;

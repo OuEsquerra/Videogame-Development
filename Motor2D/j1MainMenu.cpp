@@ -28,23 +28,26 @@ bool j1MainMenu::Start()
 
 	basic_button_texture = App->tex->Load("gui/UI_Button.png");
 
+	//Text load
+	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25); //Magic
+
 	//Buttons
 	background =  App->gui->CreateImage(0, 0, true, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
 	UI_mainmenulist.add(background);
 
-	play_button = App->gui->CreateButton(700, 250, true, false, "plAy", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
+	play_button = App->gui->CreateButton(700, 250, true, false, "plAy", &bootleg_color,font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
 	UI_mainmenulist.add(play_button);
 	
-	continue_button = App->gui->CreateButton(700, 350, true, false, "continue", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 50, 13);
+	continue_button = App->gui->CreateButton(700, 350, true, false, "continue", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 50, 13);
 	UI_mainmenulist.add(continue_button);
 	
-	credits_button = App->gui->CreateButton(700, 450, true, false, "credits", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
+	credits_button = App->gui->CreateButton(700, 450, true, false, "credits", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
 	UI_mainmenulist.add(credits_button);
 
-	settings_button = App->gui->CreateButton(700, 550, true, false, "settings", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 50, 13);
+	settings_button = App->gui->CreateButton(700, 550, true, false, "settings", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 50, 13);
 	UI_mainmenulist.add(settings_button);
 
-	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
+	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
 	UI_mainmenulist.add(exit_button);
 	
 	settings_window = App->gui->CreateUiWindow(200,200,false); //new UI_Window(100, 100, false);

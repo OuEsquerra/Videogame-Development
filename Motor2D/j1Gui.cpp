@@ -44,7 +44,7 @@ bool j1Gui::PreUpdate()
 
 	while (it != nullptr)
 	{
-		if(it->data->IsEnabled() == true) it->data->Update();
+		if(it->data->IsEnabled() == true && it->data->update_it) it->data->Update();
 
 		it = it->next;
 	}
@@ -53,15 +53,19 @@ bool j1Gui::PreUpdate()
 
 	while (winit != nullptr)
 	{
-		if (winit->data->enabled) 
+		if (winit->data->enabled )
 		{ 
 			winit->data->Update(); 
+
+			disableUI();
 
 			return true;
 		}
 
 		winit = winit->prev;
 	}
+
+	enableUI();
 
 	return true;
 }
@@ -90,7 +94,7 @@ bool j1Gui::PostUpdate()
 	while (it != nullptr)
 	{
 
-		if (it->data->IsEnabled() == true)  it->data->Draw();
+		if (it->data->IsEnabled() == true )  it->data->Draw();
 
 		it = it->next;
 	}
@@ -118,9 +122,9 @@ bool j1Gui::CleanUp()
 	return true;
 }
 
-UI_Text* j1Gui::CreateText(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, const char* path, int size)
+UI_Text* j1Gui::CreateText(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font)
 {
-	UI_Text* ret = new UI_Text(x,y, enabled, draggable,text,color,path,size);
+	UI_Text* ret = new UI_Text(x,y, enabled, draggable,text,color,font);
 
 	UI_list.add(ret);
 
@@ -136,9 +140,9 @@ UI_Image* j1Gui::CreateImage(int x, int y, bool enabled ,bool draggable, SDL_Rec
 	return ret;
 }
 
-UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect,int x_offset, int y_offset)
+UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect,int x_offset, int y_offset)
 {
-	UI_Button* ret = new UI_Button(x,y,active,draggable,text,color,path,size,default_rect,hover_rect,press_rect,image,rect,x_offset,y_offset);
+	UI_Button* ret = new UI_Button(x,y,active,draggable,text,color,font,default_rect,hover_rect,press_rect,image,rect,x_offset,y_offset);
 
 	UI_list.add(ret);
 
@@ -152,4 +156,39 @@ UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled)
 	Windows_list.add(ret);
 
 	return ret;
+}
+
+UI_Input_Box* j1Gui::CreateInputBox(int x, int y, int enabled,bool draggable)
+{
+	UI_Input_Box* ret = new UI_Input_Box(x, y, enabled,draggable);
+
+	UI_list.add(ret);
+
+	return ret;
+}
+
+void j1Gui::disableUI()
+{
+	p2List_item<UI*>* it = UI_list.start;
+
+	while (it != nullptr)
+	{
+
+		if (it->data->IsEnabled() == true)  it->data->update_it = false;
+
+		it = it->next;
+	}
+}
+
+void j1Gui::enableUI()
+{
+	p2List_item<UI*>* it = UI_list.start;
+
+	while (it != nullptr)
+	{
+
+		if (it->data->IsEnabled() == true)  it->data->update_it = true;
+
+		it = it->next;
+	}
 }

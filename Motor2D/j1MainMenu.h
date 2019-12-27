@@ -11,6 +11,7 @@ class UI_Button;
 class UI_Window;
 
 
+
 class j1MainMenu : public j1Module
 {
 public:
@@ -66,5 +67,5 @@ public:
 	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};
 
-
+	_TTF_Font* font;
 };
