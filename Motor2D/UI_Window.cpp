@@ -21,6 +21,7 @@ void UI_Window::Update()
 void UI_Window::addUI(UI* ui)
 {
 	elements.add(ui);
+	ui->position += position;
 }
 
 void UI_Window::enable()
@@ -31,6 +32,7 @@ void UI_Window::enable()
 	{
 		elementsIt->data->Enable();
 	}
+	border->Enable();
 }
 
 void UI_Window::disable()
@@ -41,4 +43,5 @@ void UI_Window::disable()
 	{
 		elementsIt->data->Disable();
 	}
+	border->Disable();
 }

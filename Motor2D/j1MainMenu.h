@@ -1,11 +1,12 @@
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
+#include "UI_Window.h"
 class UI;
 class UI_Image;
 struct SDL_Texture;
 class UI_Text;
 class UI_Button;
-class UI_Window;
+
 
 
 class j1MainMenu : public j1Module
@@ -56,6 +57,8 @@ public:
 	SDL_Texture* button_over;
 	SDL_Texture* button_press;
 
-	UI_Window settings_window;
+	UI_Window* settings_window;
+	UI_Image* border;
+	SDL_Rect border_rect = {0,0,448,384};
 
 };
