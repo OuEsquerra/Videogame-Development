@@ -53,9 +53,10 @@ enum class ObjectType {
 	DAMAGE,
 	PLAYER,
 	ENEMY,
+	COIN,
 	WARP,
 	ATTACK,
-	MAX_OBJECTS = 6
+	MAX_OBJECTS = 7
 };
 
 struct Animations

@@ -103,6 +103,9 @@
     <ClCompile Include="UI_Window.cpp">
       <Filter>Desenvolupament  ========\Modules\UI\Ui_Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1Coin.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -227,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="UI_Window.h">
       <Filter>Desenvolupament  ========\Modules\UI\Ui_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Coin.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

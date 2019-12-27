@@ -128,7 +128,7 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 
 		break;
 
-	case PARTICLE:
+	case COIN:
 		//ret = new Particle(x,y,Rect,Type);
 		break;
 

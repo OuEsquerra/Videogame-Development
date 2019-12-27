@@ -15,7 +15,7 @@ enum EntityType
 	PLAYER = 0,
 	FLYING_ENEMY,
 	GROUND_ENEMY,
-	PARTICLE,
+	COIN,
 	UNKNOWN
 };
 

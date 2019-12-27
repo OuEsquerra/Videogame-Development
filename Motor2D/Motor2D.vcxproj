@@ -76,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="j1Coin.cpp" />
     <ClCompile Include="j1Collisions.cpp" />
     <ClCompile Include="j1Entity.cpp" />
     <ClCompile Include="j1EntityMachine.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="UI_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="j1Coin.h" />
     <ClInclude Include="j1Collisions.h" />
     <ClInclude Include="j1Entity.h" />
     <ClInclude Include="j1EntityMachine.h" />

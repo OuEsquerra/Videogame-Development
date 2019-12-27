@@ -11,6 +11,7 @@
 #include "j1Flying_Enemy.h"
 #include "j1Player.h"
 #include "j1Ground_Enemy.h"
+#include "j1Coin.h"
 
 //Machine class
 class j1EntityMachine : public j1Module {
