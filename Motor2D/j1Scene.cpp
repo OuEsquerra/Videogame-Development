@@ -42,7 +42,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path.png");
 
-	
+	coin_score = 0;
 
 	return true;
 }

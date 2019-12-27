@@ -3,7 +3,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1FadeToBlack.h"
-
+#include "j1Scene.h"
 #include "BroFiler/Brofiler.h"
 
 #include "j1EntityMachine.h"
@@ -129,7 +129,13 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 		break;
 
 	case COIN:
-		//ret = new Particle(x,y,Rect,Type);
+
+		ret = new Coin(x, y, Type);
+
+		if (ret != nullptr)
+		{
+			entity_list.add(ret);
+		}
 		break;
 
 	case FLYING_ENEMY:
@@ -335,6 +341,13 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 	{
 		App->fade->FadeToBlack(1);
 
+		return;
+	}
+
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::COIN)
+	{
+		App->scene->coin_score += 1;
+		DeleteEntity(B->entity);
 		return;
 	}
 

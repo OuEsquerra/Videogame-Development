@@ -47,7 +47,7 @@ bool Coin::Update(float dt)
 	}
 
 	//Draw enemy
-	App->map->DrawAnimation("skull_still", "Skull1", position, &Ainfo, flip);
+	App->map->DrawAnimation("spin", "Coin", position, &Ainfo, flip);
 
 	return true;
 }

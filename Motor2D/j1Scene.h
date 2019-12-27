@@ -35,13 +35,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+public:
+
+	int coin_score;
+
 private:
 
 	SDL_Texture* debug_tex;
 
 	UI_Button* button;
-
-	UI_Image* wowLogo;
 
 	SDL_Rect button_rect = { 0, 0, 244, 56 };
 
@@ -50,7 +52,7 @@ private:
 	SDL_Rect press_rect = { 0, 120, 244, 56 };
 
 	UI_Text* Bootleg;
-	SDL_Color bootleg_color = { (0),(0),(0),(255) };
+	SDL_Color bootleg_color = { (75),(0),(130),(255) };
 
 	SDL_Texture* button_idle;
 	SDL_Texture* button_over;

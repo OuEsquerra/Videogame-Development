@@ -124,6 +124,10 @@ void j1Collisions::DebugDraw() {
 
 		case ObjectType::ENEMY:
 			App->render->DrawQuad(Coll_iterator->data->rect, 255, 75, 0, alpha);
+			break;
+		case ObjectType::COIN:
+			App->render->DrawQuad(Coll_iterator->data->rect, 128, 0, 128, alpha);
+			break;
 		}
 		Coll_iterator = Coll_iterator->next;
 	}
@@ -181,6 +185,9 @@ void j1Collisions::LoadFromMap(bool LoadEntities) {
 						App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, PLAYER);
 					}
 				}
+			}
+			else if (list_i->data->objects[i].type == ObjectType::COIN) {
+				App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, COIN);
 			}
 			else {
 				AddCollider(*list_i->data->objects[i].box, list_i->data->objects[i].type, nullptr, nullptr, &list_i->data->objects[i].properties);

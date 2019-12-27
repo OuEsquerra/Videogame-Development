@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="115">
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="116">
  <properties>
   <property name="startX" type="int" value="250"/>
   <property name="startY" type="int" value="1100"/>
@@ -40249,6 +40249,11 @@
   <object id="114" name="Player" type="enemy" x="256" y="1344" width="32" height="32">
    <properties>
     <property name="EntityType" value="PLAYER"/>
+   </properties>
+  </object>
+  <object id="115" name="Coin" type="coin" x="480" y="1376" width="32" height="32">
+   <properties>
+    <property name="EntityType" value="COIN"/>
    </properties>
   </object>
  </objectgroup>
