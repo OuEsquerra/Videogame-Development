@@ -72,7 +72,7 @@ public:
 	// Destructor
 	virtual ~p2SString()
 	{
-		if(str != NULL)
+		if (str != NULL)
 			delete[] str;
 	}
 

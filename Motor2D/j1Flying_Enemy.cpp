@@ -62,7 +62,7 @@ bool Flying_Enemy::Update(float dt)
 		position.y += 2 * ((position.y < closest_center.y) ? 1 : -1);
 		
 	}*/
-
+	pathfind();
 
 
 	if (collider != nullptr)
@@ -90,7 +90,10 @@ void Flying_Enemy::pathfind()
 
 		const iPoint* tile;
 		if (Path->Count() != 0) {
-			if (Path->Count() > 1) {
+			if (Path->Count() > 2) {
+				tile = Path->At(2);
+			}
+			else if (Path->Count() > 1) {
 				tile = Path->At(1);
 			}
 			else

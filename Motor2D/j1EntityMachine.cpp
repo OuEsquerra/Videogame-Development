@@ -141,8 +141,6 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 			entity_list.add(ret);
 		}
 
-		
-
 		break;
 
 	case GROUND_ENEMY:
@@ -155,7 +153,6 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 		}
 
 		
-
 		break;
 	}
 
@@ -170,6 +167,7 @@ void j1EntityMachine::DeleteEntity(Entity* entity)
 {
 	entity->collider->to_delete = true;
 	entity_list.del(entity_list.At(entity_list.find(entity)));
+	delete entity;
 }
 
 bool j1EntityMachine::Save(pugi::xml_node& node) const 
@@ -203,27 +201,27 @@ bool j1EntityMachine::Load(pugi::xml_node& node)
 {
 	entity_list.clear();
 	
-	pugi::xml_node node_i = node;
+	pugi::xml_node node_i = node.child("entity");
 	Entity* loaded_entity;
 	
 	for (; node_i; node_i = node_i.next_sibling("entity")) {
 		
 		iPoint pos;
-		pos.x = node.child("position").attribute("x").as_int();
-		pos.y = node.child("position").attribute("y").as_int();
+		pos.x = node_i.child("position").attribute("x").as_float();
+		pos.y = node_i.child("position").attribute("y").as_float();
 		
-		if (strcmp(node.attribute("EntityType").as_string(), "FLYING_ENEMY")) {
-			loaded_entity = (Entity*)new Flying_Enemy(pos.x, pos.y, FLYING_ENEMY);
+		if (strcmp(node_i.attribute("EntityType").as_string(), "FLYING_ENEMY") == 0) {
+			loaded_entity = CreateEntity(pos.x, pos.y, FLYING_ENEMY);
 		}
-		else if (strcmp(node.attribute("EntityType").as_string(), "GROUND_ENEMY")) {
-			loaded_entity = (Entity*)new Ground_Enemy(pos.x, pos.y, GROUND_ENEMY);
+		else if (strcmp(node_i.attribute("EntityType").as_string(), "GROUND_ENEMY") == 0) {
+			loaded_entity = CreateEntity(pos.x, pos.y, GROUND_ENEMY);
 		}
-		else if (strcmp(node.attribute("EntityType").as_string(), "PLAYER")) {
-			loaded_entity = (Entity*)new j1Player((float)pos.x, (float)pos.y, PLAYER);
+		else if (strcmp(node_i.attribute("EntityType").as_string(), "PLAYER") == 0) {
+			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, PLAYER);
 		}
-		else break;
-		loaded_entity->prevposition.x = node.child("position").attribute("x").as_int();
-		loaded_entity->prevposition.x = node.child("position").attribute("y").as_int();
+		else continue;
+		loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
+		loaded_entity->prevposition.x = node_i.child("position").attribute("y").as_float();
 
 		entity_list.add(loaded_entity);
 	}
@@ -237,7 +235,6 @@ void j1EntityMachine::OnCollision(Collider* A, Collider* B)
 
 	AttackCollisions(A, B);
 
-
 	GroundenemyCollisions(A, B);
 }
 
@@ -246,7 +243,6 @@ void j1EntityMachine::AttackCollisions(Collider* A, Collider* B)
 	if (A->type == ObjectType::ATTACK && B->type == ObjectType::ENEMY) {
 
 		DeleteEntity(B->entity);
-
 
 	}
 }
@@ -311,12 +307,7 @@ void j1EntityMachine::GroundenemyCollisions(Collider* A, Collider* B)
 			}
 			A->entity->collider->SetPos(A->entity->position.x , A->entity->position.y);
 		}
-
-
-
 	}
-
-
 }
 
 
@@ -342,7 +333,9 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::ENEMY)
 	{
-		App->fade->FadeToBlack("Dark_Map.tmx");
+		App->fade->FadeToBlack(1);
+
+		return;
 	}
 
 	// ------------ Player Colliding against solids ------------------
@@ -382,16 +375,19 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 			player->player.wall = true;
 			LOG("Touching WALL");
 
+			//Player to the left 
 			if ((A->rect.x + A->rect.w) < (B->rect.x + B->rect.w / 4)
 				&& player->prevposition.x + A->rect.w + 1 <= (B->rect.x + B->rect.w) )
-			{ //Player to the left 
-				player->position.x = B->rect.x - A->rect.w - player->player.boxOffset_x + 1;
+			{ 
+				player->position.x = B->rect.x - A->rect.w - player->player.boxOffset_x + 1.0f;
 
 			}
-			else if (A->rect.x > (B->rect.x + B->rect.w ) //* 3 / 4
+
+			//Player to the right
+			else if (A->rect.x > (B->rect.x + B->rect.w * 3.0f / 4.0f)
 				&& player->prevposition.x - 1  >= (B->rect.x + B->rect.w))
-			{ //Player to the right
-				player->position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1;
+			{ 
+				player->position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1.0f;
 			}
 			player->player.collider->SetPos(player->position.x + player->player.boxOffset_x, player->position.y);
 		}
@@ -402,12 +398,12 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 		if (player->player.drop_plat == false) {
 
 			if ((player->player.prevposition.y + player->player.collider->rect.h) < B->rect.y + (B->rect.h / 2.0f) && (player->player.prevposition.y + player->player.collider->rect.h) > B->rect.y && player->player.speed.y >= 0) {//this won't ever happen
-				player->position.y = B->rect.y - player->player.collider->rect.h + 1;
+				player->position.y = B->rect.y - player->player.collider->rect.h + 1.0f;
 				player->player.able_to_jump = false;
 				player->player.onPlatform = true;
 			}
 			else if ((player->position.y >= player->player.prevposition.y) && (player->player.prevposition.y + player->player.collider->rect.h) < B->rect.y && player->player.speed.y >= 0) {
-				player->position.y = B->rect.y - player->player.collider->rect.h + 1;
+				player->position.y = B->rect.y - player->player.collider->rect.h + 1.0f;
 				player->player.SetGroundState(true);
 				player->player.able_to_jump = false;
 				player->player.onPlatform = true;
@@ -417,6 +413,13 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 	}
 	// ------------ Player Colliding against a warp zone -----------------
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::WARP) {
-		App->fade->FadeToBlack(B->userdata->Get("MapToLoad").v_string);
+		if (strcmp(B->userdata->Get("MapToLoad").v_string, "Dark_Map.tmx") == 0) {
+			App->fade->FadeToBlack(1);
+		}
+		else if (strcmp(B->userdata->Get("MapToLoad").v_string, "Dark_Map2.tmx") == 0) {
+			App->fade->FadeToBlack(2);
+		}
+		else LOG("Issues on warp Loading");
+		
 	}
 }

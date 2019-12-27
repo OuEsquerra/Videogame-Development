@@ -46,8 +46,11 @@ bool j1FadeToBlack::Start()
 bool j1FadeToBlack::Update(float dt)
 {
 	
-	if(current_step == fade_step::none)
+	if (current_step == fade_step::none) {
+		//Freeze = false
 		return true;
+	}
+	
 
 	Uint32 now = SDL_GetTicks() - start_time;
 	float normalized = MIN(1.0f, (float)now / (float)total_time);
@@ -58,9 +61,11 @@ bool j1FadeToBlack::Update(float dt)
 		{
 			if(now >= total_time)
 			{
-
+				//freeze = true
 				SwitchMap(level);
 				
+
+
 				total_time += total_time;
 				start_time = SDL_GetTicks();
 				current_step = fade_step::fade_from_black;
@@ -73,7 +78,7 @@ bool j1FadeToBlack::Update(float dt)
 
 			if(now >= total_time)
 				current_step = fade_step::none;
-				//App->player->player.freeze = false;
+				
 		} break;
 	}
 
@@ -84,12 +89,14 @@ bool j1FadeToBlack::Update(float dt)
 }
 
 // Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(const char* mapname, bool reset_player, float time)
+bool j1FadeToBlack::FadeToBlack(int lvl, bool reset_player, float time)
 {
 	bool ret = false;
 	
 	playerReset = reset_player;
-	map_name = mapname;
+	level = lvl;
+
+	isLevelSwitch = true;
 
 	if(current_step == fade_step::none)
 	{
@@ -97,19 +104,19 @@ bool j1FadeToBlack::FadeToBlack(const char* mapname, bool reset_player, float ti
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		ret = true;
-
-		
 	}
 
 	return ret;
 }
 
-bool j1FadeToBlack::FadeToBlack_scene(const char* mapname, bool reset_player, float time)
+bool j1FadeToBlack::FadeToBlack_scene(int lvl, bool reset_player, float time)
 {
 	bool ret = false;
 
 	playerReset = reset_player;
-	map_name = mapname;
+	level = lvl;
+
+	isLevelSwitch = false;
 
 	if (current_step == fade_step::none)
 	{
@@ -117,8 +124,6 @@ bool j1FadeToBlack::FadeToBlack_scene(const char* mapname, bool reset_player, fl
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
 		ret = true;
-
-
 	}
 
 	return ret;

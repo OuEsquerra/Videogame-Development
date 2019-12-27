@@ -13,8 +13,9 @@ public:
 	bool Start();
 	bool Awake(pugi::xml_node& conf);
 	bool Update(float dt);
-	bool FadeToBlack(const char* mapname,  bool reset_player = true, float time = 0.5f);
-	bool FadeToBlack_scene(const char* mapname, bool reset_player = true, float time = 0.5f);
+	bool FadeToBlack(int lvl,  bool reset_player = true, float time = 0.5f);
+
+	bool FadeToBlack_scene(int lvl, bool reset_player = true, float time = 0.5f);
 
 private:
 	bool SwitchMap(int level);

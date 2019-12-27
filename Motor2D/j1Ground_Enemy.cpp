@@ -43,21 +43,15 @@ bool Ground_Enemy::Update(float dt)
 {
 	prevposition = position;
 	animation = "idle";
-	/*if (App->do_logic)
-	{*/
-		pathfind();
-	//}
+
+	pathfind();
 
 	if (!grounded)
 	{
-
+		//Falling behaviour
 		position.y += 150 * dt;
 
 	}
-
-
-
-
 
 	if (collider != nullptr)
 	{
@@ -86,7 +80,10 @@ void Ground_Enemy::pathfind()
 
 		const iPoint* tile;
 		if (Path->Count() != 0) {
-			if (Path->Count() > 1) {
+			if (Path->Count() > 2) {
+				tile = Path->At(2);
+			}
+			else if (Path->Count() > 1) {
 				tile = Path->At(1);
 			}
 			else

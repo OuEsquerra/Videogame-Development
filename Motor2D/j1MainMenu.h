@@ -58,7 +58,9 @@ public:
 	SDL_Texture* button_press;
 
 	UI_Window* settings_window;
+
 	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};
+
 
 };

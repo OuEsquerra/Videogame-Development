@@ -159,24 +159,27 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, ObjectType type, j1Module* ca
 }
 
 //Add Colliders to the list from the map
-void j1Collisions::LoadFromMap() {
+void j1Collisions::LoadFromMap(bool LoadEntities) {
 	
 	p2List_item<MapObjectgroup*>* list_i = App->map->data.objectgroups.start;
 	while (list_i != nullptr) {
 		for (int i = 0; i < list_i->data->objects_size; i++) {
 			
-			if (list_i->data->objects[i].type == ObjectType::ENEMY) {
-				if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "FLYING_ENEMY") == 0) 
-				{
-					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, FLYING_ENEMY);
-				}
-				else if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "GROUND_ENEMY") == 0)
-				{
-					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, GROUND_ENEMY);
-				}
-				else if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "PLAYER") == 0)
-				{
-					App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, PLAYER);
+			if (list_i->data->objects[i].type == ObjectType::ENEMY ) {
+				if (LoadEntities) {
+				
+					if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "FLYING_ENEMY") == 0)
+					{
+						App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, FLYING_ENEMY);
+					}
+					else if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "GROUND_ENEMY") == 0)
+					{
+						App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, GROUND_ENEMY);
+					}
+					else if (strcmp(list_i->data->objects[i].properties.list.start->data->data.v_string, "PLAYER") == 0)
+					{
+						App->entities->CreateEntity(list_i->data->objects[i].box->x, list_i->data->objects[i].box->y, PLAYER);
+					}
 				}
 			}
 			else {
@@ -185,16 +188,13 @@ void j1Collisions::LoadFromMap() {
 		}
 		list_i = list_i->next;
 	}
-
 }
 
 //  Struct Collider Methods --------------------------------------
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-
 	return ((r.x + r.w > rect.x ) && (r.x < rect.x + rect.w) &&
 		(r.y + r.h > rect.y) && (r.y < rect.y + rect.h));
-
 }
 
 Collider::Collider(Object object) {
