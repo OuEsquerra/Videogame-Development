@@ -17,6 +17,10 @@
 #include "UI_Image.h"
 #include "UI_Text.h"
 
+#include "UI_Window.h"
+
+//class UI_Window;
+
 #define CURSOR_WIDTH 2
 
 
@@ -47,6 +51,7 @@ public:
 
 	UI_Button* CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, const char* path, int size, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect, int x_offset, int y_offset);
 
+	UI_Window* CreateUiWindow(int x, int y, int enabled = false);
 private:
 	
 	SDL_Texture* background;
@@ -55,6 +60,9 @@ private:
 	p2SString atlas_file_name;
 	
 	p2List<UI*> UI_list;
+
+public:
+	p2List<UI_Window*> Windows_list;
 };
 
 #endif // __j1GUI_H__

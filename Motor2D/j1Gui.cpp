@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+//#include "UI_Window.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -45,6 +46,20 @@ bool j1Gui::PreUpdate()
 		it = it->next;
 	}
 
+	p2List_item<UI_Window*>* winit = Windows_list.end;
+
+	while (winit != nullptr)
+	{
+		if (winit->data->enabled) 
+		{ 
+			winit->data->Update(); 
+
+			return true;
+		}
+
+		winit = winit->prev;
+	}
+
 	return true;
 }
 
@@ -76,6 +91,19 @@ bool j1Gui::PostUpdate()
 
 		it = it->next;
 	}
+
+	p2List_item<UI_Window*>* winit = Windows_list.start;
+
+	while (winit != nullptr)
+	{
+
+		if (winit->data->enabled)
+		{
+			winit->data->Draw();
+		}
+		winit = winit->next;
+	}
+
 	return true;
 }
 
@@ -110,6 +138,15 @@ UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SStr
 	UI_Button* ret = new UI_Button(x,y,active,draggable,text,color,path,size,default_rect,hover_rect,press_rect,image,rect,x_offset,y_offset);
 
 	UI_list.add(ret);
+
+	return ret;
+}
+
+UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled)
+{
+	UI_Window* ret = new UI_Window(x, y, enabled);
+
+	Windows_list.add(ret);
 
 	return ret;
 }

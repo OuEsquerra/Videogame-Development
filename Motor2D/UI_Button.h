@@ -1,5 +1,5 @@
 
-#include "j1Gui.h"
+//#include "j1Gui.h"
 
 
 class UI_Text;

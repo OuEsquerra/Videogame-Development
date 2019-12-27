@@ -1,10 +1,13 @@
 #include "p2List.h"
 #include "p2Point.h"
-#include "j1Gui.h"
+
+//#include "j1Gui.h"
 
 //class UI_Button;
 //class UI_Text;
 //class UI_Image;
+
+//class UI;
 
 class UI_Window
 {
@@ -16,15 +19,17 @@ public:
 
 	iPoint position;
 
-	bool active;
+	bool enabled;
 
 public:
 
-	UI_Window(int x, int y,bool activa);
+	UI_Window(int x, int y,bool enabled);
 
 	void Update();
 
-	void addUI(UI* ui);
+	void Draw();
+
+	void addUI(UI* ui,int x, int y);
 
 	void enable();
 

@@ -1,12 +1,14 @@
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
-#include "UI_Window.h"
+
+//#include "UI_Window.h"
+
 class UI;
 class UI_Image;
 struct SDL_Texture;
 class UI_Text;
 class UI_Button;
-
+class UI_Window;
 
 
 class j1MainMenu : public j1Module
