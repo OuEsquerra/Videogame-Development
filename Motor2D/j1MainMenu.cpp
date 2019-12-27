@@ -4,7 +4,7 @@
 #include "j1Scene.h"
 #include "j1Collisions.h"
 #include "j1MainMenu.h"
-
+#include "j1Audio.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
 {
@@ -23,7 +23,10 @@ bool j1MainMenu::Awake()
 
 bool j1MainMenu::Start()
 {
+	//Music
+	App->audio->PlayMusic("audio/music/Interstellar_msc.ogg", 0.0f);
 
+	//Buttons
 	background =  App->gui->CreateImage(0, 0, true, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
 	UI_mainmenulist.add(background);
 
@@ -41,7 +44,6 @@ bool j1MainMenu::Start()
 
 	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, "fonts/MajorMonoDisplay.ttf", 25, &default_rect, &hover_rect, &press_rect, App->tex->Load("gui/UI_Button.png"), button_rect, 80, 13);
 	UI_mainmenulist.add(exit_button);
-
 
 	settings_window = App->gui->CreateUiWindow(100,100,false); //new UI_Window(100, 100, false);
 	//App->gui->Windows_list.add(settings_window);

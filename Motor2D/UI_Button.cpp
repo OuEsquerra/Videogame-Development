@@ -44,6 +44,7 @@ void UI_Button::Update()
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && !pressed)
 		{
 			LOG("Button do thing");
+			App->audio->PlayFx(App->gui->click_audio, 32);
 			pressed = true;
 		}
 	}

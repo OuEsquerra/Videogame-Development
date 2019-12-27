@@ -50,6 +50,8 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	Mix_VolumeMusic(64);
+
 	return ret;
 }
 
@@ -157,17 +159,21 @@ unsigned int j1Audio::LoadFx(const char* path)
 }
 
 // Play WAV
-bool j1Audio::PlayFx(unsigned int id, int repeat)
+bool j1Audio::PlayFx(unsigned int id, int volume, int repeat)
 {
 	bool ret = false;
 
 	if(!active)
 		return false;
 
+	
 	if(id > 0 && id <= fx.count())
 	{
-		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		int channel;
+		channel = Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_Volume(channel, volume);
 	}
+
 
 	return ret;
 }

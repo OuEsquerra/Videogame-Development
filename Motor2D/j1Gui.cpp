@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+
 //#include "UI_Window.h"
 
 j1Gui::j1Gui() : j1Module()
@@ -30,6 +31,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
+
+	click_audio = App->audio->LoadFx("audio/fx/button_click.wav");
 
 	return true;
 }

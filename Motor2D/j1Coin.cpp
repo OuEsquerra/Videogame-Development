@@ -9,7 +9,7 @@
 //Coin
 Coin::Coin(float x, float y, EntityType Type) : Entity(x, y, Type)
 {
-	colliderRect = { (int)position.x, (int)position.y, 32, 32 }; //Magic
+	colliderRect = { (int)position.x, (int)position.y, 20, 20}; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::COIN, App->entities, (Entity*)this);
 	
 }

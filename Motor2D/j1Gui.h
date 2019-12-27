@@ -11,6 +11,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Fonts.h"
+#include "j1Audio.h"
 
 #include "j1UI.h"
 #include "UI_Button.h"
@@ -54,8 +55,7 @@ public:
 	UI_Window* CreateUiWindow(int x, int y, int enabled = false);
 private:
 	
-	SDL_Texture* background;
-	SDL_Texture* wow_logo;
+
 
 	p2SString atlas_file_name;
 	
@@ -63,6 +63,7 @@ private:
 
 public:
 	p2List<UI_Window*> Windows_list;
+	int click_audio;
 };
 
 #endif // __j1GUI_H__
