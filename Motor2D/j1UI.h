@@ -16,11 +16,11 @@ public:
 	
 	iPoint position;
 
+	iPoint startingPosition;
+
 	bool draggable;
 
 	bool enabled;
-
-
 
 	bool debug;
 
