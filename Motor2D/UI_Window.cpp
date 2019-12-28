@@ -5,6 +5,7 @@
 UI_Window::UI_Window(int x, int y, bool enabled, UI_Button* x_button) : position(x,y) , enabled(enabled),x_button(x_button)
 {
 	addUI(x_button, 0,0);
+	
 }
 
 void UI_Window::Update()

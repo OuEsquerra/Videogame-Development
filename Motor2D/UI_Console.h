@@ -1,14 +1,17 @@
 class UI_Console : public UI
 {
-private:
-
+public:
 	SDL_Rect rect;
 
-	//Text
-	p2SString text;
+	p2List<UI_Text*> logs;
+
+	//Input Text
+	p2SString text = "";
 	SDL_Texture * texture;
 	SDL_Color* color;
 	_TTF_Font* font;
+
+	int maxTexts = 0;
 
 public:
 
@@ -18,5 +21,13 @@ public:
 
 	void Draw();
 
+	void UpdateText();
+
 	const char* GetText() const;
+
+	void ConcatNewText(char* newText);
+
+	void Execute(char* call);
+
+	void AddText(p2SString string);
 };

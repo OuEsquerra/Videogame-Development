@@ -1,9 +1,11 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "j1Gui.h"
 #include "j1Input.h"
-
-UI_Console::UI_Console(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect) : UI(x,y,enabled,draggable),rect(rect)
+#include "p2Log.h"
+#include "j1EntityMachine.h"
+UI_Console::UI_Console(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect) : UI(x,y,enabled,draggable),rect(rect),color(color),font(font)
 {
-	//texture = App->font->Print(text.GetString(), *color, font);
+	texture = App->font->Print(text.GetString(), *color, font);
 	rect.x = position.x;
 	rect.y = position.y;
 }
@@ -17,25 +19,73 @@ void UI_Console::Update()
 
 	App->input->GetMousePosition(x, y);
 
-	//if ()
-	//{
-		
-	//	SDL_StartTextInput();
-	//}
-
-	if (SDL_IsTextInputActive() && App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		SDL_StopTextInput();
+		Execute((char*)text.GetString());
+		text.Clear();
 	}
+
+
+
+
 }
 
 void UI_Console::Draw()
 {
-	//App->render->Blit(texture, position.x, position.y, NULL, false, 0.f);
+	if (text != "")
+	{
+		App->render->Blit(texture, position.x , position.y + rect.h - 20, NULL, false, 0.f);
+	}
+
 	App->render->DrawQuad(rect, 0, 0, 0, 50);
+}
+
+void UI_Console::UpdateText()
+{
+	//SDL_DestroyTexture(texture);
+
+	texture = App->font->Print(text.GetString(), *color, font);
 }
 
 const char* UI_Console::GetText()const
 {
 	return text.GetString();
+}
+
+void UI_Console::ConcatNewText(char* newText)
+{
+	//oldText = text;
+	strcat((char*)text.GetString(), newText);
+	UpdateText();
+}
+
+void UI_Console::Execute(char* call)
+{
+	if (strcmp("quit", call) == 0)
+	{
+		App->input->CloseGame();
+	}
+
+	if (strcmp("god_mode", call) == 0)
+	{
+		if (App->entities->player != nullptr)
+		{
+			App->entities->player->GodMode();
+		}
+	}
+
+	//FPS check
+	/*if (call[0] == "F" && call[1] == "P" && call[2] == "S")
+	{
+		LOG("bruh");
+	}*/
+}
+
+void UI_Console::AddText(p2SString string)
+{
+	//logs.del(logs.start);
+
+	
+
+
 }

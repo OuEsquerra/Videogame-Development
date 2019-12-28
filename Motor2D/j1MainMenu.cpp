@@ -34,6 +34,8 @@ bool j1MainMenu::Start()
 	//Text load
 	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25); //Magic
 
+	consoleFont = App->font->Load("fonts/Minecraftia-Regular.ttf", 20);
+
 	//Buttons
 	background =  App->gui->CreateImage(0, 0, true, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
 	UI_mainmenulist.add(background);
@@ -52,10 +54,6 @@ bool j1MainMenu::Start()
 
 	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
 	UI_mainmenulist.add(exit_button);
-	
-
-	//inputBox = App->gui->CreateInputBox(0, 0, false, false, "bruh", &bootleg_color, font, App->gui->CreateImage(0, 0, false, false, default_rect, basic_button_texture), { 0,0,200,50 });
-
 
 	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect,0,0);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
@@ -64,6 +62,8 @@ bool j1MainMenu::Start()
 	//Settings
 	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button);
 	settings_window->border = border;
+
+	console = App->gui->CreateConsole(110,0,false,false,&white,consoleFont,console_rect);
 
 	fx_slider = App->gui->CreateSlider(0, 0, false, false);
 	settings_window->addUI(fx_slider, 90, 150);
@@ -149,13 +149,15 @@ bool j1MainMenu::Update(float dt)
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && !console->IsEnabled())
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !console->IsEnabled())
 	{
 		console->Enable();
+		SDL_StartTextInput();
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && console->IsEnabled())
+	else if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && console->IsEnabled())
 	{
-
+		console->Disable();
+		SDL_StopTextInput();
 	}
 	
 	App->audio->SetFxVol(fx_slider->SliderValue());
