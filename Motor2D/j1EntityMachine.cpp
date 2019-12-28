@@ -292,6 +292,12 @@ void j1EntityMachine::AttackCollisions(Collider* A, Collider* B)
 {
 	if (A->type == ObjectType::ATTACK && B->type == ObjectType::ENEMY) {
 
+		if (B->entity->type == GROUND_ENEMY) {
+			App->scene->score += 150;
+		}
+		else if (B->entity->type == FLYING_ENEMY) {
+			App->scene->score += 100;
+		}
 		DeleteEntity(B->entity);
 
 	}
@@ -390,7 +396,13 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::COIN)
 	{
-		App->scene->coin_score += 1;
+		Coin* tmp = (Coin*)B->entity;
+		if (tmp->picked_up == false) {
+			App->scene->coin_score += 1;
+			tmp->picked_up = true;
+		}
+		App->scene->score += 25;
+
 		DeleteEntity(B->entity);
 		return;
 	}

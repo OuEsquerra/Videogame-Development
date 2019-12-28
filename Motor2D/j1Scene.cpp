@@ -55,7 +55,8 @@ bool j1Scene::Start()
 	//HUD
 	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25);
 
-	time = 000;
+	//Starting Values
+	time = 180;
 	coin_score = 0;
 	score = 0;
 	lives = 3;
@@ -68,11 +69,15 @@ bool j1Scene::Start()
 
 	
 	UI_Life_Segments[0] = App->gui->CreateImage(28, 10, true, false, SDL_Rect{132,0,30,34 }, UI_HUD_Left_Tex);
-	UI_Life_Segments[1] = App->gui->CreateImage(60, 10, true, false, { 132,0,30,34 }, UI_HUD_Left_Tex);
-	UI_Life_Segments[2] = App->gui->CreateImage(92, 10, true, false, { 132,0,30,34 }, UI_HUD_Left_Tex);
+	UI_Life_Segments[1] = App->gui->CreateImage(60, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
+	UI_Life_Segments[2] = App->gui->CreateImage(92, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
 	
 	//Text
-	time_text = App->gui->CreateText(72, 52, true, false, time, &bootleg_color, font);
+	SDL_Color black = { 0,0,0 };
+
+	time_text = App->gui->CreateText(72, 59, true, false, "0", &bootleg_color, font);
+	score_text = App->gui->CreateText(900, 76, true, false, "0", &bootleg_color, font);
+	coin_score_text = App->gui->CreateText(943, 19, true, false, "0", &black, font);
 
 	return true;
 }
@@ -85,9 +90,16 @@ bool j1Scene::PreUpdate()
 
 
 void j1Scene::HUD() {
-	char str[4]; 
+	char str[6]; 
 	sprintf_s(str, "%d", time);
 	time_text->UpdateText(str);
+
+	sprintf_s(str, "%d", coin_score);
+	coin_score_text->UpdateText(str);
+
+	sprintf_s(str, "%d", score);
+	score_text->UpdateText(str);
+
 }
 
 
@@ -129,9 +141,6 @@ bool j1Scene::Update(float dt)
 	}
 
 
-
-	//LOG("Befor Draw");
-	
 	App->map->Draw();
 
 	// Draw path of the closest entity
