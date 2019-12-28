@@ -76,6 +76,8 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+	int scale = 0;
+
 };
 
 #endif // __j1INPUT_H__

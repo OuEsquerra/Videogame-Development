@@ -5,7 +5,9 @@
 #include "j1Window.h"
 #include "BroFiler/Brofiler.h"
 #include "SDL/include/SDL.h"
+#include "j1Gui.h"
 
+#define _CRT_SECURE_NO_WARNINGS
 #define MAX_KEYS 300
 
 j1Input::j1Input() : j1Module()
@@ -119,7 +121,7 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEMOTION:
-				int scale = App->win->GetScale();
+				scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
@@ -127,12 +129,14 @@ bool j1Input::PreUpdate()
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 
-			//case SDL_TEXTINPUT:
+			case SDL_TEXTINPUT:
 				/* Add new text onto the end of our text */
 			
-				//strcat(text, event.text.text);
+				//strcat((char*)App->gui->focused->GetText(), event.text.text);
 
-				//break;
+				App->gui->focused->text += event.text.text;
+
+				break;
 			//case SDL_TEXTEDITING:
 
 				/*
@@ -154,6 +158,8 @@ bool j1Input::PreUpdate()
 		windowEvents[WE_QUIT] = true;
 
 	}
+
+
 
 	return true;
 }

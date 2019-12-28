@@ -62,10 +62,13 @@ public:
 
 	SDL_Texture* basic_button_texture;
 
+	//SettingsWindow
 	UI_Window* settings_window;
 
 	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};
+
+	UI_Input_Box* inputBox;
 
 	_TTF_Font* font;
 };
