@@ -12,6 +12,7 @@ private:
 	//Border
 	UI_Image* border;
 
+public:
 	//Text
 	p2SString text;
 	SDL_Texture * texture;
@@ -20,10 +21,11 @@ private:
 
 public:
 
-	UI_Input_Box(int x, int y, bool enabled, bool draggable);
+	UI_Input_Box(int x, int y, bool enabled, bool draggable,p2SString text, SDL_Color* color, _TTF_Font* font, UI_Image* border,SDL_Rect rect);
 
 	void Update();
 
 	void Draw();
 
+	const char* GetText() const;
 };

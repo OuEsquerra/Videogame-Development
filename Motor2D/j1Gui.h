@@ -55,7 +55,7 @@ public:
 
 	UI_Window* CreateUiWindow(int x, int y, int enabled = false);
 
-	UI_Input_Box* CreateInputBox(int x, int y, int enabled,bool draggable);
+	UI_Input_Box* CreateInputBox(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, UI_Image* border, SDL_Rect rect);
 
 	void disableUI();
 
@@ -67,9 +67,13 @@ private:
 	
 	p2List<UI*> UI_list;
 
+	
+
 public:
 	p2List<UI_Window*> Windows_list;
 	int click_audio;
+
+	UI_Input_Box* focused;
 };
 
 #endif // __j1GUI_H__

@@ -50,11 +50,18 @@ bool j1MainMenu::Start()
 	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
 	UI_mainmenulist.add(exit_button);
 	
-	settings_window = App->gui->CreateUiWindow(200,200,false); //new UI_Window(100, 100, false);
 
-	//App->gui->Windows_list.add(settings_window);
+	inputBox = App->gui->CreateInputBox(0, 0, false, false, "bruh", &bootleg_color, font, App->gui->CreateImage(0, 0, false, false, default_rect, basic_button_texture), { 0,0,200,50 });
+
+	settings_window = App->gui->CreateUiWindow(200,200,false); //new UI_Window(100, 100, false);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
 	settings_window->border = border;
+
+	settings_window->addUI(inputBox,100,100);
+
+
+
+	//settings_window->addUI();
 
 	return true;
 }
@@ -97,6 +104,8 @@ bool j1MainMenu::Update(float dt)
 	{
 
 		settings_window->enable();
+
+	
 		
 	}
 

@@ -158,9 +158,9 @@ UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled)
 	return ret;
 }
 
-UI_Input_Box* j1Gui::CreateInputBox(int x, int y, int enabled,bool draggable)
+UI_Input_Box* j1Gui::CreateInputBox(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, UI_Image* border, SDL_Rect rect)
 {
-	UI_Input_Box* ret = new UI_Input_Box(x, y, enabled,draggable);
+	UI_Input_Box* ret = new UI_Input_Box(x, y, enabled,draggable,text,color,font,border,rect);
 
 	UI_list.add(ret);
 
