@@ -36,18 +36,40 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 
-	if (App->map->Load(1) == true)
+	if (App->map->Load(1) == true) {
 
-	App->audio->PlayMusic("audio/music/roundabout_msc.ogg" , 0.0f);
+	}
 
+	
 	debug_tex = App->tex->Load("maps/path.png");
 
+
+	//Ambience sound
 	int channel;
 	channel = App->audio->LoadFx("audio/fx/Ambience.wav");
 	App->audio->PlayFx(channel, 8, -1);
 
-	coin_score = 0;
+	//Music
+	App->audio->PlayMusic("audio/music/roundabout_msc.ogg", 0.0f);
 
+	//HUD
+
+	time = 000;
+	coin_score = 0;
+	score = 0;
+	lives = 3;
+
+	UI_HUD_Left_Tex = App->tex->Load("gui/UI_HUD_Left.png");
+	UI_HUD_Right_Tex = App->tex->Load("gui/UI_HUD_Right.png");
+
+	UI_HUD_Left = App->gui->CreateImage(10, 10, true, false, {0,0,132,88}, UI_HUD_Left_Tex);
+	UI_HUD_Right = App->gui->CreateImage(856, 10, true, false, {0,0,158,104}, UI_HUD_Right_Tex);
+
+
+	UI_Life_Segments[0] = App->gui->CreateImage(28, 10, true, false, SDL_Rect{132,0,30,34 }, UI_HUD_Left_Tex);
+	UI_Life_Segments[1] = App->gui->CreateImage(60, 10, true, false, { 132,0,30,34 }, UI_HUD_Left_Tex);
+	UI_Life_Segments[2] = App->gui->CreateImage(92, 10, true, false, { 132,0,30,34 }, UI_HUD_Left_Tex);
+	
 	return true;
 }
 
@@ -56,6 +78,14 @@ bool j1Scene::PreUpdate()
 {
 	return true;
 }
+
+
+void HUD() {
+	
+
+
+}
+
 
 // Called each loop iteration
 bool j1Scene::Update(float dt)
@@ -110,8 +140,11 @@ bool j1Scene::Update(float dt)
 		}
 	}
 
+	HUD();
+
 	return true;
 }
+
 
 // Called each loop iteration
 bool j1Scene::PostUpdate()

@@ -153,11 +153,11 @@ bool j1Input::PreUpdate()
 		}
 	}
 
-	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_DOWN) {
+	/*if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_DOWN) {
 
 		windowEvents[WE_QUIT] = true;
 
-	}
+	}*/
 
 
 

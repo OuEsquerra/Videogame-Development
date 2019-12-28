@@ -56,11 +56,9 @@ public:
 	UI_Text* Bootleg;
 	SDL_Color bootleg_color = { (0),(0),(0),(255) };
 
-	SDL_Texture* button_idle;
-	SDL_Texture* button_over;
-	SDL_Texture* button_press;
-
 	SDL_Texture* basic_button_texture;
+
+	SDL_Texture* close_button_texture;
 
 	//SettingsWindow
 	UI_Window* settings_window;
