@@ -47,10 +47,10 @@ bool j1Player::Awake()
 	player.boxH =			tmp.child("player").child("box").attribute("h").as_int();
 	player.boxOffset_x =	tmp.child("player").child("offset").attribute("x").as_int();
 	
-	App->audio->LoadFx("audio/fx/jump1.wav");
-	App->audio->LoadFx("audio/fx/jump2.wav");
-	App->audio->LoadFx("audio/fx/jump3.wav");
-	App->audio->LoadFx("audio/fx/sword_sound.wav");
+	jump1 = App->audio->LoadFx("audio/fx/jump1.wav");
+	jump2 = App->audio->LoadFx("audio/fx/jump2.wav");
+	jump3 = App->audio->LoadFx("audio/fx/jump3.wav");
+	swordslash = App->audio->LoadFx("audio/fx/sword_sound.wav");
 	
 	return true;
 }; 
@@ -305,7 +305,20 @@ void j1Player::JumpInput()
 		if (player.able_to_jump)
 		{
 			jumpSound = rand() % 3 + 1; //Fix
-			App->audio->PlayFx(jumpSound);//Sound for the start of the jump
+			
+			switch (jumpSound)
+			{
+			case 1:
+				App->audio->PlayFx(jump1);
+				break;
+			case 2:
+				App->audio->PlayFx(jump2);
+				break;
+			case 3:
+				App->audio->PlayFx(jump3);
+				break;
+			}
+			//Sound for the start of the jump
 
 			player.playerState = jumping;
 			jump_key_down = true;
@@ -328,7 +341,7 @@ void j1Player::DashInput()
 {
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 	{
-		App->audio->PlayFx(4);
+		App->audio->PlayFx(swordslash);
 
 		if (player.flip || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
