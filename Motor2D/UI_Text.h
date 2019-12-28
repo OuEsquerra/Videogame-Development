@@ -20,4 +20,5 @@ public:
 
 	void Draw();
 
+	void UpdateText(p2SString text);
 };

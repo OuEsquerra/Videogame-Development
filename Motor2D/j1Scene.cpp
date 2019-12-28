@@ -53,6 +53,7 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/roundabout_msc.ogg", 0.0f);
 
 	//HUD
+	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25);
 
 	time = 000;
 	coin_score = 0;
@@ -65,11 +66,14 @@ bool j1Scene::Start()
 	UI_HUD_Left = App->gui->CreateImage(10, 10, true, false, {0,0,132,88}, UI_HUD_Left_Tex);
 	UI_HUD_Right = App->gui->CreateImage(856, 10, true, false, {0,0,158,104}, UI_HUD_Right_Tex);
 
-
+	
 	UI_Life_Segments[0] = App->gui->CreateImage(28, 10, true, false, SDL_Rect{132,0,30,34 }, UI_HUD_Left_Tex);
 	UI_Life_Segments[1] = App->gui->CreateImage(60, 10, true, false, { 132,0,30,34 }, UI_HUD_Left_Tex);
 	UI_Life_Segments[2] = App->gui->CreateImage(92, 10, true, false, { 132,0,30,34 }, UI_HUD_Left_Tex);
 	
+	//Text
+	time_text = App->gui->CreateText(72, 52, true, false, time, &bootleg_color, font);
+
 	return true;
 }
 
@@ -80,10 +84,10 @@ bool j1Scene::PreUpdate()
 }
 
 
-void HUD() {
-	
-
-
+void j1Scene::HUD() {
+	char str[4]; 
+	sprintf_s(str, "%d", time);
+	time_text->UpdateText(str);
 }
 
 

@@ -8,6 +8,7 @@ struct SDL_Texture;
 class UI_Text;
 class UI_Button;
 class UI;
+struct _TTF_Font;
 
 class j1Scene : public j1Module
 {
@@ -36,6 +37,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+private:
+	void HUD();
+
 public:
 	//HUD data
 	int coin_score;
@@ -44,6 +48,11 @@ public:
 	int lives;
 
 private:
+
+	UI_Text* coin_score_text;
+	UI_Text* score_text;
+	UI_Text* time_text;
+	UI_Text* lives_text;
 
 	SDL_Texture* debug_tex;
 
@@ -68,7 +77,9 @@ private:
 
 	UI_Image* UI_Life_Segments[3];
 
-	p2List<UI*> HUD_elements;
+	p2List<UI*>* HUD_elements;
+
+	_TTF_Font* font;
 };
 
 #endif //__j1SCENE_H__

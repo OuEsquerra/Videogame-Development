@@ -17,3 +17,10 @@ void UI_Text::Draw()
 {
 	App->render->Blit(texture, position.x, position.y,NULL,false,0.f);
 }
+
+void UI_Text::UpdateText(p2SString text) {
+	
+	SDL_DestroyTexture(texture);
+	
+	texture = App->font->Print(text.GetString(), *color, font);
+}
