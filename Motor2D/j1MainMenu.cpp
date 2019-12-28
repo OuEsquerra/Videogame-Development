@@ -58,10 +58,16 @@ bool j1MainMenu::Start()
 
 
 	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect,0,0);
-
-	settings_window = App->gui->CreateUiWindow(200,200,false,x_button); //new UI_Window(100, 100, false);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
+
+	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button);
 	settings_window->border = border;
+
+	credits_window = App->gui->CreateUiWindow(175, 300, false, x_button);
+	credits_window->border = border;
+
+	link_button = App->gui->CreateButton(700, 650, false, false, "website", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
+	credits_window->addUI(link_button, 100, 300);
 
 
 	console = App->gui->CreateConsole(0,300,false,false,&bootleg_color,font,console_rect);
@@ -100,22 +106,24 @@ bool j1MainMenu::Update(float dt)
 	
 	if (credits_button->buttonPressed())
 	{
-
+		credits_window->enable();
 
 	}
 	
 	if (settings_button->buttonPressed())
 	{
-
 		settings_window->enable();
-
-	
 		
 	}
 
 	if (exit_button->buttonPressed())
 	{
 		App->input->CloseGame();
+	}
+
+	if (link_button->buttonPressed())
+	{
+		ShellExecuteA(NULL, "open", "https://es.google.com/", NULL , NULL , SW_SHOWNORMAL);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)

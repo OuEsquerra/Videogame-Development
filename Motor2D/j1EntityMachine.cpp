@@ -394,7 +394,7 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::ENEMY)
 	{
 		App->fade->FadeToBlack(1);
-
+		//App->scene->lives--;
 		return;
 	}
 

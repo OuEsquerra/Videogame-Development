@@ -12,8 +12,8 @@ UI_Button::UI_Button(int x, int y, bool enabled, bool draggable, p2SString text,
 	
 	text_texture = App->font->Print(text.GetString(),*color,font);
 
-	textPos.x = x + x_offset;
-	textPos.y = y + y_offset;
+	X_offset = x_offset;
+	Y_offset = y_offset;
 }
 
 void UI_Button::Update()
@@ -21,7 +21,8 @@ void UI_Button::Update()
 	rect.x = position.x;
 	rect.y = position.y;
 
-	
+	textPos.x = position.x + X_offset;
+	textPos.y = position.y + Y_offset;
 
 	pressed = false;
 
@@ -43,7 +44,7 @@ void UI_Button::Update()
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && !pressed)
 		{
 			LOG("Button do thing");
-			App->audio->PlayFx(App->gui->click_audio, 32);
+			App->audio->PlayFx(App->gui->click_audio, 8);
 			pressed = true;
 		}
 	}

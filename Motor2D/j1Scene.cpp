@@ -40,6 +40,7 @@ bool j1Scene::Start()
 
 	}
 
+	InGameTime = new j1Timer;
 	
 	debug_tex = App->tex->Load("maps/path.png");
 
@@ -79,6 +80,8 @@ bool j1Scene::Start()
 	score_text = App->gui->CreateText(900, 76, true, false, "0", &bootleg_color, font);
 	coin_score_text = App->gui->CreateText(943, 19, true, false, "0", &black, font);
 
+
+	InGameTime->Start();
 	return true;
 }
 
@@ -91,6 +94,12 @@ bool j1Scene::PreUpdate()
 
 void j1Scene::HUD() {
 	char str[6]; 
+
+	time = (180 - (int)InGameTime->ReadSec());
+	if (time == 0) {
+
+	}
+	
 	sprintf_s(str, "%d", time);
 	time_text->UpdateText(str);
 

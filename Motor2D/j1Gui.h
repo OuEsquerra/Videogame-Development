@@ -18,6 +18,8 @@
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Console.h"
+#include "UI_Slider.h"
+
 
 #include "UI_Window.h"
 

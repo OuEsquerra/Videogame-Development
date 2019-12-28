@@ -8,6 +8,7 @@ struct SDL_Texture;
 class UI_Text;
 class UI_Button;
 class UI;
+class j1Timer;
 struct _TTF_Font;
 
 class j1Scene : public j1Module
@@ -48,6 +49,8 @@ public:
 	int lives;
 
 private:
+
+	j1Timer*	InGameTime;
 
 	UI_Text* coin_score_text;
 	UI_Text* score_text;
