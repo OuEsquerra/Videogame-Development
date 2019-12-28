@@ -68,12 +68,19 @@ bool j1MainMenu::Start()
 	fx_slider = App->gui->CreateSlider(0, 0, false, false);
 	settings_window->addUI(fx_slider, 90, 150);
 
+	music_slider = App->gui->CreateSlider(0, 0, false, false);
+	settings_window->addUI(music_slider, 90, 250);
+
+	settings_window->addUI(App->gui->CreateText(0,0,false,false,"settings", &bootleg_color,font), 150, 20);
+
 	//Credits
 	credits_window = App->gui->CreateUiWindow(175, 300, false, x_button);
 	credits_window->border = border;
 
 	link_button = App->gui->CreateButton(700, 650, false, false, "website", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
 	credits_window->addUI(link_button, 100, 300);
+
+	credits_window->addUI(App->gui->CreateText(0, 0, false, false, "credits", &bootleg_color, font), 150, 20);
 
 
 	console = App->gui->CreateConsole(0,300,false,false,&bootleg_color,font,console_rect);
@@ -152,6 +159,9 @@ bool j1MainMenu::Update(float dt)
 	}
 	
 	App->audio->SetFxVol(fx_slider->SliderValue());
+	App->audio->SetMusicVol(music_slider->SliderValue());
+
+
 
 	return true;
 }
