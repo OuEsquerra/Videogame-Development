@@ -15,4 +15,5 @@ public:
 
 	void Draw();
 
+	void UpdatePosition(int x, int y);
 };

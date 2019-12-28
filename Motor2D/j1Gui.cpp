@@ -158,6 +158,15 @@ UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled,UI_Button* x_button)
 	return ret;
 }
 
+UI_Slider* j1Gui::CreateSlider(int x, int y, bool active, bool draggable)
+{
+	UI_Slider* ret = new UI_Slider(x, y, active, draggable);
+
+	UI_list.add(ret);
+
+	return ret;
+}
+
 UI_Console* j1Gui::CreateConsole(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect)
 {
 	UI_Console* ret = new UI_Console(x, y, enabled,draggable,color,font,rect);

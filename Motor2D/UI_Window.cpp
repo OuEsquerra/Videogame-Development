@@ -50,6 +50,7 @@ void UI_Window::Draw()
 void UI_Window::addUI(UI* ui,int x, int y)
 {
 	elements.add(ui);
+
 	ui->position.x = position.x + x;
 	ui->position.y = position.y + y;
 }

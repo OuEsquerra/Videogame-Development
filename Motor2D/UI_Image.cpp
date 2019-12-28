@@ -15,3 +15,9 @@ void UI_Image::Draw()
 {
 	App->render->Blit(image, position.x, position.y, &rect,false, 0.f);
 }
+
+void UI_Image::UpdatePosition(int x, int y) {
+	if (!draggable) return;
+	position.x = x;
+	position.y = y;
+};

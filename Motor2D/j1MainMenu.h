@@ -62,6 +62,13 @@ public:
 
 	//SettingsWindow
 	UI_Window* settings_window;
+	UI_Slider* fx_slider;
+
+
+	//Credits Window
+	UI_Window* credits_window;
+	UI_Button* link_button;
+	UI_Text* credits_text;
 
 	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};

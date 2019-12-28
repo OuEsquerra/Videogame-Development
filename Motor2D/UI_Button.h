@@ -22,6 +22,9 @@ public:
 
 	bool pressed;
 
+	int X_offset;
+	int Y_offset;
+
 	//Text
 	p2SString text;
 	SDL_Texture * text_texture;

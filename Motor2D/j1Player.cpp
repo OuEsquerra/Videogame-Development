@@ -305,7 +305,7 @@ void j1Player::JumpInput()
 		if (player.able_to_jump)
 		{
 			jumpSound = rand() % 3 + 1; //Fix
-			App->audio->PlayFx(jumpSound, 0);//Sound for the start of the jump
+			App->audio->PlayFx(jumpSound);//Sound for the start of the jump
 
 			player.playerState = jumping;
 			jump_key_down = true;
@@ -328,7 +328,7 @@ void j1Player::DashInput()
 {
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
 	{
-		App->audio->PlayFx(4, 0);
+		App->audio->PlayFx(4);
 
 		if (player.flip || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
