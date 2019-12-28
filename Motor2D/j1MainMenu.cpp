@@ -63,6 +63,8 @@ bool j1MainMenu::Start()
 	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button);
 	settings_window->border = border;
 
+	console = App->gui->CreateConsole(110,0,false,false,&white,consoleFont,console_rect);
+
 	fx_slider = App->gui->CreateSlider(0, 0, false, false);
 	settings_window->addUI(fx_slider, 90, 150);
 
@@ -73,10 +75,6 @@ bool j1MainMenu::Start()
 	link_button = App->gui->CreateButton(700, 650, false, false, "website", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
 	credits_window->addUI(link_button, 100, 300);
 
-
-	console = App->gui->CreateConsole(0,300,false,false,&bootleg_color,font,console_rect);
-
-	
 	return true;
 }
 
