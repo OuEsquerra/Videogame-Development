@@ -66,7 +66,7 @@ private:
 	SDL_Rect press_rect = { 0, 120, 244, 56 };
 
 	UI_Text* Bootleg;
-	SDL_Color bootleg_color = {(75),(0),(130),(255)};
+	SDL_Color bootleg_color = {(220),(220),(255),(255)};
 
 	//HUD
 	SDL_Texture* UI_HUD_Left_Tex;

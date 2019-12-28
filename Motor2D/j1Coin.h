@@ -6,7 +6,8 @@
 class Coin : public Entity {
 	//variables
 public:
-	fPoint goal;
+	
+	bool picked_up;
 
 
 	//Methods
@@ -18,8 +19,6 @@ public:
 	bool Start();
 
 	bool Update(float dt);
-
-	void pathfind();
 
 	bool Save(pugi::xml_node & node) const;
 	bool Load(pugi::xml_node & node);
