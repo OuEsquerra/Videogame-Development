@@ -48,7 +48,7 @@ bool j1Scene::Start()
 	//Ambience sound
 	int channel;
 	channel = App->audio->LoadFx("audio/fx/Ambience.wav");
-	App->audio->PlayFx(channel, 8, -1);
+	App->audio->PlayFx(channel, -1);
 
 	//Music
 	App->audio->PlayMusic("audio/music/roundabout_msc.ogg", 0.0f);

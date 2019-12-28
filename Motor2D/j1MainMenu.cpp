@@ -60,9 +60,15 @@ bool j1MainMenu::Start()
 	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect,0,0);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
 
+
+	//Settings
 	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button);
 	settings_window->border = border;
 
+	fx_slider = App->gui->CreateSlider(0, 0, false, false);
+	settings_window->addUI(fx_slider, 90, 150);
+
+	//Credits
 	credits_window = App->gui->CreateUiWindow(175, 300, false, x_button);
 	credits_window->border = border;
 
@@ -107,13 +113,11 @@ bool j1MainMenu::Update(float dt)
 	if (credits_button->buttonPressed())
 	{
 		credits_window->enable();
-
 	}
 	
 	if (settings_button->buttonPressed())
 	{
 		settings_window->enable();
-		
 	}
 
 	if (exit_button->buttonPressed())
@@ -146,6 +150,8 @@ bool j1MainMenu::Update(float dt)
 	{
 
 	}
+	
+	App->audio->SetFxVol(fx_slider->SliderValue());
 
 	return true;
 }

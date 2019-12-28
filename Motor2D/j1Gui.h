@@ -59,6 +59,8 @@ public:
 
 	UI_Console* CreateConsole(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect);
 
+	UI_Slider* CreateSlider(int x, int y, bool active, bool draggable);
+
 	void disableUI();
 
 	void enableUI();

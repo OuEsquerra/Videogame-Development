@@ -62,6 +62,8 @@ public:
 
 	//SettingsWindow
 	UI_Window* settings_window;
+	UI_Slider* fx_slider;
+
 
 	//Credits Window
 	UI_Window* credits_window;
