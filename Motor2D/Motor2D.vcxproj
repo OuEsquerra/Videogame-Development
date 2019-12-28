@@ -104,7 +104,7 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="UI_Button.cpp" />
     <ClCompile Include="UI_Image.cpp" />
-    <ClCompile Include="UI_Input_Box.cpp" />
+    <ClCompile Include="UI_Console.cpp" />
     <ClCompile Include="UI_Text.cpp" />
     <ClCompile Include="UI_Window.cpp" />
   </ItemGroup>
@@ -144,7 +144,7 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="UI_Button.h" />
     <ClInclude Include="UI_Image.h" />
-    <ClInclude Include="UI_Input_Box.h" />
+    <ClInclude Include="UI_Console.h" />
     <ClInclude Include="UI_Text.h" />
     <ClInclude Include="UI_Window.h" />
   </ItemGroup>

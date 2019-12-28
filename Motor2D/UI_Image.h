@@ -1,5 +1,6 @@
 class UI_Image : public UI
 {
+public:
 	//Vars
 	SDL_Rect rect;
 

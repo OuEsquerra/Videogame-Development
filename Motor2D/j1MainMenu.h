@@ -66,7 +66,22 @@ public:
 	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};
 
-	UI_Input_Box* inputBox;
+	//x_button
+	UI_Button* x_button;
+
+	SDL_Rect x_rect = { 0,0,62,45 };
+
+	SDL_Rect x_default = { 0,0,62,45 };
+	SDL_Rect x_hover = { 0,45,62,45 };
+	SDL_Rect x_press = { 0,90,62,45 };
+
+	SDL_Texture* x_button_texture;
+
 
 	_TTF_Font* font;
+
+	//Console
+	UI_Console* console;
+
+	SDL_Rect console_rect = { 0,0,1024,450 };
 };

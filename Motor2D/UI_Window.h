@@ -21,9 +21,11 @@ public:
 
 	bool enabled;
 
+	UI_Button* x_button;
+
 public:
 
-	UI_Window(int x, int y,bool enabled);
+	UI_Window(int x, int y,bool enabled,UI_Button* x_button);
 
 	void Update();
 

@@ -304,6 +304,10 @@ void j1EntityMachine::GroundenemyCollisions(Collider* A, Collider* B)
 	{
 		return;
 	}
+	if (A->type == ObjectType::PLAYER && B->type == ObjectType::PLAYER)
+	{
+		return;
+	}
 	if (B->type == ObjectType::ENEMY) {
 		Collider temp = *A;
 		A = B;
@@ -372,9 +376,9 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 		B = &temp;
 	}
 
-	if (A->type != ObjectType::PLAYER ) {
+	/*if (A->type != ObjectType::PLAYER ) {
 		return;
-	}
+	}*/
 
 	/*if (A->type == ObjectType::ENEMY || B->type == ObjectType::ENEMY) {
 
@@ -446,6 +450,7 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 			{ 
 				player->position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1.0f;
 			}
+
 			player->player.collider->SetPos(player->position.x + player->player.boxOffset_x, player->position.y);
 		}
 	}

@@ -26,7 +26,10 @@ bool j1MainMenu::Start()
 	//Music
 	App->audio->PlayMusic("audio/music/Interstellar_msc.ogg", 0.0f);
 
+	//Textures
 	basic_button_texture = App->tex->Load("gui/UI_Button.png");
+
+	x_button_texture = App->tex->Load("gui/UI_Button_close.png");
 
 	//Text load
 	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25); //Magic
@@ -51,17 +54,18 @@ bool j1MainMenu::Start()
 	UI_mainmenulist.add(exit_button);
 	
 
-	inputBox = App->gui->CreateInputBox(0, 0, false, false, "bruh", &bootleg_color, font, App->gui->CreateImage(0, 0, false, false, default_rect, basic_button_texture), { 0,0,200,50 });
+	//inputBox = App->gui->CreateInputBox(0, 0, false, false, "bruh", &bootleg_color, font, App->gui->CreateImage(0, 0, false, false, default_rect, basic_button_texture), { 0,0,200,50 });
 
-	settings_window = App->gui->CreateUiWindow(200,200,false); //new UI_Window(100, 100, false);
+
+	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect,0,0);
+
+	settings_window = App->gui->CreateUiWindow(200,200,false,x_button); //new UI_Window(100, 100, false);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
 	settings_window->border = border;
 
-	settings_window->addUI(inputBox,100,100);
 
-
-
-	//settings_window->addUI();
+	console = App->gui->CreateConsole(0,300,false,false,&bootleg_color,font,console_rect);
+	
 
 	return true;
 }
@@ -124,6 +128,15 @@ bool j1MainMenu::Update(float dt)
 		{
 			App->frame_rate = 0;
 		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && !console->IsEnabled())
+	{
+		console->Enable();
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN && console->IsEnabled())
+	{
+
 	}
 
 	return true;

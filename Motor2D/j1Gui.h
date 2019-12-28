@@ -17,7 +17,7 @@
 #include "UI_Button.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
-#include "UI_Input_Box.h"
+#include "UI_Console.h"
 
 #include "UI_Window.h"
 
@@ -53,9 +53,9 @@ public:
 
 	UI_Button* CreateButton(int x, int y, bool active, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, SDL_Rect* default_rect, SDL_Rect* hover_rect, SDL_Rect* press_rect, SDL_Texture* image,SDL_Rect rect, int x_offset, int y_offset);
 
-	UI_Window* CreateUiWindow(int x, int y, int enabled = false);
+	UI_Window* CreateUiWindow(int x, int y, int enabled,UI_Button* x_button);
 
-	UI_Input_Box* CreateInputBox(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, UI_Image* border, SDL_Rect rect);
+	UI_Console* CreateConsole(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect);
 
 	void disableUI();
 
@@ -73,7 +73,7 @@ public:
 	p2List<UI_Window*> Windows_list;
 	int click_audio;
 
-	UI_Input_Box* focused;
+	UI_Console* focused;
 };
 
 #endif // __j1GUI_H__

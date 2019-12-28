@@ -149,18 +149,18 @@ UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SStr
 	return ret;
 }
 
-UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled)
+UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled,UI_Button* x_button)
 {
-	UI_Window* ret = new UI_Window(x, y, enabled);
+	UI_Window* ret = new UI_Window(x, y, enabled,x_button);
 
 	Windows_list.add(ret);
 
 	return ret;
 }
 
-UI_Input_Box* j1Gui::CreateInputBox(int x, int y, bool enabled, bool draggable, p2SString text, SDL_Color* color, _TTF_Font* font, UI_Image* border, SDL_Rect rect)
+UI_Console* j1Gui::CreateConsole(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect)
 {
-	UI_Input_Box* ret = new UI_Input_Box(x, y, enabled,draggable,text,color,font,border,rect);
+	UI_Console* ret = new UI_Console(x, y, enabled,draggable,color,font,rect);
 
 	UI_list.add(ret);
 

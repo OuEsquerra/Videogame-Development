@@ -21,6 +21,8 @@ void UI_Button::Update()
 	rect.x = position.x;
 	rect.y = position.y;
 
+	
+
 	pressed = false;
 
 	state = Button_State::DEFAULT;

@@ -106,7 +106,7 @@
     <ClCompile Include="j1Coin.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Input_Box.cpp">
+    <ClCompile Include="UI_Console.cpp">
       <Filter>Desenvolupament  ========\Modules\UI\Ui_Elements</Filter>
     </ClCompile>
   </ItemGroup>
@@ -237,7 +237,7 @@
     <ClInclude Include="j1Coin.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Input_Box.h">
+    <ClInclude Include="UI_Console.h">
       <Filter>Desenvolupament  ========\Modules\UI\Ui_Elements</Filter>
     </ClInclude>
   </ItemGroup>

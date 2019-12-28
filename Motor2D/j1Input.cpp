@@ -134,7 +134,7 @@ bool j1Input::PreUpdate()
 			
 				//strcat((char*)App->gui->focused->GetText(), event.text.text);
 
-				App->gui->focused->text += event.text.text;
+				//App->gui->focused->text += event.text.text;
 
 				break;
 			//case SDL_TEXTEDITING:

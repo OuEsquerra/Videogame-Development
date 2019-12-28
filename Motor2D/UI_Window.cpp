@@ -2,14 +2,17 @@
 //#include "UI_Window.h"
 //#include "UI_Button.h"
 
-UI_Window::UI_Window(int x, int y, bool enabled) : position(x,y) , enabled(enabled)
+UI_Window::UI_Window(int x, int y, bool enabled, UI_Button* x_button) : position(x,y) , enabled(enabled),x_button(x_button)
 {
-
+	addUI(x_button, 0,0);
 }
 
 void UI_Window::Update()
 {
 	border->position = position;
+
+	x_button->position.x = position.x + border->rect.w - x_button->rect.w - 8;
+	x_button->position.y = position.y + 6;
 
 	p2List_item<UI*>* elementsIt = elements.start;
 
@@ -17,10 +20,15 @@ void UI_Window::Update()
 	{
 		elementsIt->data->Update();
 
-		elementsIt->data->position = elementsIt->data->startingPosition;
-		elementsIt->data->position += position;
+		//elementsIt->data->position = elementsIt->data->startingPosition;
+		//elementsIt->data->position += position;
 
 		elementsIt = elementsIt->next;
+	}
+
+	if (x_button->buttonPressed())
+	{
+		disable();
 	}
 }
 
