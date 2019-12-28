@@ -21,8 +21,6 @@ void UI_Button::Update()
 	rect.x = position.x;
 	rect.y = position.y;
 
-	
-
 	pressed = false;
 
 	state = Button_State::DEFAULT;
@@ -73,8 +71,10 @@ void UI_Button::Draw()
 	{
 		App->render->DrawQuad(rect,0,255,255,50);
 	}
-
-	App->render->Blit(text_texture, textPos.x , textPos.y , NULL, false, 0.f);
+	if (text != "")
+	{
+		App->render->Blit(text_texture, textPos.x, textPos.y, NULL, false, 0.f);
+	}
 }
 
 bool UI_Button::buttonPressed()

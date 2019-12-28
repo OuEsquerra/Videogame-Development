@@ -83,5 +83,9 @@ public:
 	//Console
 	UI_Console* console;
 
-	SDL_Rect console_rect = { 0,0,1024,450 };
+	SDL_Color white = { (255),(255),(255),(255) };
+
+	_TTF_Font* consoleFont;
+
+	SDL_Rect console_rect = { 0,0,800,300 };
 };

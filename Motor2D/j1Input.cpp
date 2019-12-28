@@ -1,3 +1,4 @@
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -6,8 +7,10 @@
 #include "BroFiler/Brofiler.h"
 #include "SDL/include/SDL.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 
-#define _CRT_SECURE_NO_WARNINGS
+
+
 #define MAX_KEYS 300
 
 j1Input::j1Input() : j1Module()
@@ -131,10 +134,8 @@ bool j1Input::PreUpdate()
 
 			case SDL_TEXTINPUT:
 				/* Add new text onto the end of our text */
-			
-				//strcat((char*)App->gui->focused->GetText(), event.text.text);
-
-				//App->gui->focused->text += event.text.text;
+		
+				App->mainmenu->console->ConcatNewText(event.text.text);
 
 				break;
 			//case SDL_TEXTEDITING:
