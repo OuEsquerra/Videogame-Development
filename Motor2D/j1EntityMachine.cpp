@@ -114,17 +114,17 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 	switch (Type) {
 	case PLAYER:
 
-		ret = new j1Player(x, y, Type); //Struct Player es igual
+		player = new j1Player(x, y, Type); //Struct Player es igual
 
-		player = (j1Player*)ret;
+		ret = player;
 
 		if (ret != nullptr)
 		{
 			entity_list.add(ret);
 		}
 
-		ret->Awake();
-		ret->Start();
+		player->Awake();
+		player->Start();
 
 		break;
 
@@ -168,7 +168,7 @@ void j1EntityMachine::DeleteEntity(Entity* entity)
 {
 	entity->collider->to_delete = true;
 	entity_list.del(entity_list.At(entity_list.find(entity)));
-
+	
 }
 
 bool j1EntityMachine::Save(pugi::xml_node& node) const 
@@ -237,6 +237,8 @@ bool j1EntityMachine::Load(pugi::xml_node& node)
 
 bool j1EntityMachine::Load_Now()
 {
+	delete player;
+	
 	entity_list.clear();
 
 	pugi::xml_document data;

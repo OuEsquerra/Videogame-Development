@@ -59,7 +59,7 @@ bool j1Player::Start()
 {
 	StartPlayer();
 
-	player.attackBox = { 0,0,32,64 };
+	player.attackBox = { 0, 0, 32, 64 };
 
 	dashtimercheck = new j1PerfTimer;
 	jump_key_down_timer = new j1PerfTimer;
@@ -365,14 +365,7 @@ void j1Player::RunCheck()
 
 void j1Player::GodMode()
 {
-	if (player.godMode)
-	{
-		player.godMode = false;
-	}
-	else
-	{
-		player.godMode = true;
-	}
+	player.godMode = !player.godMode;
 }
 
 bool j1Player::Dash()
