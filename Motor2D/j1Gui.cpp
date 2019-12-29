@@ -158,9 +158,9 @@ UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled,UI_Button* x_button)
 	return ret;
 }
 
-UI_Slider* j1Gui::CreateSlider(int x, int y, bool active, bool draggable)
+UI_Slider* j1Gui::CreateSlider(int x, int y, bool active, bool draggable, int sliderposition)
 {
-	UI_Slider* ret = new UI_Slider(x, y, active, draggable);
+	UI_Slider* ret = new UI_Slider(x, y, active, draggable, sliderposition);
 
 	UI_list.add(ret);
 

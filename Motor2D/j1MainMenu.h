@@ -73,7 +73,7 @@ public:
 	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};
 
-	//x_button
+	//X button
 	UI_Button* x_button;
 
 	SDL_Rect x_rect = { 0,0,62,45 };

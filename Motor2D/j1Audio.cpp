@@ -175,10 +175,12 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 }
 
 
-void j1Audio::SetMusicVol(float vol) {
-	Mix_VolumeMusic(128*vol);
+int j1Audio::SetMusicVol(float vol) {
+	if (vol >= 0.0f) return Mix_VolumeMusic(MIX_MAX_VOLUME * vol);
+	else return Mix_VolumeMusic(-1);
 }
 
-void j1Audio::SetFxVol(float vol) {
-	Mix_Volume(-1, 128*vol);
+int j1Audio::SetFxVol(float vol) {
+	if (vol >= 0.0f) return Mix_Volume(-1, MIX_MAX_VOLUME * vol);
+	else return Mix_Volume(-1, -1);
 }

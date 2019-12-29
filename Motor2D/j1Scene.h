@@ -2,12 +2,16 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "SDL/include/SDL_rect.h"
 
+class UI;
 class UI_Image;
 struct SDL_Texture;
 class UI_Text;
 class UI_Button;
-class UI;
+class UI_Window;
+class UI_Slider;
+
 class j1Timer;
 struct _TTF_Font;
 
@@ -70,6 +74,23 @@ private:
 
 	UI_Text* Bootleg;
 	SDL_Color bootleg_color = {(220),(220),(255),(255)};
+
+	//X button
+	UI_Button* x_button;
+
+	SDL_Rect x_rect = { 0,0,62,45 };
+
+	SDL_Rect x_default = { 0,0,62,45 };
+	SDL_Rect x_hover = { 0,45,62,45 };
+	SDL_Rect x_press = { 0,90,62,45 };
+
+	//Settings
+	UI_Image* border;
+	SDL_Rect border_rect = { 0,0,448,384 };
+
+	UI_Window* settings_window;
+	UI_Slider* fx_slider;
+	UI_Slider* music_slider;
 
 	//HUD
 	SDL_Texture* UI_HUD_Left_Tex;

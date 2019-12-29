@@ -24,7 +24,7 @@ public:
 	//Methods
 public:
 
-	UI_Slider(int x, int y, bool active, bool draggable);
+	UI_Slider(int x, int y, bool active, bool draggable, int sliderposition = 76);
 
 	void Update();
 	

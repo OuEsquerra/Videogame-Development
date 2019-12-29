@@ -34,8 +34,9 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
-	void SetMusicVol(float vol);
-	void SetFxVol(float vol);
+	// Set Volumes - If vol < 0 just return current value; 
+	int SetMusicVol(float vol);
+	int SetFxVol(float vol);
 
 
 private:

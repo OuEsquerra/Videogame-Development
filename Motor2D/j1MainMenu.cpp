@@ -31,6 +31,8 @@ bool j1MainMenu::Start()
 
 	x_button_texture = App->tex->Load("gui/UI_Button_close.png");
 
+	SDL_Texture* icons = App->tex->Load("gui/UI_Slider.png");
+
 	//Text load
 	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25); //Magic
 
@@ -58,18 +60,21 @@ bool j1MainMenu::Start()
 	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect,0,0);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
 
+	console = App->gui->CreateConsole(110, 0, false, false, &white, consoleFont, console_rect);
 
 	//Settings
 	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button);
 	settings_window->border = border;
 
-	console = App->gui->CreateConsole(110,0,false,false,&white,consoleFont,console_rect);
-
 	fx_slider = App->gui->CreateSlider(0, 0, false, false);
-	settings_window->addUI(fx_slider, 90, 150);
+	settings_window->addUI(fx_slider, 90, 125);
+	settings_window->addUI(App->gui->CreateText(0, 0, false, false, "fx", &bootleg_color, font), 90, 90);
+	settings_window->addUI(App->gui->CreateImage(0, 0, false, false, SDL_Rect{76, 48, 19, 22}, icons), 104, 138);
 
 	music_slider = App->gui->CreateSlider(0, 0, false, false);
-	settings_window->addUI(music_slider, 90, 250);
+	settings_window->addUI(music_slider, 90, 275);
+	settings_window->addUI(App->gui->CreateText(0, 0, false, false, "music", &bootleg_color, font), 90, 240);
+	settings_window->addUI(App->gui->CreateImage(0, 0, false, false, SDL_Rect{ 95, 48, 19, 22 }, icons), 104, 288);
 
 	settings_window->addUI(App->gui->CreateText(0,0,false,false,"settings", &bootleg_color,font), 150, 20);
 
@@ -82,9 +87,7 @@ bool j1MainMenu::Start()
 
 	credits_window->addUI(App->gui->CreateText(0, 0, false, false, "credits", &bootleg_color, font), 150, 20);
 
-
 	console = App->gui->CreateConsole(0,300,false,false,&bootleg_color,font,console_rect);
-	
 
 	return true;
 }

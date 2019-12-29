@@ -12,7 +12,7 @@
 #include "j1EntityMachine.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
-#include "j1MainMenu.h"
+//#include "j1MainMenu.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -69,7 +69,7 @@ bool j1Scene::Start()
 	UI_HUD_Right = App->gui->CreateImage(856, 10, true, false, {0,0,158,104}, UI_HUD_Right_Tex);
 
 	
-	UI_Life_Segments[0] = App->gui->CreateImage(28, 10, true, false, SDL_Rect{132,0,30,34 }, UI_HUD_Left_Tex);
+	UI_Life_Segments[0] = App->gui->CreateImage(28, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
 	UI_Life_Segments[1] = App->gui->CreateImage(60, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
 	UI_Life_Segments[2] = App->gui->CreateImage(92, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
 	
@@ -80,6 +80,31 @@ bool j1Scene::Start()
 	score_text = App->gui->CreateText(900, 76, true, false, "0", &bootleg_color, font);
 	coin_score_text = App->gui->CreateText(943, 19, true, false, "0", &black, font);
 
+	//Settings
+	SDL_Texture* x_button_texture = App->tex->Load("gui/UI_Button_close.png");
+	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect, 0, 0);
+	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
+
+	settings_window = App->gui->CreateUiWindow(175, 300, false, x_button);
+	settings_window->border = border;
+
+	SDL_Texture* icons = App->tex->Load("gui/UI_Slider.png");
+
+	int currentVol = ((float)App->audio->SetFxVol(-1.0f)/128.0f)*152.0f;
+
+	fx_slider = App->gui->CreateSlider(0, 0, false, false, currentVol);
+	settings_window->addUI(fx_slider, 90, 125);
+	settings_window->addUI(App->gui->CreateText(0, 0, false, false, "fx", &bootleg_color, font), 90, 90);
+	settings_window->addUI(App->gui->CreateImage(0, 0, false, false, SDL_Rect{ 76, 48, 19, 22 }, icons), 104, 138);
+
+	currentVol = ((float)App->audio->SetMusicVol(-1.0f) / 128.0f)*152.0f;
+	
+	music_slider = App->gui->CreateSlider(0, 0, false, false, currentVol);
+	settings_window->addUI(music_slider, 90, 275);
+	settings_window->addUI(App->gui->CreateText(0, 0, false, false, "music", &bootleg_color, font), 90, 240);
+	settings_window->addUI(App->gui->CreateImage(0, 0, false, false, SDL_Rect{ 95, 48, 19, 22 }, icons), 104, 288);
+
+	settings_window->addUI(App->gui->CreateText(0, 0, false, false, "settings", &bootleg_color, font), 150, 20);
 
 	InGameTime->Start();
 	return true;
@@ -96,8 +121,8 @@ void j1Scene::HUD() {
 	char str[6]; 
 
 	time = (180 - (int)InGameTime->ReadSec());
-	if (time == 0) {
-
+	if (time < 0) {
+		time = 0;
 	}
 	
 	sprintf_s(str, "%d", time);
@@ -109,6 +134,12 @@ void j1Scene::HUD() {
 	sprintf_s(str, "%d", score);
 	score_text->UpdateText(str);
 
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		settings_window->enable();
+	}
+
+	App->audio->SetFxVol(fx_slider->SliderValue());
+	App->audio->SetMusicVol(music_slider->SliderValue());
 }
 
 
@@ -148,6 +179,8 @@ bool j1Scene::Update(float dt)
 			App->frame_rate = 0;
 		}
 	}
+	
+
 
 
 	App->map->Draw();
@@ -173,8 +206,8 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+
+
 
 	return ret;
 }
