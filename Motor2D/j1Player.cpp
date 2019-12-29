@@ -13,8 +13,8 @@
 j1Player::j1Player(float x, float y, EntityType Type) : Entity(x,y,Type)
 {
 
-	//player.playerBox = { (int)x, (int)y, player.boxW,player.boxH };
-	//player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
+	player.playerBox = { (int)x, (int)y, player.boxW,player.boxH };
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
 };
 
 j1Player::~j1Player() 
@@ -59,7 +59,7 @@ bool j1Player::Start()
 {
 	StartPlayer();
 
-	player.attackBox = { 0, 0, 32, 64 };
+	player.attackBox = { 0, 0, 64, 64 };
 
 	dashtimercheck = new j1PerfTimer;
 	jump_key_down_timer = new j1PerfTimer;
@@ -248,7 +248,7 @@ bool j1Player::StartPlayer() {
 
 	if(App->fade->playerReset == true)
 
-	position = App->map->data.start_position;
+	//position = App->map->data.start_position;
 
 	player.playerBox = { (int)position.x, (int)position.y, player.boxW,player.boxH };
 	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
@@ -413,7 +413,7 @@ bool j1Player::Dash()
 		}
 		else
 		{
-			player.attackCollider->SetPos(position.x - 20, position.y);
+			player.attackCollider->SetPos(position.x - 50, position.y);
 		}
 	}
 

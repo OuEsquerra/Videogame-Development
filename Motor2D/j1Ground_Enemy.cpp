@@ -12,6 +12,8 @@ Ground_Enemy::Ground_Enemy(float x, float y, EntityType Type) : Entity(x, y, Typ
 	colliderRect = { (int)position.x, (int)position.y, 50, 64 }; //Magic
 	collider = App->collisions->AddCollider(colliderRect, ObjectType::ENEMY, App->entities,(Entity*)this);
 
+	animation = new p2SString();
+
 	speed = { 150,150 };
 }
 
@@ -40,10 +42,16 @@ bool Ground_Enemy::Start()
 	return true;
 }
 
+bool Ground_Enemy::CleanUp()
+{
+
+	return true;
+}
+
 bool Ground_Enemy::Update(float dt)
 {
 	prevposition = position;
-	animation.create("idle");
+	animation->create("idle");
 
 	pathfind();
 
@@ -59,7 +67,7 @@ bool Ground_Enemy::Update(float dt)
 		collider->SetPos(position.x, position.y);
 	}
 	//Draw enemy
-	App->map->DrawAnimation(animation, "Skeleton", position , &Ainfo, flip);
+	App->map->DrawAnimation(*animation, "Skeleton", position , &Ainfo, flip);
 
 	grounded = false;
 
@@ -97,12 +105,12 @@ void Ground_Enemy::pathfind()
 			if (closest_center.x > position.x - collider->rect.w / 2) {
 				position.x += speed.x * App->dt;
 				flip = true;
-				animation.create("walk");
+				animation->create("walk");
 			}
 			else if (closest_center.x < position.x - collider->rect.w / 2) {
 				position.x -= speed.x * App->dt;
 				flip = false;
-				animation.create("walk");
+				animation->create("walk");
 			}
 		}
 	}

@@ -12,6 +12,7 @@
 #include "j1EntityMachine.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 //#include "j1MainMenu.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -28,6 +29,10 @@ bool j1Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+
+
+	channel = App->audio->LoadFx("audio/fx/Ambience.wav");
 
 	return ret;
 }
@@ -46,8 +51,7 @@ bool j1Scene::Start()
 
 
 	//Ambience sound
-	int channel;
-	channel = App->audio->LoadFx("audio/fx/Ambience.wav");
+
 	App->audio->PlayFx(channel, -1);
 
 	//Music
@@ -117,11 +121,18 @@ bool j1Scene::PreUpdate()
 
 
 void j1Scene::HUD() {
+//	LOG("HUD");
+	
 	char str[6]; 
 
 	time = (180 - (int)InGameTime->ReadSec());
 	if (time < 0) {
 		time = 0;
+
+		App->mainmenu->activate();
+		App->scene->disactivate();
+		App->entities->disactivate();
+		App->collisions->disactivate();
 	}
 	
 	sprintf_s(str, "%d", time);
@@ -137,8 +148,12 @@ void j1Scene::HUD() {
 		settings_window->enable();
 	}
 
+
+//	LOG("SetVOl");
 	App->audio->SetFxVol(fx_slider->SliderValue());
 	App->audio->SetMusicVol(music_slider->SliderValue());
+
+//	LOG("Finished HUD");
 }
 
 
@@ -153,6 +168,7 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->fade->FadeToBlack(1);
+
 
 	if(App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->fade->FadeToBlack(2);

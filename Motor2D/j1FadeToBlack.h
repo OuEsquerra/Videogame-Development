@@ -13,9 +13,7 @@ public:
 	bool Start();
 	bool Awake(pugi::xml_node& conf);
 	bool Update(float dt);
-	bool FadeToBlack(int lvl,  bool reset_player = true, float time = 0.5f);
-
-	bool FadeToBlack_scene(int lvl, bool reset_player = true, float time = 0.5f);
+	bool FadeToBlack(int lvl,  bool isSaveLoad = false, float time = 0.5f);
 
 private:
 	bool SwitchMap(int level);
@@ -40,7 +38,7 @@ private:
 	int level;
 
 	//Wheter the fade to black involves switching levels(TRUE) or switching scenes(FALSE)
-	bool isLevelSwitch;
+	bool isLoad;
 
 
 };

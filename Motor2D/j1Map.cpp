@@ -35,10 +35,10 @@ bool j1Map::Load(pugi::xml_node& node)
 
 
 	if (strcmp(node.child("map_name").attribute("filename").as_string(), "Dark_Map.tmx") == 0) {
-		App->fade->FadeToBlack(1, false);
+		App->fade->FadeToBlack(1, true, 1.0f);
 	}
 	else if (strcmp(node.child("map_name").attribute("filename").as_string(), "Dark_Map2.tmx") == 0) {
-		App->fade->FadeToBlack(2, false);
+		App->fade->FadeToBlack(2, true, 1.0f);
 	}
 	else LOG("Something's wrong!");
 
@@ -103,7 +103,6 @@ void j1Map::Draw()
 		}
 		layerIter = layerIter->next;
 	}
-	
 }
 
 void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, AnimationInfo* ainfo, bool flip)
@@ -197,7 +196,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 			continue;
 
 		uchar* map = new uchar[layer->width*layer->height];
-		memset(map, 1, layer->width*layer->height);
+		memset(map, 1, layer->width*layer->height*sizeof(uchar));
 
 		for (int y = 0; y < data.height; ++y)
 		{
@@ -260,8 +259,9 @@ bool j1Map::CleanUp()
 	{
 		item->data->animations.clear();
 
-
-		SDL_DestroyTexture(item->data->texture);
+		//SDL_DestroyTexture
+		//if(item->data->texture != NULL)
+		//SDL_DestroyTexture(item->data->texture);
 		
 		//delete item;
 		//RELEASE(item->data);
@@ -276,7 +276,9 @@ bool j1Map::CleanUp()
 
 	while (item2 != NULL)
 	{
+		if(item2->data->objects != NULL)
 		delete[] item2->data->objects;
+		
 		delete item2->data;
 
 		item2 = item2->next;
@@ -285,6 +287,17 @@ bool j1Map::CleanUp()
 	App->map->data.objectgroups.clear();
 	
 	// Remove all layers
+	p2List_item<MapLayer*>* item3;
+	item3 = App->map->data.layers.start;
+
+	while (item3 != NULL)
+	{
+
+		delete item3->data;
+
+		item3 = item3->next;
+	}
+	
 	data.layers.clear();
 
 
@@ -424,6 +437,7 @@ bool j1Map::Load(int level)
 		RELEASE_ARRAY(data);
 	}
 
+	//LOG("walkability map finished");
 	map_loaded = ret;
 
 	return ret;
@@ -573,7 +587,7 @@ bool j1Map::LoadTilesetAnimation(pugi::xml_node& tileset_node, TileSet* set)
 		newAnimation->id = iterator_node.attribute("id").as_uint(); // Get the Id of the animated Tile
 		newAnimation->name = iterator_node.child("properties").child("property").attribute("name").as_string(); //Get the name of the animation inside extra attribute
 		newAnimation->frames = new uint[12]; // new array for frames
-		memset(newAnimation->frames, 0, 12); // allocate the new array
+		memset(newAnimation->frames, 0, 12*sizeof(uint)); // allocate the new array
 
 		int j = 0;
 		for (pugi::xml_node iterator_node_anim = iterator_node.child("animation").child("frame"); iterator_node_anim; j++ ) { //Enters the frame of the animation child inside the tile we are in

@@ -141,8 +141,21 @@ bool j1Collisions::PostUpdate() {
 
 bool j1Collisions::CleanUp() {
 
-	colliders.clear();
 
+
+
+	p2List_item<Collider *>* item;
+	item = colliders.start;
+
+	while (item != NULL)
+	{
+
+		RELEASE(item->data);
+
+		item = item->next;
+	}
+
+	colliders.clear();
 	return true;
 };
 
@@ -195,6 +208,7 @@ void j1Collisions::LoadFromMap(bool LoadEntities) {
 		}
 		list_i = list_i->next;
 	}
+	LOG("Load Collisions From Map complete");
 }
 
 //  Struct Collider Methods --------------------------------------

@@ -22,7 +22,7 @@ j1Gui::~j1Gui()
 bool j1Gui::Awake(pugi::xml_node& conf)
 {
 	bool ret = true;
-
+	click_audio = App->audio->LoadFx("audio/fx/button_click.wav");
 	return ret;
 }
 

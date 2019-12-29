@@ -50,7 +50,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-
+	Mix_AllocateChannels(16);
 
 	return ret;
 }
@@ -142,7 +142,7 @@ unsigned int j1Audio::LoadFx(const char* path)
 
 	if(!active)
 		return 0;
-
+	LOG("FX Channels: %d", Mix_AllocateChannels(-1));
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
 
 	if(chunk == NULL)
