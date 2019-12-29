@@ -64,6 +64,8 @@ bool j1Player::Start()
 	dashtimercheck = new j1PerfTimer;
 	jump_key_down_timer = new j1PerfTimer;
 
+	
+
 	return true;
 };
 

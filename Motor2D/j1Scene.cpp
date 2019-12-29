@@ -65,7 +65,7 @@ bool j1Scene::Start()
 	time = 180;
 	coin_score = 0;
 	score = 0;
-	lives = 3;
+	hp = 3;
 
 	UI_HUD_Left_Tex = App->tex->Load("gui/UI_HUD_Left.png");
 	UI_HUD_Right_Tex = App->tex->Load("gui/UI_HUD_Right.png");
@@ -73,7 +73,6 @@ bool j1Scene::Start()
 	UI_HUD_Left = App->gui->CreateImage(10, 10, true, false, {0,0,132,88}, UI_HUD_Left_Tex);
 	UI_HUD_Right = App->gui->CreateImage(856, 10, true, false, {0,0,158,104}, UI_HUD_Right_Tex);
 
-	
 	UI_Life_Segments[0] = App->gui->CreateImage(28, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
 	UI_Life_Segments[1] = App->gui->CreateImage(60, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
 	UI_Life_Segments[2] = App->gui->CreateImage(92, 10, true, false, SDL_Rect{ 132,0,30,34 }, UI_HUD_Left_Tex);
@@ -146,6 +145,30 @@ void j1Scene::HUD() {
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		settings_window->enable();
+	}
+
+	switch (hp)
+	{
+		case 0:
+			UI_Life_Segments[0]->Disable();
+			UI_Life_Segments[1]->Disable();
+			UI_Life_Segments[2]->Disable();
+			break;
+		case 1:
+			UI_Life_Segments[0]->Enable();
+			UI_Life_Segments[1]->Disable();
+			UI_Life_Segments[2]->Disable();
+			break;
+		case 2:
+			UI_Life_Segments[0]->Enable();
+			UI_Life_Segments[1]->Enable();
+			UI_Life_Segments[2]->Disable();
+			break;
+		case 3:
+			UI_Life_Segments[0]->Enable();
+			UI_Life_Segments[1]->Enable();
+			UI_Life_Segments[2]->Enable();
+			break;
 	}
 
 

@@ -16,6 +16,8 @@ j1EntityMachine::j1EntityMachine() {
 
 bool j1EntityMachine::Start()
 {
+	damage_timer = new j1Timer();
+
 	p2List_item<Entity*>* entityIter = entity_list.start;
 
 	while (entityIter != NULL)
@@ -44,6 +46,7 @@ bool  j1EntityMachine::Awake(pugi::xml_node& config)
 		entityIter = entityIter->next;
 	}*/
 	coin = App->audio->LoadFx("audio/fx/coin.wav");
+	hurt = App->audio->LoadFx("audio/fx/hurt.wav");
 	return true;
 };
 
@@ -405,8 +408,18 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 
 	if (A->type == ObjectType::PLAYER && B->type == ObjectType::ENEMY)
 	{
-		App->fade->FadeToBlack(1);
-		//App->scene->lives--;
+		if (damage_timer->Read() >= 1000.f)
+		{
+			App->scene->hp--;
+			damage_timer->Start();
+			App->audio->PlayFx(hurt);
+		}
+		if (App->scene->hp <= 0)
+		{
+			App->audio->PlayFx(hurt);
+			App->fade->FadeToBlack(1);
+			App->scene->hp = 3;
+		}
 		return;
 	}
 

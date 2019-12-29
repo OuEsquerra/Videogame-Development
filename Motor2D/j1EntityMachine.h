@@ -6,6 +6,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "SDL/include/SDL.h"
+#include "j1Timer.h"
 
 #include "j1Entity.h"
 #include "j1Flying_Enemy.h"
@@ -66,9 +67,12 @@ public:
 
 	j1Player* player = nullptr;
 
+	j1Timer* damage_timer;
+
 private:
 	pugi::xml_node load_node;
 	int coin;
+	int hurt;
 };
 
 

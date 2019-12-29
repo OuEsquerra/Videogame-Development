@@ -50,7 +50,7 @@ public:
 	int coin_score;
 	int score;
 	int time;
-	int lives;
+	int hp;
 
 private:
 

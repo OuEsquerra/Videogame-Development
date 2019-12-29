@@ -12,7 +12,6 @@ public:
 	SDL_Color* color;
 	_TTF_Font* font;
 
-	//int minimumTextPos = 250 ;
 	int bruh;
 
 public:

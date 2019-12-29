@@ -3,6 +3,7 @@
 #include "j1Input.h"
 #include "p2Log.h"
 #include "j1EntityMachine.h"
+#include "j1FadeToBlack.h"
 UI_Console::UI_Console(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect) : UI(x,y,enabled,draggable), base_rect(rect),color(color),font(font)
 {
 	texture = App->font->Print(text.GetString(), *color, font);
@@ -29,31 +30,6 @@ void UI_Console::Update()
 		AddText((char*)text.GetString());
 		text.Clear();
 	}
-
-	//Scroll funcionallity
-	//if (App->input->getScrollDown() && logs.start->data->position.y > 250)
-	//{
-	//	p2List_item<UI_Text*>* textIt = logs.start;
-
-	//	while (textIt != nullptr)
-	//	{
-	//		textIt->data->position.y -= 25;
-
-	//		textIt = textIt->next;
-	//	}
-	//}
-	//else if (App->input->getScrollUp()  )
-	//{
-	//	p2List_item<UI_Text*>* textIt = logs.start;
-
-	//	while (textIt != nullptr)
-	//	{
-	//		textIt->data->position.y += 25;
-
-	//		textIt = textIt->next;
-	//	}
-	//}
-
 
 	p2List_item<UI_Text*>* textIt = logs.start;
 
@@ -131,13 +107,55 @@ void UI_Console::Execute(char* call)
 		App->audio->PlayFx(bruh);
 	}
 
-	//FPS check
+	if (strcmp("FPS <30>", call) == 0)
+	{
+		App->frame_rate = 30;
+	}
+
+	if (strcmp("FPS <45>", call) == 0)
+	{
+		App->frame_rate = 45;
+	}
+	if (strcmp("FPS <60>", call) == 0)
+	{
+		App->frame_rate = 60;
+	}
+	if (strcmp("FPS <90>", call) == 0)
+	{
+		App->frame_rate = 90;
+	}
+	if (strcmp("FPS <120>", call) == 0) 
+	{
+		App->frame_rate = 120;
+	}
+	if (strcmp("FPS <144>", call) == 0) //144 bcz u plev, all hail pc master reis up to 144hz
+	{
+		App->frame_rate = 144;
+	}
+
+	if (strcmp("map <1>", call) == 0)
+	{
+		App->fade->FadeToBlack(1);
+	}
+	if (strcmp("map <2>", call) == 0)
+	{
+		App->fade->FadeToBlack(2);
+	}
+
+	if (strcmp("list", call) == 0)
+	{
+		AddText("list of commands:");
+		AddText("list - Shows the list of possible commands");
+		AddText("quit - Quits the game");
+		AddText("god_mode - Toggles godmode on player");
+		AddText("FPS <number> - Sets frame rate to specified number");
+		AddText("map <number> - Loads specified map (1 or 2)");
+	}
 
 }
 
 void UI_Console::AddText(char* string)
 {
-	//logs.del(logs.start);
 
 	p2List_item<UI_Text*>* textIt = logs.start;
 
@@ -149,6 +167,4 @@ void UI_Console::AddText(char* string)
 	}
 
 	logs.add(new UI_Text(position.x + 5, 250, true, false, string, color, font));
-
 }
-
