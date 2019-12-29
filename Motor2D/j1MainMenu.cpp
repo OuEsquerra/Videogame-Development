@@ -129,7 +129,7 @@ bool j1MainMenu::Update(float dt)
 
 	if (link_button->buttonPressed())
 	{
-		ShellExecuteA(NULL, "open", "https://paupedra.github.io/Videogame-Development/", NULL , NULL , SW_SHOWNORMAL);
+		//ShellExecuteA(NULL, "open", "https://paupedra.github.io/Videogame-Development/", NULL , NULL , SW_SHOWNORMAL);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)

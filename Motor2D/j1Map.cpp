@@ -126,11 +126,11 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 		animTileset = animTileset->next;
 	}
 
-	if (animTileset == NULL)
+	if (animTileset == nullptr)
 		return;
 
 	// I have the adventurer Tileset inside I have animation
-	Animations* currentanim_u;
+	//Animations* currentanim_u;
 
 	p2List_item<Animations*>* currentanim = animTileset->data->animations.start;
 
@@ -140,18 +140,14 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 
 		if (cmp == 0)
 		{
-			//currentanim.frames = animIter->data->frames; //gets the animation with the name we sent
-			//currentanim.id = animIter->data->id;
-			//currentanim.name = animIter->data->name;
-			//currentanim.nFrames = animIter->data->nFrames;
-			//currentanim.speed = animIter->data->speed;
-			//currentanim_u = 
+			
 			break;
 
 		}
 
 		currentanim = currentanim->next;
 	}
+	if (currentanim == nullptr) return;
 
 	if (ainfo->prev_anim_name != currentanim->data->name.GetString()) // So that when animations change they start from frame 0
 	{
