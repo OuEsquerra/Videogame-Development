@@ -461,8 +461,7 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 			}
 
 			//Player to the right
-			else if (A->rect.x > (B->rect.x + B->rect.w * 3.0f / 4.0f)
-				&& player->prevposition.x - 1  >= (B->rect.x + B->rect.w))
+			else if (A->rect.x > (B->rect.x + B->rect.w * 3.0f / 4.0f))
 			{ 
 				player->position.x = B->rect.x + B->rect.w - player->player.boxOffset_x - 1.0f;
 			}
