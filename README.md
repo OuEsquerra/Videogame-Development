@@ -1,8 +1,9 @@
 # Void Leaper
-Repository for our 2D platformer. This prototype is the first delivery of a platormer game which is part of the
+Repository for our 2D platformer. This prototype is the third delivery of a platormer game which is part of the
 UPC Game Design and Development Degree. 
 
 The Github repository can be accesed [here.](https://github.com/paupedra/Videogame-Development/) 
+The project's site can be accesed [here.](https://paupedra.github.io/Videogame-Development/)
 
 ## Authors
 - Pau Fiol-[paufiol](https://github.com/paufiol/)
