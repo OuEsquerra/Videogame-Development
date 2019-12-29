@@ -61,6 +61,9 @@ public:
 		return mouse_buttons[id - 1];
 	}
 
+	bool getScrollUp();
+
+	bool getScrollDown();
 
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
@@ -76,6 +79,9 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+	bool		scrollUp;
+	bool		scrollDown;
+	int			prev_scroll_y = 0;
 	int scale = 0;
 
 };

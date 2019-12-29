@@ -138,19 +138,24 @@ bool j1Input::PreUpdate()
 				App->mainmenu->console->ConcatNewText(event.text.text);
 
 				break;
-			//case SDL_TEXTEDITING:
 
-				/*
-				Update the composition text.
-				Update the cursor position.
-				Update the selection length (if any).
-				*/
+			case SDL_MOUSEWHEEL:
 
-				//composition = event.edit.text;
-				//cursor = event.edit.start;
-				//selection_len = event.edit.length;
+				scrollUp = false;
+				scrollDown = false;
 
-				//break;
+				if (event.wheel.y > 0 && prev_scroll_y != event.wheel.y) // scroll up
+				{
+					scrollUp = true;
+				}
+				else if (event.wheel.y < 0 && prev_scroll_y != event.wheel.y) // scroll down
+				{
+					scrollDown = true;
+				}
+				
+				prev_scroll_y = event.wheel.y;
+
+				break;
 		}
 	}
 
@@ -195,4 +200,14 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+bool j1Input::getScrollUp()
+{
+	return scrollUp;
+}
+
+bool j1Input::getScrollDown()
+{
+	return scrollDown;
 }

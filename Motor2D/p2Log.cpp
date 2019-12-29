@@ -17,7 +17,4 @@ void log(const char file[], int line, const char* format, ...)
 	OutputDebugString(tmp_string2);
 
 	
-	//App->mainmenu->console->AddText(tmp_string2);
-	
-
 }

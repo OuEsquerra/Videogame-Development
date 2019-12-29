@@ -26,6 +26,31 @@ void UI_Console::Update()
 		text.Clear();
 	}
 
+	//Scroll funcionallity
+	//if (App->input->getScrollDown() && logs.start->data->position.y > 250)
+	//{
+	//	p2List_item<UI_Text*>* textIt = logs.start;
+
+	//	while (textIt != nullptr)
+	//	{
+	//		textIt->data->position.y -= 25;
+
+	//		textIt = textIt->next;
+	//	}
+	//}
+	//else if (App->input->getScrollUp()  )
+	//{
+	//	p2List_item<UI_Text*>* textIt = logs.start;
+
+	//	while (textIt != nullptr)
+	//	{
+	//		textIt->data->position.y += 25;
+
+	//		textIt = textIt->next;
+	//	}
+	//}
+
+
 	p2List_item<UI_Text*>* textIt = logs.start;
 
 	while (textIt != nullptr)
@@ -42,7 +67,7 @@ void UI_Console::Draw()
 {
 	App->render->DrawQuad(rect, 0, 0, 0, 100);
 
-	if (text != "")
+	if (text != "" )
 	{
 		App->render->Blit(texture, position.x , position.y + rect.h - 20, NULL, false, 0.f);
 	}
@@ -51,12 +76,15 @@ void UI_Console::Draw()
 
 	while (textIt != nullptr)
 	{
-		textIt->data->Draw();
-
+		if (textIt->data->position.x >= rect.x
+			&& textIt->data->position.x < rect.x + rect.w
+			&& textIt->data->position.y > rect.y
+			&& textIt->data->position.y < rect.y + rect.h)
+		{
+			textIt->data->Draw();
+		}
 		textIt = textIt->next;
 	}
-
-
 }
 
 void UI_Console::UpdateText()
@@ -121,3 +149,4 @@ void UI_Console::AddText(char* string)
 	logs.add(new UI_Text(125, 250, true, false, string, color, font));
 
 }
+

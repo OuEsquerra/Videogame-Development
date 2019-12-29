@@ -12,6 +12,7 @@ public:
 	_TTF_Font* font;
 
 	int maxTexts = 0;
+	int minimumTextPos = 250 ;
 
 public:
 
