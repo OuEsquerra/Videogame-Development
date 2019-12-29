@@ -85,7 +85,7 @@ bool j1Scene::Start()
 	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect, 0, 0);
 	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
 
-	settings_window = App->gui->CreateUiWindow(175, 300, false, x_button);
+	settings_window = App->gui->CreateUiWindow(275, 200, false, x_button);
 	settings_window->border = border;
 
 	SDL_Texture* icons = App->tex->Load("gui/UI_Slider.png");

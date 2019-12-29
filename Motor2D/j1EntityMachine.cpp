@@ -5,6 +5,7 @@
 #include "j1FadeToBlack.h"
 #include "j1Scene.h"
 #include "BroFiler/Brofiler.h"
+#include "j1Audio.h"
 
 #include "j1EntityMachine.h"
 
@@ -23,6 +24,8 @@ bool j1EntityMachine::Start()
 
 		entityIter = entityIter->next;
 	}
+
+	coin = App->audio->LoadFx("audio/fx/coin.wav");
 
 	return true;
 };
@@ -404,6 +407,7 @@ void j1EntityMachine::PlayerCollisions(Collider* A, Collider* B)
 		if (tmp->picked_up == false) {
 			App->scene->coin_score += 1;
 			tmp->picked_up = true;
+			App->audio->PlayFx(coin);
 		}
 		App->scene->score += 25;
 

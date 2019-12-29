@@ -68,7 +68,7 @@ public:
 
 private:
 	pugi::xml_node load_node;
-	
+	int coin;
 };
 
 
