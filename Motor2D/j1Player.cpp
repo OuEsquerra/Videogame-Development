@@ -13,8 +13,8 @@
 j1Player::j1Player(float x, float y, EntityType Type) : Entity(x,y,Type)
 {
 
-	//player.playerBox = { (int)x, (int)y, player.boxW,player.boxH };
-	//player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
+	player.playerBox = { (int)x, (int)y, player.boxW,player.boxH };
+	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);
 };
 
 j1Player::~j1Player() 
@@ -248,7 +248,7 @@ bool j1Player::StartPlayer() {
 
 	if(App->fade->playerReset == true)
 
-	position = App->map->data.start_position;
+	//position = App->map->data.start_position;
 
 	player.playerBox = { (int)position.x, (int)position.y, player.boxW,player.boxH };
 	player.collider = App->collisions->AddCollider(player.playerBox, ObjectType::PLAYER, App->entities, (Entity*)this);

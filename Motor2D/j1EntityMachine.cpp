@@ -25,8 +25,6 @@ bool j1EntityMachine::Start()
 		entityIter = entityIter->next;
 	}
 
-
-
 	return true;
 };
 
@@ -99,10 +97,11 @@ bool j1EntityMachine::CleanUp() {
 
 	while (entityIter != NULL)
 	{
-		if (entityIter->data->type != PLAYER) {
-			entityIter->data->CleanUp();
-			RELEASE(entityIter->data);
-		}
+		
+		entityIter->data->CleanUp();
+		
+		//RELEASE(entityIter->data);
+		
 		
 		entityIter = entityIter->next;
 	}
@@ -172,7 +171,9 @@ Entity* j1EntityMachine::CreateEntity(float x, float y, EntityType Type) {
 // Destroy an Entity and remove it from the list -----------------------------------------------------
 void j1EntityMachine::DeleteEntity(Entity* entity) 
 {
-	entity->collider->to_delete = true;
+	if (entity->collider != nullptr) {
+		entity->collider->to_delete = true;
+	}
 	entity_list.del(entity_list.At(entity_list.find(entity)));
 	
 }
@@ -194,8 +195,6 @@ bool j1EntityMachine::Save(pugi::xml_node& node) const
 		entity_node.append_child("speed").append_attribute("x") = entityIter->data->speed.x;
 		entity_node.child("speed").append_attribute("y") = entityIter->data->speed.y;
 
-		//entity_node.append_child("animation").set_value(entityIter->data->animation.GetString());
-
 		entityIter->data->Save(entity_node);
 
 		entityIter = entityIter->next;
@@ -205,11 +204,9 @@ bool j1EntityMachine::Save(pugi::xml_node& node) const
 };
 
 bool j1EntityMachine::Load(pugi::xml_node& node)
-{
-	//load_node = node;
+{	
 	
-	/*entity_list.clear();
-	
+	/*
 	pugi::xml_node node_i = node.child("entity");
 	Entity* loaded_entity;
 	
@@ -227,23 +224,30 @@ bool j1EntityMachine::Load(pugi::xml_node& node)
 		}
 		else if (strcmp(node_i.attribute("EntityType").as_string(), "PLAYER") == 0) {
 			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, PLAYER);
+			//loaded_entity = nullptr;
+			//pla
 		}
 		else if (strcmp(node_i.attribute("EntityType").as_string(), "COIN") == 0) {
 			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, COIN);
 		}
 		else continue;
-		loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
-		loaded_entity->prevposition.x = node_i.child("position").attribute("y").as_float();
+		
+		if (loaded_entity != nullptr) {
+			loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
+			loaded_entity->prevposition.x = node_i.child("position").attribute("y").as_float();
 
-		entity_list.add(loaded_entity);
-	}*/
+			entity_list.add(loaded_entity);
+		}
 
+	}
+*/
 	return true;
 };
 
+
 bool j1EntityMachine::Load_Now()
 {
-	delete player;
+
 	
 	entity_list.clear();
 
@@ -276,10 +280,12 @@ bool j1EntityMachine::Load_Now()
 			loaded_entity = CreateEntity((float)pos.x, (float)pos.y, COIN);
 		}
 		else continue;
-		loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
-		loaded_entity->prevposition.x = node_i.child("position").attribute("y").as_float();
+		if (loaded_entity != nullptr) {
+			loaded_entity->prevposition.x = node_i.child("position").attribute("x").as_float();
+			loaded_entity->prevposition.y = node_i.child("position").attribute("y").as_float();
 
-		entity_list.add(loaded_entity);
+			//entity_list.add(loaded_entity);
+		}
 	}
 
 	return true;

@@ -35,10 +35,10 @@ bool j1Map::Load(pugi::xml_node& node)
 
 
 	if (strcmp(node.child("map_name").attribute("filename").as_string(), "Dark_Map.tmx") == 0) {
-		App->fade->FadeToBlack(1, false);
+		App->fade->FadeToBlack(1, true, 1.0f);
 	}
 	else if (strcmp(node.child("map_name").attribute("filename").as_string(), "Dark_Map2.tmx") == 0) {
-		App->fade->FadeToBlack(2, false);
+		App->fade->FadeToBlack(2, true, 1.0f);
 	}
 	else LOG("Something's wrong!");
 

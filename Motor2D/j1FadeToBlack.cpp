@@ -87,17 +87,17 @@ bool j1FadeToBlack::Update(float dt)
 }
 
 // Fade to black. At mid point deactivate one module, then activate the other
-bool j1FadeToBlack::FadeToBlack(int lvl, bool reset_player, float time)
+bool j1FadeToBlack::FadeToBlack(int lvl, bool isSaveLoad, float time)
 {
 	bool ret = false;
 	
-	playerReset = reset_player;
-	level = lvl;
 
-	isLevelSwitch = true;
 
 	if(current_step == fade_step::none)
 	{
+		isLoad = isSaveLoad;
+		level = lvl;
+
 		current_step = fade_step::fade_to_black;
 		start_time = SDL_GetTicks();
 		total_time = (Uint32)(time * 0.5f * 1000.0f);
@@ -139,9 +139,34 @@ bool j1FadeToBlack::SwitchMap(int level) {
 	App->entities->CleanUp();
 	App->collisions->CleanUp();
 
-	
 	App->map->Load(level);
-	App->collisions->LoadFromMap();
+	if (!isLoad) {
+		App->collisions->LoadFromMap();
+	}
+	else if (isLoad) {
+		App->collisions->LoadFromMap(false);
+
+		//Delete all entities.
+		p2List_item<Collider*>* Coll_iterator = App->collisions->colliders.start;
+		while (Coll_iterator != nullptr) {
+
+			if (Coll_iterator->data->type == ObjectType::ENEMY || Coll_iterator->data->type == ObjectType::PLAYER || Coll_iterator->data->type == ObjectType::COIN)
+			{
+				int tmp = App->entities->entity_list.find(Coll_iterator->data->entity);
+				if (tmp != -1) {
+					
+					Entity* to_delete = App->entities->entity_list.At(tmp)->data;
+					App->entities->DeleteEntity(to_delete);
+				}	
+			
+			}
+			Coll_iterator = Coll_iterator->next;
+		}
+	
+
+
+		App->entities->Load_Now();
+	}
 
 
 	return ret;
