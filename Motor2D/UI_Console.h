@@ -1,7 +1,8 @@
 class UI_Console : public UI
 {
 public:
-	SDL_Rect rect;
+	SDL_Rect base_rect;
+	SDL_Rect input_rect;
 
 	p2List<UI_Text*> logs;
 
@@ -11,8 +12,8 @@ public:
 	SDL_Color* color;
 	_TTF_Font* font;
 
-	int maxTexts = 0;
-	int minimumTextPos = 250 ;
+	//int minimumTextPos = 250 ;
+	int bruh;
 
 public:
 

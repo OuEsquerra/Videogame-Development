@@ -1,4 +1,3 @@
-
 class UI_Slider : public UI
 {
 public:

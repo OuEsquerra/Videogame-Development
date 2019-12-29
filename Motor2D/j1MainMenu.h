@@ -70,8 +70,8 @@ public:
 	UI_Button* link_button;
 	UI_Text* credits_text;
 
-	UI_Image* border;
 	SDL_Rect border_rect = {0,0,448,384};
+	SDL_Texture* border_tex;
 
 	//X button
 	UI_Button* x_button;
@@ -84,15 +84,7 @@ public:
 
 	SDL_Texture* x_button_texture;
 
-
 	_TTF_Font* font;
 
-	//Console
-	UI_Console* console;
-
-	SDL_Color white = { (255),(255),(255),(255) };
-
-	_TTF_Font* consoleFont;
-
-	SDL_Rect console_rect = { 0,0,800,300 };
+	
 };

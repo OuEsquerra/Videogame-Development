@@ -31,13 +31,14 @@ bool j1MainMenu::Start()
 
 	x_button_texture = App->tex->Load("gui/UI_Button_close.png");
 
+	border_tex = App->tex->Load("gui/UI_Border.png");
+
 	SDL_Texture* icons = App->tex->Load("gui/UI_Slider.png");
 
 	//Text load
 	font = App->font->Load("fonts/MajorMonoDisplay.ttf", 25); //Magic
 
-	consoleFont = App->font->Load("fonts/Minecraftia-Regular.ttf", 20);
-
+	
 	//Buttons
 	background =  App->gui->CreateImage(0, 0, true, false, { 0,0,1024,768 }, App->tex->Load("gui/Titlescreen.png"));
 	UI_mainmenulist.add(background);
@@ -57,14 +58,16 @@ bool j1MainMenu::Start()
 	exit_button = App->gui->CreateButton(700, 650, true, false, "exit", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 80, 13);
 	UI_mainmenulist.add(exit_button);
 
-	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect,0,0);
-	border = App->gui->CreateImage(0, 100, false, false, border_rect, App->tex->Load("gui/UI_Border.png"));
-
-	console = App->gui->CreateConsole(110, 0, false, false, &white, consoleFont, console_rect);
-
 	//Settings
-	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button);
-	settings_window->border = border;
+	x_button = App->gui->CreateButton(0, 0, false, false, "", &bootleg_color, font, &x_default, &x_hover, &x_press, x_button_texture, x_rect, 0, 0);
+	settings_window = App->gui->CreateUiWindow(175, 300,false,x_button,border_tex);
+	//Credits
+	credits_window = App->gui->CreateUiWindow(175, 300, false, x_button, border_tex);
+
+	link_button = App->gui->CreateButton(700, 650, false, false, "website", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
+	credits_window->addUI(link_button, 100, 300);
+
+	credits_window->addUI(App->gui->CreateText(0, 0, false, false, "credits", &bootleg_color, font), 150, 20);
 
 	fx_slider = App->gui->CreateSlider(0, 0, false, false);
 	settings_window->addUI(fx_slider, 90, 125);
@@ -77,17 +80,6 @@ bool j1MainMenu::Start()
 	settings_window->addUI(App->gui->CreateImage(0, 0, false, false, SDL_Rect{ 95, 48, 19, 22 }, icons), 104, 288);
 
 	settings_window->addUI(App->gui->CreateText(0,0,false,false,"settings", &bootleg_color,font), 150, 20);
-
-	//Credits
-	credits_window = App->gui->CreateUiWindow(175, 300, false, x_button);
-	credits_window->border = border;
-
-	link_button = App->gui->CreateButton(700, 650, false, false, "website", &bootleg_color, font, &default_rect, &hover_rect, &press_rect, basic_button_texture, button_rect, 60, 13);
-	credits_window->addUI(link_button, 100, 300);
-
-	credits_window->addUI(App->gui->CreateText(0, 0, false, false, "credits", &bootleg_color, font), 150, 20);
-
-	console = App->gui->CreateConsole(125,0,false,false,&white,consoleFont,console_rect);
 
 	return true;
 }
@@ -154,17 +146,7 @@ bool j1MainMenu::Update(float dt)
 
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !console->IsEnabled())
-	{
-		console->Enable();
-		console->text.Clear();
-		SDL_StartTextInput();
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && console->IsEnabled())
-	{
-		console->Disable();
-		SDL_StopTextInput();
-	}
+	
 	
 	App->audio->SetFxVol(fx_slider->SliderValue());
 	App->audio->SetMusicVol(music_slider->SliderValue());

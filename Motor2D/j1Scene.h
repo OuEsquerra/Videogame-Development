@@ -85,8 +85,8 @@ private:
 	SDL_Rect x_press = { 0,90,62,45 };
 
 	//Settings
-	UI_Image* border;
 	SDL_Rect border_rect = { 0,0,448,384 };
+	SDL_Texture* border_tex;
 
 	UI_Window* settings_window;
 	UI_Slider* fx_slider;

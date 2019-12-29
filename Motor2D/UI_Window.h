@@ -23,9 +23,13 @@ public:
 
 	UI_Button* x_button;
 
+	SDL_Rect border_rect = { 0,0,448,384 };
+
+	SDL_Texture* border_texture;
+
 public:
 
-	UI_Window(int x, int y,bool enabled,UI_Button* x_button);
+	UI_Window(int x, int y,bool enabled,UI_Button* x_button,SDL_Texture* border_texture);
 
 	void Update();
 

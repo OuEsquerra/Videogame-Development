@@ -135,7 +135,7 @@ bool j1Input::PreUpdate()
 			case SDL_TEXTINPUT:
 				/* Add new text onto the end of our text */
 		
-				App->mainmenu->console->ConcatNewText(event.text.text);
+				App->gui->console->ConcatNewText(event.text.text);
 
 				break;
 

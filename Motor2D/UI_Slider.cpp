@@ -16,6 +16,8 @@ UI_Slider::UI_Slider(int x, int y, bool active, bool draggable, int sliderpositi
 	bar = { 0, 0, 280, 48 };
 	thumb = { 0, 48, 36, 28 };
 	thumb_hovered = { 38, 48, 36, 28 };
+
+	clickable_rect = { position.x + 46, position.y + 4, 188, 40 };
 }
 
 void UI_Slider::Update()
@@ -48,7 +50,7 @@ void UI_Slider::Draw() {
 	}
 	else App->render->Blit(texture, position.x + thumb_offset + sliderpos, position.y + 10, &thumb, false, .0f);
 	
-	if (!debug)
+	if (debug)
 	{
 		App->render->DrawQuad(clickable_rect, 0, 255, 255, 50, true, false);
 	}

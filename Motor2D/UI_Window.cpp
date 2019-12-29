@@ -2,10 +2,14 @@
 //#include "UI_Window.h"
 //#include "UI_Button.h"
 
-UI_Window::UI_Window(int x, int y, bool enabled, UI_Button* x_button) : position(x,y) , enabled(enabled),x_button(x_button)
+UI_Window::UI_Window(int x, int y, bool enabled, UI_Button* x_button,SDL_Texture* border_texture) : position(x,y) , enabled(enabled),x_button(x_button),border_texture(border_texture)
 {
 	addUI(x_button, 0,0);
-	
+	border = App->gui->CreateImage(0, 100, false, false, border_rect, border_texture);
+
+	border->position = position;
+	x_button->position.x = position.x + border->rect.w - x_button->rect.w - 8;
+	x_button->position.y = position.y + 6;
 }
 
 void UI_Window::Update()

@@ -21,9 +21,7 @@ j1Gui::~j1Gui()
 // Called before render is available
 bool j1Gui::Awake(pugi::xml_node& conf)
 {
-	LOG("Loading GUI atlas");
 	bool ret = true;
-	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
 
 	return ret;
 }
@@ -31,8 +29,11 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
-
 	click_audio = App->audio->LoadFx("audio/fx/button_click.wav");
+
+	consoleFont = App->font->Load("fonts/Minecraftia-Regular.ttf", 20);
+	console = App->gui->CreateConsole(150, 0, false, false, &white, consoleFont, console_rect);
+
 
 	return true;
 }
@@ -83,6 +84,19 @@ bool j1Gui::Update(float dt)
 			it = it->next;
 		}
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !console->IsEnabled())
+	{
+		console->Enable();
+		console->text.Clear();
+		SDL_StartTextInput();
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && console->IsEnabled())
+	{
+		console->Disable();
+		SDL_StopTextInput();
+	}
+
 	return true;
 }
 
@@ -149,9 +163,9 @@ UI_Button* j1Gui::CreateButton(int x, int y, bool active, bool draggable, p2SStr
 	return ret;
 }
 
-UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled,UI_Button* x_button)
+UI_Window* j1Gui::CreateUiWindow(int x, int y, int enabled,UI_Button* x_button,SDL_Texture* board_texture)
 {
-	UI_Window* ret = new UI_Window(x, y, enabled,x_button);
+	UI_Window* ret = new UI_Window(x, y, enabled,x_button, board_texture);
 
 	Windows_list.add(ret);
 

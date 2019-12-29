@@ -3,17 +3,21 @@
 #include "j1Input.h"
 #include "p2Log.h"
 #include "j1EntityMachine.h"
-UI_Console::UI_Console(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect) : UI(x,y,enabled,draggable),rect(rect),color(color),font(font)
+UI_Console::UI_Console(int x, int y, bool enabled, bool draggable, SDL_Color* color, _TTF_Font* font, SDL_Rect rect) : UI(x,y,enabled,draggable), base_rect(rect),color(color),font(font)
 {
 	texture = App->font->Print(text.GetString(), *color, font);
-	rect.x = position.x;
-	rect.y = position.y;
+	base_rect.x = position.x;
+	base_rect.y = position.y;
+	bruh = App->audio->LoadFx("audio/fx/bruh.wav");
+	input_rect = {0,275,700,25};
+	input_rect.x = position.x;
+	
 }
 
 void UI_Console::Update()
 {
-	rect.x = position.x;
-	rect.y = position.y;
+	base_rect.x = position.x;
+	base_rect.y = position.y;
 
 	int x, y;
 
@@ -65,25 +69,26 @@ void UI_Console::Update()
 
 void UI_Console::Draw()
 {
-	App->render->DrawQuad(rect, 0, 0, 0, 100);
-
-	if (text != "" )
-	{
-		App->render->Blit(texture, position.x , position.y + rect.h - 20, NULL, false, 0.f);
-	}
+	App->render->DrawQuad(base_rect, 75, 75, 75, 255,true,false);
+	App->render->DrawQuad(input_rect, 0, 0, 0, 255,true,false);
 
 	p2List_item<UI_Text*>* textIt = logs.start;
 
 	while (textIt != nullptr)
 	{
-		if (textIt->data->position.x >= rect.x
-			&& textIt->data->position.x < rect.x + rect.w
-			&& textIt->data->position.y > rect.y
-			&& textIt->data->position.y < rect.y + rect.h)
+		if (textIt->data->position.x >= base_rect.x
+			&& textIt->data->position.x < base_rect.x + base_rect.w
+			&& textIt->data->position.y > base_rect.y
+			&& textIt->data->position.y < base_rect.y + base_rect.h)
 		{
 			textIt->data->Draw();
 		}
 		textIt = textIt->next;
+	}
+
+	if (text != "")
+	{
+		App->render->Blit(texture, position.x , position.y + base_rect.h - 25, NULL, false, 0.f);
 	}
 }
 
@@ -123,14 +128,11 @@ void UI_Console::Execute(char* call)
 
 	if (strcmp("bruh", call) == 0)
 	{
-		LOG("bruh");
+		App->audio->PlayFx(bruh);
 	}
 
 	//FPS check
-	/*if (call[0] == "F" && call[1] == "P" && call[2] == "S")
-	{
-		LOG("bruh");
-	}*/
+
 }
 
 void UI_Console::AddText(char* string)
@@ -146,7 +148,7 @@ void UI_Console::AddText(char* string)
 		textIt = textIt->next;
 	}
 
-	logs.add(new UI_Text(125, 250, true, false, string, color, font));
+	logs.add(new UI_Text(position.x + 5, 250, true, false, string, color, font));
 
 }
 

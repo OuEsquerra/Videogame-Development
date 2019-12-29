@@ -14,6 +14,8 @@ UI_Button::UI_Button(int x, int y, bool enabled, bool draggable, p2SString text,
 
 	X_offset = x_offset;
 	Y_offset = y_offset;
+	rect.x = position.x;
+	rect.y = position.y;
 }
 
 void UI_Button::Update()
@@ -70,7 +72,7 @@ void UI_Button::Draw()
 		break;
 	}
 	
-	if (!debug)
+	if (debug)
 	{
 		App->render->DrawQuad(rect,0,255,255,50);
 	}
