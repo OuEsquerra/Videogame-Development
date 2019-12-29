@@ -29,5 +29,5 @@ public:
 
 	void Execute(char* call);
 
-	void AddText(p2SString string);
+	void AddText(char* string);
 };

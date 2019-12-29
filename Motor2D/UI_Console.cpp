@@ -22,6 +22,7 @@ void UI_Console::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		Execute((char*)text.GetString());
+		AddText((char*)text.GetString());
 		text.Clear();
 	}
 
@@ -39,7 +40,7 @@ void UI_Console::Update()
 
 void UI_Console::Draw()
 {
-	App->render->DrawQuad(rect, 0, 0, 0, 50);
+	App->render->DrawQuad(rect, 0, 0, 0, 100);
 
 	if (text != "")
 	{
@@ -104,11 +105,19 @@ void UI_Console::Execute(char* call)
 	}*/
 }
 
-void UI_Console::AddText(p2SString string)
+void UI_Console::AddText(char* string)
 {
 	//logs.del(logs.start);
 
-	logs.add(new UI_Text(100, 200, true, false, string, color, font));
+	p2List_item<UI_Text*>* textIt = logs.start;
 
+	while (textIt != nullptr)
+	{
+		textIt->data->position.y -= 25;
+
+		textIt = textIt->next;
+	}
+
+	logs.add(new UI_Text(125, 250, true, false, string, color, font));
 
 }

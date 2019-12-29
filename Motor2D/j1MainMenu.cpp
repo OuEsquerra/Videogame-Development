@@ -87,7 +87,7 @@ bool j1MainMenu::Start()
 
 	credits_window->addUI(App->gui->CreateText(0, 0, false, false, "credits", &bootleg_color, font), 150, 20);
 
-	console = App->gui->CreateConsole(0,300,false,false,&bootleg_color,font,console_rect);
+	console = App->gui->CreateConsole(125,0,false,false,&white,consoleFont,console_rect);
 
 	return true;
 }
@@ -157,6 +157,7 @@ bool j1MainMenu::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !console->IsEnabled())
 	{
 		console->Enable();
+		console->text.Clear();
 		SDL_StartTextInput();
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && console->IsEnabled())
