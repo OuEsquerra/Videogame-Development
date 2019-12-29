@@ -107,7 +107,7 @@ void j1Map::Draw()
 
 void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, AnimationInfo* ainfo, bool flip)
 {
-	//TileSet* animTileset = nullptr;
+	//TileSet* animTileset_u = nullptr;
 
 	p2List_item<TileSet*>* animTileset = data.tilesets.start;
 
@@ -119,7 +119,7 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 
 		if (cmp == 0 )
 		{
-			//animTileset = TilesetIter->data;
+			//animTileset_u = animTileset->data; //store found tileset into TileSet pointer
 			break;
 		}
 
@@ -130,7 +130,7 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 		return;
 
 	// I have the adventurer Tileset inside I have animation
-	//Animations currentanim;
+	Animations* currentanim_u;
 
 	p2List_item<Animations*>* currentanim = animTileset->data->animations.start;
 
@@ -145,6 +145,7 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 			//currentanim.name = animIter->data->name;
 			//currentanim.nFrames = animIter->data->nFrames;
 			//currentanim.speed = animIter->data->speed;
+			//currentanim_u = 
 			break;
 
 		}
@@ -178,6 +179,7 @@ void j1Map::DrawAnimation(p2SString name, char* tileset, fPoint& position, Anima
 	}
 
 	ainfo->frameCount += App->dt;
+	
 }
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
