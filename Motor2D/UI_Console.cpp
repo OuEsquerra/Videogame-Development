@@ -25,19 +25,37 @@ void UI_Console::Update()
 		text.Clear();
 	}
 
+	p2List_item<UI_Text*>* textIt = logs.start;
 
+	while (textIt != nullptr)
+	{
+		textIt->data->Update();
+
+		textIt = textIt->next;
+	}
 
 
 }
 
 void UI_Console::Draw()
 {
+	App->render->DrawQuad(rect, 0, 0, 0, 50);
+
 	if (text != "")
 	{
 		App->render->Blit(texture, position.x , position.y + rect.h - 20, NULL, false, 0.f);
 	}
 
-	App->render->DrawQuad(rect, 0, 0, 0, 50);
+	p2List_item<UI_Text*>* textIt = logs.start;
+
+	while (textIt != nullptr)
+	{
+		textIt->data->Draw();
+
+		textIt = textIt->next;
+	}
+
+
 }
 
 void UI_Console::UpdateText()
@@ -74,6 +92,11 @@ void UI_Console::Execute(char* call)
 		}
 	}
 
+	if (strcmp("bruh", call) == 0)
+	{
+		LOG("bruh");
+	}
+
 	//FPS check
 	/*if (call[0] == "F" && call[1] == "P" && call[2] == "S")
 	{
@@ -85,7 +108,7 @@ void UI_Console::AddText(p2SString string)
 {
 	//logs.del(logs.start);
 
-	
+	logs.add(new UI_Text(100, 200, true, false, string, color, font));
 
 
 }

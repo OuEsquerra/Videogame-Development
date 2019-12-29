@@ -133,6 +133,10 @@ private:
 	int dashTime  = 0;
 	int jumpSound = 1;
 
+	int jump1;
+	int jump2;
+	int jump3;
+	int swordslash;
 
 	j1PerfTimer* dashtimercheck;
 	j1PerfTimer* jump_key_down_timer;

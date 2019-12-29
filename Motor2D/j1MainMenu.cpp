@@ -152,6 +152,8 @@ bool j1MainMenu::Update(float dt)
 		}
 	}
 
+	
+
 	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN && !console->IsEnabled())
 	{
 		console->Enable();
