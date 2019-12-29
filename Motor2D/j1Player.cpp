@@ -59,7 +59,7 @@ bool j1Player::Start()
 {
 	StartPlayer();
 
-	player.attackBox = { 0, 0, 32, 64 };
+	player.attackBox = { 0, 0, 64, 64 };
 
 	dashtimercheck = new j1PerfTimer;
 	jump_key_down_timer = new j1PerfTimer;
@@ -413,7 +413,7 @@ bool j1Player::Dash()
 		}
 		else
 		{
-			player.attackCollider->SetPos(position.x - 20, position.y);
+			player.attackCollider->SetPos(position.x - 50, position.y);
 		}
 	}
 

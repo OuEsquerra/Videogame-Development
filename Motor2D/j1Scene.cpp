@@ -12,6 +12,7 @@
 #include "j1EntityMachine.h"
 #include "j1Pathfinding.h"
 #include "j1Gui.h"
+#include "j1MainMenu.h"
 //#include "j1MainMenu.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -123,6 +124,11 @@ void j1Scene::HUD() {
 	time = (180 - (int)InGameTime->ReadSec());
 	if (time < 0) {
 		time = 0;
+
+		App->mainmenu->activate();
+		App->scene->disactivate();
+		App->entities->disactivate();
+		App->collisions->disactivate();
 	}
 	
 	sprintf_s(str, "%d", time);

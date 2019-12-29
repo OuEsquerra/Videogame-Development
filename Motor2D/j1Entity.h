@@ -36,7 +36,7 @@ public:
 	EntityType type;
 
 	//Vars
-	p2SString animation;
+	p2SString* animation;
 	fPoint speed;
 	fPoint prevposition;
 	AnimationInfo Ainfo;

@@ -34,7 +34,7 @@ bool Coin::Awake(pugi::xml_node &)
 
 bool Coin::Start()
 {
-	animation.create("walk");
+
 	return true;
 }
 

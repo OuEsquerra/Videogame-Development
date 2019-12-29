@@ -131,14 +131,13 @@ bool j1FadeToBlack::SwitchMap(int level) {
 	bool ret = true;
 	LOG("Switching Maps...");
 
-	p2List_item<Entity*>* entityIter = App->entities->entity_list.start;
+	/*p2List_item<Entity*>* entityIter = App->entities->entity_list.start;
 
 	while (entityIter != NULL)
 	{
 		App->entities->entity_list.del(entityIter);
 
 		entityIter = entityIter->next;
-	
 	}
 	
 	if (App->entities->active) App->entities->entity_list.clear();
@@ -153,6 +152,16 @@ bool j1FadeToBlack::SwitchMap(int level) {
 												//ret = App->player->StartPlayer();	//Reset Player
 	LOG("Starting Load_Now");
 	App->entities->Load_Now();
-	LOG("Finished Load_Now");
+	LOG("Finished Load_Now");*/
+
+	App->map->CleanUp();
+	App->entities->CleanUp();
+	App->collisions->CleanUp();
+
+	
+	App->map->Load(level);
+	App->collisions->LoadFromMap();
+
+
 	return ret;
 }

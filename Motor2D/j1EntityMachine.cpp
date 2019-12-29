@@ -99,11 +99,14 @@ bool j1EntityMachine::CleanUp() {
 
 	while (entityIter != NULL)
 	{
-		entityIter->data->CleanUp();
-
+		if (entityIter->data->type != PLAYER) {
+			entityIter->data->CleanUp();
+			RELEASE(entityIter->data);
+		}
+		
 		entityIter = entityIter->next;
 	}
-
+	entity_list.clear();
 	return true;
 };
 
