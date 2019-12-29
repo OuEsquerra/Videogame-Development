@@ -21,7 +21,7 @@ enum EntityType
 
 struct AnimationInfo
 {
-	int iter;
+	int iter = 0;
 	p2SString prev_anim_name = "idle";
 	float frameCount = 0.0f;
 };

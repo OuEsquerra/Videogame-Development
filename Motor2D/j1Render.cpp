@@ -114,7 +114,12 @@ bool j1Render::PostUpdate()
 {
 	BROFILER_CATEGORY("j1Render::PostUpdate", Profiler::Color::Red);
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
+	
+
+	//LOG("Before Present");
 	SDL_RenderPresent(renderer);
+	//LOG("After Present");
+	
 	return true;
 }
 

@@ -107,25 +107,6 @@ bool j1FadeToBlack::FadeToBlack(int lvl, bool reset_player, float time)
 	return ret;
 }
 
-bool j1FadeToBlack::FadeToBlack_scene(int lvl, bool reset_player, float time)
-{
-	bool ret = false;
-
-	playerReset = reset_player;
-	level = lvl;
-
-	isLevelSwitch = false;
-
-	if (current_step == fade_step::none)
-	{
-		current_step = fade_step::fade_to_black;
-		start_time = SDL_GetTicks();
-		total_time = (Uint32)(time * 0.5f * 1000.0f);
-		ret = true;
-	}
-
-	return ret;
-}
 
 bool j1FadeToBlack::SwitchMap(int level) {
 	bool ret = true;

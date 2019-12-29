@@ -24,7 +24,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 	LOG("Loading GUI atlas");
 	bool ret = true;
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
-
+	click_audio = App->audio->LoadFx("audio/fx/button_click.wav");
 	return ret;
 }
 
@@ -32,7 +32,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 
-	click_audio = App->audio->LoadFx("audio/fx/button_click.wav");
+
 
 	return true;
 }

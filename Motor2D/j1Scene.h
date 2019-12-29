@@ -54,6 +54,8 @@ public:
 
 private:
 
+	int channel;
+
 	j1Timer*	InGameTime;
 
 	UI_Text* coin_score_text;

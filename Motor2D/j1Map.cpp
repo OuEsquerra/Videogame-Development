@@ -260,8 +260,8 @@ bool j1Map::CleanUp()
 		item->data->animations.clear();
 
 		//SDL_DestroyTexture
-		if(item->data->texture != NULL)
-		SDL_DestroyTexture(item->data->texture);
+		//if(item->data->texture != NULL)
+		//SDL_DestroyTexture(item->data->texture);
 		
 		//delete item;
 		//RELEASE(item->data);

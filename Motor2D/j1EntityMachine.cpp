@@ -25,7 +25,7 @@ bool j1EntityMachine::Start()
 		entityIter = entityIter->next;
 	}
 
-	coin = App->audio->LoadFx("audio/fx/coin.wav");
+
 
 	return true;
 };
@@ -45,7 +45,7 @@ bool  j1EntityMachine::Awake(pugi::xml_node& config)
 
 		entityIter = entityIter->next;
 	}*/
-
+	coin = App->audio->LoadFx("audio/fx/coin.wav");
 	return true;
 };
 

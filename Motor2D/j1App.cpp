@@ -265,7 +265,7 @@ bool j1App::PreUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
+		//LOG("Preupdate:  %s", pModule->name.GetString());
 		ret = item->data->PreUpdate();
 	}
 
@@ -299,7 +299,7 @@ bool j1App::DoUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
+		//LOG("Update:  %s", pModule->name.GetString());
 		ret = item->data->Update( dt );
 	}
 
@@ -322,7 +322,7 @@ bool j1App::PostUpdate()
 		if(pModule->active == false) {
 			continue;
 		}
-
+		//LOG("Postupdate:  %s", pModule->name.GetString());
 		ret = item->data->PostUpdate();
 	}
 
